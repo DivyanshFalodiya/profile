@@ -35,14 +35,19 @@ body{
     position: sticky;
     left: 0;
     top: 0;
+    min-width: 100px;
     height: 100vh;
     padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    min-width: 100px;
+    align-items: center;
     color: white;
     background-color: rgb(0, 15, 27);
+}
+
+.nav-brand{
+    cursor: default;
 }
 
 .nav-links ul {
@@ -52,14 +57,53 @@ body{
 }
 
 .nav-links > ul > li{
+    position: relative;
+    cursor: pointer;
     writing-mode: sideways-lr;
     margin: 3rem auto;
 }
 
 .nav-links a{
+    display: block;
     color: white;
     text-decoration: none;
     font-size: 1em;
+    transition: 0.3s;
+}
+
+.link-underline{
+    position: absolute;
+    opacity: 0;
+    left: -50%;
+    width: 100%;
+    height: 1px;
+    background-color: white;
+    transition: 0.3s;
+}
+
+.nav-links li:hover a{
+    color: white;
+    transform: scale(1.2);
+    transition: 0.3s;
+}
+
+.nav-links li:hover .link-underline{
+    opacity: 1;
+    left: 0;
+    transition: 0.3s;
+}
+
+.ham-container{
+    display: none;
+    cursor: pointer;
+}
+
+.ham{
+    position: relative;
+    width: 1.5rem;
+    height: 2px;
+    margin: 0.5rem;
+    background-color: white;
 }
 
 
@@ -99,5 +143,18 @@ body{
     .nav-links > ul > li{
         writing-mode: sideways-lr;
         margin: auto 1rem;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .navbar{
+        justify-content: space-between;
+        padding: 0.5rem;
+    }
+    .ham-container{
+        display: block;
+    }
+    .nav-links{
+        display: none;
     }
 }

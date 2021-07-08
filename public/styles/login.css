@@ -1,0 +1,33 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.title {
+    text-align: center;
+}
+.form-group {
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.form-control {
+    margin: 1rem;
+}
+.btn {
+    border: none;
+    outline: none;
+    background-color: rgb(0, 15, 27);
+    color: white;
+}
+.btn:hover {
+    color: white;
+    background-color: rgba(0, 15, 27, 0.849);
+}
+.error {
+    display: none;
+    color: red;
+}

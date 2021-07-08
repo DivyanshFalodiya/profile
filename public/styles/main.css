@@ -45,13 +45,9 @@ body{
     background-color: rgb(0, 15, 27);
 }
 
-.nav-links{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .nav-links ul {
+    display: flex;
+    flex-direction: column;
     list-style-type: none;
 }
 
@@ -89,10 +85,16 @@ body{
         width: 100%;
         flex-direction: row;
     }
-    .nav-links > ul{
+    .nav-links{
         display: flex;
-        flex-direction: row;
+        justify-content: center;
         align-items: center;
+        /* position: relative; */
+    }
+    .nav-links ul{
+        /* position: relative; */
+        /* top: 1rem; */
+        flex-direction: row;
     }
     .nav-links > ul > li{
         writing-mode: sideways-lr;

@@ -2,7 +2,6 @@
 const express = require('express');
 const homeRoutes = require('./routes/homeRoutes');
 const projectRoutes = require('./routes/projectRoutes');
-const blogRoutes = require('./routes/blogRoutes');
 const loginRoutes = require('./routes/loginRoutes');
 
 // App and middlewares
@@ -15,7 +14,6 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/', homeRoutes);
 app.use('/projects', projectRoutes);
-app.use('/blog', blogRoutes);
 app.use('/login', loginRoutes);
 
 // Listening on port

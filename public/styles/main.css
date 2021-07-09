@@ -7,7 +7,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: row;
-    background-color: rgb(218, 218, 218);
+    /* background-color: rgb(218, 218, 218); */
 }
 
 /* Scrollbar */
@@ -23,7 +23,7 @@ body {
 #canvas {
     position: fixed;
     z-index: -1;
-    background-color: rgb(218, 218, 218);
+    /* background-color: rgb(218, 218, 218); */
     width: 100%;
     height: 100%;
 }

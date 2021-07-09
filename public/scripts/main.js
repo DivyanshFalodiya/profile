@@ -5,6 +5,7 @@ const canvas = document.getElementById('canvas');
 const scene = new THREE.Scene();
 scene.background = new THREE.Color('#dadada');
 
+// Setup the camera
 const camera = new THREE.PerspectiveCamera(
     75,
     canvas.clientWidth / canvas.clientHeight,
@@ -13,25 +14,53 @@ const camera = new THREE.PerspectiveCamera(
 );
 camera.position.set(0, 0, 10);
 
+// Setup the clock
+const clock = new THREE.Clock();
+
+// Setup the renderer
 const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+renderer.shadowMap.enabled = true;
 renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
+
+// Set up orbit controls
+// const controls = new OrbitControls(renderer.domElement);
 
 // Object fovY wrt camera depth and fov
 fovY = camera.position.z * 2 * Math.tan((camera.fov * (Math.PI / 180)) / 2);
 
 // Add cube object
-const planeGeometry = new THREE.PlaneGeometry(fovY * camera.aspect, fovY);
-const planeMaterial = new THREE.MeshStandardMaterial({
-    color: '#dadada',
+const planeGeometry = new THREE.PlaneGeometry(
+    fovY * camera.aspect * 1.1,
+    fovY * 1.1,
+    window.innerWidth / (window.innerHeight / 50),
+    50
+);
+const planeMaterial = new THREE.MeshLambertMaterial({
+    color: '#fff',
+    wireframe: true,
 });
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+plane.castShadow = true;
+plane.receiveShadow = true;
 scene.add(plane);
+
+// Add object to see shadow
+// const cube = new THREE.Mesh(
+//     new THREE.BoxGeometry(1, 1, 1),
+//     new THREE.MeshStandardMaterial({
+//         color: 'red',
+//     })
+// );
+// cube.castShadow = true;
+// scene.add(cube);
 
 // Add lights
 // Ambient light for overall
-const ambientLight = new THREE.AmbientLight(0xffffff);
-scene.add(ambientLight);
+const directionalLight = new THREE.AmbientLight(0xffffff, 1);
+// directionalLight.position.set(0, 0, 5);
+// directionalLight.castShadow = true;
+scene.add(directionalLight);
 
 // Spot light for mouse tracking
 const spotTarget = new THREE.Object3D();
@@ -39,19 +68,19 @@ spotTarget.position.set(0, 0, 0);
 scene.add(spotTarget);
 
 const spotLight = new THREE.SpotLight('#fff');
-spotLight.position.set(0, 0, 0.3);
+spotLight.position.set(0, 0, 0.8);
 // spotLight.angle = Math.PI / 6;
 spotLight.target = spotTarget;
 scene.add(spotLight);
 
-// Mouse move event
-window.addEventListener('mousemove', (e) => {
+// Convert 2d to 3d space
+const convertClientToWorld = (x, y, camera) => {
     var vec = new THREE.Vector3();
     var pos = new THREE.Vector3();
 
     vec.set(
-        (e.clientX / window.innerWidth) * 2 - 1,
-        -(e.clientY / window.innerHeight) * 2 + 1,
+        (x / window.innerWidth) * 2 - 1,
+        -(y / window.innerHeight) * 2 + 1,
         0.5
     );
     vec.unproject(camera);
@@ -59,6 +88,13 @@ window.addEventListener('mousemove', (e) => {
 
     var distance = -camera.position.z / vec.z;
     pos.copy(camera.position).add(vec.multiplyScalar(distance));
+
+    return pos;
+};
+
+// Mouse move event
+window.addEventListener('mousemove', (e) => {
+    pos = convertClientToWorld(e.clientX, e.clientY, camera);
 
     spotTarget.position.set(pos.x, pos.y, 0);
     pos2 = spotLight.position.clone();
@@ -74,9 +110,14 @@ document.addEventListener('mouseover', (e) => {
         spotLight.position.lerp(pos, 1);
     } else {
         pos = spotLight.position.clone();
-        pos.z = 0.3;
+        pos.z = 0.8;
         spotLight.position.lerp(pos, 1);
     }
+});
+
+// On click effect
+document.addEventListener('click', (e) => {
+    pos = convertClientToWorld(e.clientX, e.clientY, camera);
 });
 
 // Window Resize event
@@ -92,7 +133,12 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
 
     // Object update
-    geometry = new THREE.PlaneGeometry(fovY * camera.aspect, fovY);
+    geometry = new THREE.PlaneGeometry(
+        fovY * camera.aspect * 1.1,
+        fovY * 1.1,
+        window.innerWidth / (window.innerHeight / 50),
+        50
+    );
     plane.geometry.dispose();
     plane.geometry = geometry.clone();
     plane.geometry.buffersNeedUpdate = true;
@@ -102,8 +148,27 @@ window.addEventListener('resize', () => {
     renderer.setPixelRatio(window.devicePixelRatio);
 });
 
+// Create plane wave
+const updatePlane = (plane, time) => {
+    const positions = plane.geometry.attributes.position.array;
+
+    for (let i = 2; i < positions.length; i += 3) {
+        waveX = Math.sin(positions[i - 2] + time) * 0.5;
+        waveY = Math.sin(positions[i - 1] + time) * 0.5;
+        positions[i] = waveX + waveY;
+    }
+
+    plane.geometry.attributes.position.array = positions;
+    plane.geometry.attributes.position.needsUpdate = true;
+};
+
 // Render function for animation
 const render = () => {
+    const time = clock.getElapsedTime();
+    updatePlane(plane, time);
+
+    // controls.update();
+
     renderer.render(scene, camera);
     requestAnimationFrame(render);
 };

@@ -37,8 +37,8 @@ const planeGeometry = new THREE.PlaneGeometry(
     50
 );
 const planeMaterial = new THREE.MeshLambertMaterial({
-    color: '#fff',
-    wireframe: true,
+    color: '#dadada',
+    // wireframe: true,
 });
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 plane.castShadow = true;
@@ -57,10 +57,18 @@ scene.add(plane);
 
 // Add lights
 // Ambient light for overall
-const directionalLight = new THREE.AmbientLight(0xffffff, 1);
-// directionalLight.position.set(0, 0, 5);
+const mainLight = new THREE.PointLight(0xffffff, 1);
+mainLight.position.set(0, 0, 10);
 // directionalLight.castShadow = true;
-scene.add(directionalLight);
+scene.add(mainLight);
+
+const secLight = new THREE.PointLight(0xff0000, 0.3);
+secLight.position.set(10, 0, 1);
+scene.add(secLight);
+
+const secLight2 = new THREE.PointLight(0x0000ff, 0.5);
+secLight2.position.set(-10, 0, 1);
+scene.add(secLight2);
 
 // Spot light for mouse tracking
 const spotTarget = new THREE.Object3D();
@@ -71,7 +79,7 @@ const spotLight = new THREE.SpotLight('#fff');
 spotLight.position.set(0, 0, 0.8);
 // spotLight.angle = Math.PI / 6;
 spotLight.target = spotTarget;
-scene.add(spotLight);
+// scene.add(spotLight);
 
 // Convert 2d to 3d space
 const convertClientToWorld = (x, y, camera) => {
@@ -155,6 +163,7 @@ const updatePlane = (plane, time) => {
     for (let i = 2; i < positions.length; i += 3) {
         waveX = Math.sin(positions[i - 2] + time) * 0.5;
         waveY = Math.sin(positions[i - 1] + time) * 0.5;
+        waveXY = Math.sin(positions[i - 2] + positions[i - 1] + time) * 0.5;
         positions[i] = waveX + waveY;
     }
 

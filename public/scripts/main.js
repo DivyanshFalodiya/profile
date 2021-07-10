@@ -126,34 +126,39 @@ document.addEventListener('mouseover', (e) => {
 // On click effect
 document.addEventListener('click', (e) => {
     pos = convertClientToWorld(e.clientX, e.clientY, camera);
-    // planeWavePos = {
-    //     x: pos.x,
-    //     y: pos.y,
-    // };
-    // totalTime = 1000;
-    // speed = {
-    //     x: (planeWavePos.x - prevPlaneWavePos.x) / totalTime,
-    //     y: (planeWavePos.y - prevPlaneWavePos.y) / totalTime,
-    // };
+    newAmp = 1;
+    initialAmp = planeAmplitude;
+    totalTime = 1500;
+    time = 0;
+    interval = 50;
 
-    // interval = setInterval(() => {
-    //     if (time >= totalTime) {
-    //         clearInterval(interval);
-    //         time = 0;
-    //         totalTime = 0;
-    //         speed = {
-    //             x: 0,
-    //             y: 0,
-    //         };
-    //         prevPlaneWavePos = planeWavePos;
-    //     } else {
-    //         time += 50;
-    //         curPlaneWavePos = {
-    //             x: speed.x * time + prevPlaneWavePos.x,
-    //             y: speed.y * time + prevPlaneWavePos.y,
-    //         };
-    //     }
-    // }, 50);
+    // Increase to the new amp
+    speed = (newAmp - initialAmp) / totalTime;
+    var interval = setInterval(() => {
+        if (time >= totalTime) {
+            clearInterval(interval);
+        } else {
+            time += interval;
+            planeAmplitude = initialAmp + speed * time;
+        }
+    }, interval);
+
+    // Decrease to the prev amp
+    setTimeout(() => {
+        tmp = newAmp;
+        newAmp = initialAmp;
+        initialAmp = tmp;
+        time = 0;
+        speed = -speed;
+        var interval = setInterval(() => {
+            if (time >= totalTime) {
+                clearInterval(interval);
+            } else {
+                time += interval;
+                planeAmplitude = initialAmp + speed * time;
+            }
+        }, interval);
+    }, totalTime);
 });
 
 // Window Resize event
@@ -190,31 +195,22 @@ var planeWavePos = {
     x: 0,
     y: 0,
 };
-var prevPlaneWavePos = {
-    x: 0,
-    y: 0,
-};
 var curPlaneWavePos = {
     x: 0,
     y: 0,
 };
-var time = 0;
-var totalTime = 0;
-var speed = {
-    x: 0,
-    y: 0,
-};
+var planeAmplitude = 0.3;
 const updatePlane = () => {
     const elapsedTime = clock.getElapsedTime();
     const positions = plane.geometry.attributes.position.array;
 
     for (let i = 2; i < positions.length; i += 3) {
-        // waveX = Math.sin(positions[i - 2] + time) * 0.5;
-        // waveY = Math.sin(positions[i - 1] + time) * 0.5;
-        // waveXY = Math.sin(positions[i - 2] + positions[i - 1] + time) * 0.5;
-        // positions[i] = waveX + waveY + waveXY;
-
-        // waveMix = Math.sin(positions[i - 2] - positions[i - 1] + time) * 0.2;
+        // waveX = Math.sin(positions[i - 2] + elapsedTime) * 0.2;
+        // waveY = Math.sin(positions[i - 1] + elapsedTime) * 0.2;
+        // waveXY =
+        //     Math.sin(positions[i - 2] + positions[i - 1] + elapsedTime) * 0.2;
+        // waveMix =
+        //     Math.sin(positions[i - 2] - positions[i - 1] + elapsedTime) * 0.2;
         waveMix2 =
             Math.sin(
                 -Math.sqrt(
@@ -222,7 +218,7 @@ const updatePlane = () => {
                         Math.pow(positions[i - 1] - curPlaneWavePos.y, 2)
                 ) +
                     elapsedTime * 5
-            ) * 0.5;
+            ) * planeAmplitude;
         positions[i] = waveMix2;
     }
 

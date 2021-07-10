@@ -3,7 +3,7 @@ const canvas = document.getElementById('canvas');
 
 // Setup the scene
 const scene = new THREE.Scene();
-scene.background = new THREE.Color('#dadada');
+scene.background = new THREE.Color('#000');
 
 // Setup the camera
 const camera = new THREE.PerspectiveCamera(
@@ -23,22 +23,20 @@ renderer.shadowMap.enabled = true;
 renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
-// Set up orbit controls
-// const controls = new OrbitControls(renderer.domElement);
-
 // Object fovY wrt camera depth and fov
 fovY = camera.position.z * 2 * Math.tan((camera.fov * (Math.PI / 180)) / 2);
+planeSize = fovY > fovY * camera.aspect ? fovY : fovY * camera.aspect;
 
 // Add cube object
 const planeGeometry = new THREE.PlaneGeometry(
-    fovY * camera.aspect * 1.1,
-    fovY * 1.1,
-    window.innerWidth / (window.innerHeight / 50),
-    50
+    planeSize * 2,
+    planeSize * 2,
+    window.innerWidth / (window.innerHeight / 100),
+    100
 );
 const planeMaterial = new THREE.MeshLambertMaterial({
     color: '#dadada',
-    // wireframe: true,
+    wireframe: true,
 });
 const plane = new THREE.Mesh(planeGeometry, planeMaterial);
 plane.castShadow = true;
@@ -56,19 +54,26 @@ scene.add(plane);
 // scene.add(cube);
 
 // Add lights
-// Ambient light for overall
+// Main white light for overall
 const mainLight = new THREE.PointLight(0xffffff, 1);
-mainLight.position.set(0, 0, 10);
+mainLight.position.set(0, 0, 15);
 // directionalLight.castShadow = true;
-scene.add(mainLight);
+// scene.add(mainLight);
 
+// Red Light
 const secLight = new THREE.PointLight(0xff0000, 0.3);
 secLight.position.set(10, 0, 1);
 scene.add(secLight);
 
+// Blue light
 const secLight2 = new THREE.PointLight(0x0000ff, 0.5);
 secLight2.position.set(-10, 0, 1);
 scene.add(secLight2);
+
+// Green light
+const secLight3 = new THREE.PointLight(0x00ff00, 0.5);
+secLight3.position.set(0, 10, 1);
+scene.add(secLight3);
 
 // Spot light for mouse tracking
 const spotTarget = new THREE.Object3D();
@@ -142,10 +147,10 @@ window.addEventListener('resize', () => {
 
     // Object update
     geometry = new THREE.PlaneGeometry(
-        fovY * camera.aspect * 1.1,
-        fovY * 1.1,
-        window.innerWidth / (window.innerHeight / 50),
-        50
+        planeSize * 2,
+        planeSize * 2,
+        window.innerWidth / (window.innerHeight / 100),
+        100
     );
     plane.geometry.dispose();
     plane.geometry = geometry.clone();
@@ -164,7 +169,10 @@ const updatePlane = (plane, time) => {
         waveX = Math.sin(positions[i - 2] + time) * 0.5;
         waveY = Math.sin(positions[i - 1] + time) * 0.5;
         waveXY = Math.sin(positions[i - 2] + positions[i - 1] + time) * 0.5;
-        positions[i] = waveX + waveY;
+        // positions[i] = waveX + waveY + waveXY;
+
+        waveMix = Math.sin(positions[i - 2] - positions[i - 1] + time) * 0.2;
+        positions[i] = waveMix;
     }
 
     plane.geometry.attributes.position.array = positions;
@@ -175,8 +183,6 @@ const updatePlane = (plane, time) => {
 const render = () => {
     const time = clock.getElapsedTime();
     updatePlane(plane, time);
-
-    // controls.update();
 
     renderer.render(scene, camera);
     requestAnimationFrame(render);

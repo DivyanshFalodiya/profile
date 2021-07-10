@@ -55,10 +55,10 @@ scene.add(plane);
 
 // Add lights
 // Main white light for overall
-const mainLight = new THREE.PointLight(0xffffff, 1);
-mainLight.position.set(0, 0, 15);
+const mainLight = new THREE.PointLight(0xe4ff00, 0.5);
+mainLight.position.set(0, -10, 1);
 // directionalLight.castShadow = true;
-// scene.add(mainLight);
+scene.add(mainLight);
 
 // Red Light
 const secLight = new THREE.PointLight(0xff0000, 0.3);
@@ -109,28 +109,51 @@ const convertClientToWorld = (x, y, camera) => {
 window.addEventListener('mousemove', (e) => {
     pos = convertClientToWorld(e.clientX, e.clientY, camera);
 
-    spotTarget.position.set(pos.x, pos.y, 0);
-    pos2 = spotLight.position.clone();
-    spotLight.position.set(pos.x, pos.y, pos2.z);
+    planeWavePos = {
+        x: pos.x,
+        y: pos.y,
+    };
+    curPlaneWavePos = planeWavePos;
 });
 
 // Hover effect
 document.addEventListener('mouseover', (e) => {
     tag = e.target.tagName;
-    if (tag == 'A') {
-        pos = spotLight.position.clone();
-        pos.z = 1;
-        spotLight.position.lerp(pos, 1);
-    } else {
-        pos = spotLight.position.clone();
-        pos.z = 0.8;
-        spotLight.position.lerp(pos, 1);
+    if (tag == 'A' || tag == 'BUTTON') {
     }
 });
 
 // On click effect
 document.addEventListener('click', (e) => {
     pos = convertClientToWorld(e.clientX, e.clientY, camera);
+    // planeWavePos = {
+    //     x: pos.x,
+    //     y: pos.y,
+    // };
+    // totalTime = 1000;
+    // speed = {
+    //     x: (planeWavePos.x - prevPlaneWavePos.x) / totalTime,
+    //     y: (planeWavePos.y - prevPlaneWavePos.y) / totalTime,
+    // };
+
+    // interval = setInterval(() => {
+    //     if (time >= totalTime) {
+    //         clearInterval(interval);
+    //         time = 0;
+    //         totalTime = 0;
+    //         speed = {
+    //             x: 0,
+    //             y: 0,
+    //         };
+    //         prevPlaneWavePos = planeWavePos;
+    //     } else {
+    //         time += 50;
+    //         curPlaneWavePos = {
+    //             x: speed.x * time + prevPlaneWavePos.x,
+    //             y: speed.y * time + prevPlaneWavePos.y,
+    //         };
+    //     }
+    // }, 50);
 });
 
 // Window Resize event
@@ -146,6 +169,7 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
 
     // Object update
+    planeSize = fovY > fovY * camera.aspect ? fovY : fovY * camera.aspect;
     geometry = new THREE.PlaneGeometry(
         planeSize * 2,
         planeSize * 2,
@@ -162,17 +186,44 @@ window.addEventListener('resize', () => {
 });
 
 // Create plane wave
-const updatePlane = (plane, time) => {
+var planeWavePos = {
+    x: 0,
+    y: 0,
+};
+var prevPlaneWavePos = {
+    x: 0,
+    y: 0,
+};
+var curPlaneWavePos = {
+    x: 0,
+    y: 0,
+};
+var time = 0;
+var totalTime = 0;
+var speed = {
+    x: 0,
+    y: 0,
+};
+const updatePlane = () => {
+    const elapsedTime = clock.getElapsedTime();
     const positions = plane.geometry.attributes.position.array;
 
     for (let i = 2; i < positions.length; i += 3) {
-        waveX = Math.sin(positions[i - 2] + time) * 0.5;
-        waveY = Math.sin(positions[i - 1] + time) * 0.5;
-        waveXY = Math.sin(positions[i - 2] + positions[i - 1] + time) * 0.5;
+        // waveX = Math.sin(positions[i - 2] + time) * 0.5;
+        // waveY = Math.sin(positions[i - 1] + time) * 0.5;
+        // waveXY = Math.sin(positions[i - 2] + positions[i - 1] + time) * 0.5;
         // positions[i] = waveX + waveY + waveXY;
 
-        waveMix = Math.sin(positions[i - 2] - positions[i - 1] + time) * 0.2;
-        positions[i] = waveMix;
+        // waveMix = Math.sin(positions[i - 2] - positions[i - 1] + time) * 0.2;
+        waveMix2 =
+            Math.sin(
+                -Math.sqrt(
+                    Math.pow(positions[i - 2] - curPlaneWavePos.x, 2) +
+                        Math.pow(positions[i - 1] - curPlaneWavePos.y, 2)
+                ) +
+                    elapsedTime * 5
+            ) * 0.5;
+        positions[i] = waveMix2;
     }
 
     plane.geometry.attributes.position.array = positions;
@@ -181,8 +232,7 @@ const updatePlane = (plane, time) => {
 
 // Render function for animation
 const render = () => {
-    const time = clock.getElapsedTime();
-    updatePlane(plane, time);
+    updatePlane();
 
     renderer.render(scene, camera);
     requestAnimationFrame(render);

@@ -1,3 +1,6 @@
+// Imports
+import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.130.1-bsY6rEPcA1ZYyZeKdbHd/mode=imports/optimized/three.js';
+
 // Retrieve the canvas
 const canvas = document.getElementById('canvas');
 
@@ -24,8 +27,8 @@ renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
 // Object fovY wrt camera depth and fov
-fovY = camera.position.z * 2 * Math.tan((camera.fov * (Math.PI / 180)) / 2);
-planeSize = fovY > fovY * camera.aspect ? fovY : fovY * camera.aspect;
+var fovY = camera.position.z * 2 * Math.tan((camera.fov * (Math.PI / 180)) / 2);
+var planeSize = fovY > fovY * camera.aspect ? fovY : fovY * camera.aspect;
 
 // Add cube object
 const planeGeometry = new THREE.PlaneGeometry(
@@ -107,7 +110,7 @@ const convertClientToWorld = (x, y, camera) => {
 
 // Mouse move event
 window.addEventListener('mousemove', (e) => {
-    pos = convertClientToWorld(e.clientX, e.clientY, camera);
+    var pos = convertClientToWorld(e.clientX, e.clientY, camera);
 
     planeWavePos = {
         x: pos.x,
@@ -118,7 +121,7 @@ window.addEventListener('mousemove', (e) => {
 
 // Hover effect
 document.addEventListener('mouseover', (e) => {
-    tag = e.target.tagName;
+    var tag = e.target.tagName;
     if (tag == 'A' || tag == 'BUTTON') {
     }
 });
@@ -211,7 +214,7 @@ const updatePlane = () => {
         //     Math.sin(positions[i - 2] + positions[i - 1] + elapsedTime) * 0.2;
         // waveMix =
         //     Math.sin(positions[i - 2] - positions[i - 1] + elapsedTime) * 0.2;
-        waveMix2 =
+        var waveMix2 =
             Math.sin(
                 -Math.sqrt(
                     Math.pow(positions[i - 2] - curPlaneWavePos.x, 2) +

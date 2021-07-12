@@ -21,8 +21,12 @@ const setup = new Setup(canvas);
 setup.scene.background = '#000';
 
 // Passes
-let bloomPass = new UnrealBloomPass();
-setup.addPass(bloomPass);
+let bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    1.5,
+    0.4
+);
+// setup.addPass(bloomPass);
 
 // On mouve move
 window.addEventListener('mousemove', (e) => {
@@ -69,3 +73,5 @@ const render = () => {
     window.requestAnimationFrame(render);
 };
 render();
+
+export default setup;

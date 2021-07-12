@@ -1,5 +1,10 @@
 // Imports
-import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.130.1-bsY6rEPcA1ZYyZeKdbHd/mode=imports/optimized/three.js';
+import * as THREE from './three/build/three.module.js';
+import { EffectComposer } from './three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from './three/examples/jsm/postprocessing/RenderPass.js';
+import { GlitchPass } from './three/examples/jsm/postprocessing/GlitchPass.js';
+import { UnrealBloomPass } from './three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { FilmPass } from './three/examples/jsm/postprocessing/FilmPass.js';
 import vertexShader from './shaders/vertex.js';
 import fragmentShader from './shaders/fragment.js';
 import Setup from './threeSetup.js';
@@ -14,7 +19,10 @@ const setup = new Setup(canvas);
 
 // Set up eveything
 setup.scene.background = '#000';
-setup.camera.position.set(0, 0, 10);
+
+// Passes
+let bloomPass = new UnrealBloomPass();
+setup.addPass(bloomPass);
 
 // On mouve move
 window.addEventListener('mousemove', (e) => {
@@ -22,6 +30,11 @@ window.addEventListener('mousemove', (e) => {
         x: -(e.clientX - canvas.width / 2) / canvas.width,
         y: -(e.clientY - canvas.height / 2) / canvas.height,
     };
+});
+
+// On mouse click
+window.addEventListener('click', (e) => {
+    let pos = setup.convertClientToWorld(e.clientX, e.clientY);
 });
 
 // On window resize

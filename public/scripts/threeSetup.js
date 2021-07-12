@@ -1,5 +1,8 @@
-import * as THREE from 'https://cdn.skypack.dev/pin/three@v0.130.1-bsY6rEPcA1ZYyZeKdbHd/mode=imports/optimized/three.js';
-import { OrbitControls } from 'https://threejsfundamentals.org/threejs/resources/threejs/r122/examples/jsm/controls/OrbitControls.js';
+import * as THREE from './three/build/three.module.js';
+import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js';
+import { EffectComposer } from './three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from './three/examples/jsm/postprocessing/RenderPass.js';
+import { BloomPass } from './three/examples/jsm/postprocessing/BloomPass.js';
 
 export default class Setup {
     constructor(canvas) {
@@ -17,11 +20,33 @@ export default class Setup {
         });
         this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
+        // Composer and passes
+        this.composer = new EffectComposer(this.renderer);
+
+        this.renderPass = new RenderPass(this.scene, this.camera);
+        this.addPass(this.renderPass);
+
+        this.clock = new THREE.Clock();
+
         // Set up stars
         const nStars = 10000; // 500 to 1000
-        this.addStars(3000, '#ffffff', 5000, 5000);
-        this.addStars(2000, '#ffff00', 5000, 5000);
-        this.addStars(3000, '#ff00ff', 5000, 5000);
+        this.starZ = -200;
+        this.stars = [];
+        this.stars.push(this.addStars(3000, '#ffffff', 5000, 5000));
+        this.stars.push(this.addStars(2000, '#ffff00', 5000, 5000));
+        this.stars.push(this.addStars(3000, '#ff00ff', 5000, 5000));
+    }
+
+    // Add point light
+    addPointLight(color, x, y, z) {
+        let light = new THREE.PointLight(color, 1);
+        light.position.set(x, y, z);
+        this.scene.add(light);
+    }
+
+    // Add pass
+    addPass(pass) {
+        this.composer.addPass(pass);
     }
 
     // Convert 2d to 3d space
@@ -54,7 +79,7 @@ export default class Setup {
         for (let i = 0; i < nStars; i++) {
             const x = (Math.random() - 0.5) * xRange * 2;
             const y = (Math.random() - 0.5) * yRange * 2;
-            const z = -(Math.random() * 200) - 500;
+            const z = Math.random() * this.starZ - 500;
             starVertices.push(x, y, z);
         }
         starGeometry.setAttribute(
@@ -64,16 +89,24 @@ export default class Setup {
 
         const stars = new THREE.Points(starGeometry, starMaterial);
         this.scene.add(stars);
+
+        return stars;
+    }
+
+    // Update stars
+    updateStars() {
+        this.stars.forEach((star) => {});
     }
 
     // Render
     render(mouse) {
+        this.updateStars();
         gsap.to(this.camera.rotation, {
             y: mouse.x * 0.2,
             x: mouse.y * 0.2,
             delay: 0.1,
             duration: 0.5,
         });
-        this.renderer.render(this.scene, this.camera);
+        this.composer.render();
     }
 }

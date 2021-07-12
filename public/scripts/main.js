@@ -16,12 +16,6 @@ const setup = new Setup(canvas);
 setup.scene.background = '#000';
 setup.camera.position.set(0, 0, 10);
 
-// Set up stars
-const nStars = 10000; // 500 to 1000
-setup.addStars(3000, '#ffffff');
-setup.addStars(2000, '#ffff00');
-setup.addStars(3000, '#ff00ff');
-
 // On mouve move
 window.addEventListener('mousemove', (e) => {
     mouse = {
@@ -47,15 +41,18 @@ window.addEventListener('resize', () => {
     setup.renderer.setPixelRatio(window.devicePixelRatio);
 });
 
+// On device orientation for sensors
+const handleOrientation = (e) => {
+    mouse = {
+        x: e.gamma / 180,
+        y: e.beta / 360,
+    };
+};
+window.addEventListener('deviceorientation', handleOrientation, true);
+
 // Render everything
 const render = () => {
-    gsap.to(setup.camera.rotation, {
-        y: mouse.x * 0.5,
-        x: mouse.y * 0.5,
-        delay: 0.1,
-        duration: 0.5,
-    });
-    setup.render();
+    setup.render(mouse);
     window.requestAnimationFrame(render);
 };
 render();

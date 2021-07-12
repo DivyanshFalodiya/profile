@@ -16,6 +16,12 @@ export default class Setup {
             alpha: true,
         });
         this.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+
+        // Set up stars
+        const nStars = 10000; // 500 to 1000
+        this.addStars(3000, '#ffffff', 5000, 5000);
+        this.addStars(2000, '#ffff00', 5000, 5000);
+        this.addStars(3000, '#ff00ff', 5000, 5000);
     }
 
     // Convert 2d to 3d space
@@ -38,7 +44,7 @@ export default class Setup {
     }
 
     // Add stars in background
-    addStars(nStars, color) {
+    addStars(nStars, color, xRange, yRange) {
         const starGeometry = new THREE.BufferGeometry();
         const starMaterial = new THREE.PointsMaterial({
             color,
@@ -46,8 +52,8 @@ export default class Setup {
 
         const starVertices = [];
         for (let i = 0; i < nStars; i++) {
-            const x = (Math.random() - 0.5) * 10000;
-            const y = (Math.random() - 0.5) * 10000;
+            const x = (Math.random() - 0.5) * xRange * 2;
+            const y = (Math.random() - 0.5) * yRange * 2;
             const z = -(Math.random() * 200) - 500;
             starVertices.push(x, y, z);
         }
@@ -61,7 +67,13 @@ export default class Setup {
     }
 
     // Render
-    render() {
+    render(mouse) {
+        gsap.to(this.camera.rotation, {
+            y: mouse.x * 0.2,
+            x: mouse.y * 0.2,
+            delay: 0.1,
+            duration: 0.5,
+        });
         this.renderer.render(this.scene, this.camera);
     }
 }

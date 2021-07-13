@@ -10,10 +10,6 @@ import fragmentShader from './shaders/fragment.js';
 import Setup from './threeSetup.js';
 
 // Initialize
-var mouse = {
-    x: 0,
-    y: 0,
-};
 const canvas = document.getElementById('canvas');
 const setup = new Setup(canvas);
 
@@ -21,16 +17,16 @@ const setup = new Setup(canvas);
 setup.scene.background = '#000';
 
 // Passes
-let bloomPass = new UnrealBloomPass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    1.5,
-    0.4
-);
+// let bloomPass = new UnrealBloomPass(
+//     new THREE.Vector2(window.innerWidth, window.innerHeight),
+//     1.5,
+//     0.4
+// );
 // setup.addPass(bloomPass);
 
 // On mouve move
-window.addEventListener('mousemove', (e) => {
-    mouse = {
+window.addEventListener('pointermove', (e) => {
+    setup.mouse = {
         x: -(e.clientX - canvas.width / 2) / canvas.width,
         y: -(e.clientY - canvas.height / 2) / canvas.height,
     };
@@ -60,18 +56,11 @@ window.addEventListener('resize', () => {
 
 // On device orientation for sensors
 const handleOrientation = (e) => {
-    mouse = {
+    setup.mouse = {
         x: e.gamma / 180,
         y: e.beta / 360,
     };
 };
 window.addEventListener('deviceorientation', handleOrientation, true);
-
-// Render everything
-const render = () => {
-    setup.render(mouse);
-    window.requestAnimationFrame(render);
-};
-render();
 
 export default setup;

@@ -106,7 +106,7 @@ body {
 .nav-links > ul > li {
     position: relative;
     cursor: pointer;
-    writing-mode: sideways-lr;
+    /* writing-mode: sideways-lr; */
     margin: auto 1rem;
 }
 

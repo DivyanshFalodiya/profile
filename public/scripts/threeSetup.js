@@ -6,6 +6,11 @@ import { BloomPass } from './three/examples/jsm/postprocessing/BloomPass.js';
 
 export default class Setup {
     constructor(canvas) {
+        noise.seed(Math.random());
+        this.mouse = {
+            x: 0,
+            y: 0,
+        };
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(
             75,
@@ -33,8 +38,8 @@ export default class Setup {
         this.starZ = -200;
         this.stars = [];
         this.stars.push(this.addStars(3000, '#ffffff', 5000, 5000));
-        this.stars.push(this.addStars(2000, '#ffff00', 5000, 5000));
-        this.stars.push(this.addStars(3000, '#ff00ff', 5000, 5000));
+        this.stars.push(this.addStars(2000, '#0000ff', 5000, 5000));
+        this.stars.push(this.addStars(3000, '#00ff00', 5000, 5000));
     }
 
     // Add point light
@@ -94,16 +99,14 @@ export default class Setup {
     }
 
     // Update stars
-    updateStars() {
-        this.stars.forEach((star) => {});
-    }
+    updateStars() {}
 
     // Render
-    render(mouse) {
+    render() {
         this.updateStars();
         gsap.to(this.camera.rotation, {
-            y: mouse.x * 0.2,
-            x: mouse.y * 0.2,
+            y: this.mouse.x * 0.2,
+            x: this.mouse.y * 0.2,
             delay: 0.1,
             duration: 0.5,
         });

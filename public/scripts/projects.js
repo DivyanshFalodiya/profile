@@ -26,7 +26,7 @@ const planeMat = new THREE.ShaderMaterial({
 });
 const plane = new THREE.Mesh(planeGeom, planeMat);
 plane.position.set(0, 0, -10);
-setup.scene.add(plane);
+// setup.scene.add(plane);
 
 // Mousemove
 window.addEventListener('mousemove', (e) => {
@@ -38,6 +38,7 @@ window.addEventListener('mousemove', (e) => {
 
 // Render everything
 const render = () => {
+    // plane.material.uniforms.u_time.value = setup.clock.getElapsedTime();
     setup.render();
     window.requestAnimationFrame(render);
 };

@@ -6,7 +6,7 @@ import * as THREE from './three/build/three.module.js';
 // import { UnrealBloomPass } from './three/examples/jsm/postprocessing/UnrealBloomPass.js';
 // import { FilmPass } from './three/examples/jsm/postprocessing/FilmPass.js';
 import vertexShader from './shaders/vertex.js';
-import fragmentShader from './shaders/fragment.js';
+import fragmentShader from './shaders/fragmentPlane.js';
 import setup from './main.js';
 
 // Image plane

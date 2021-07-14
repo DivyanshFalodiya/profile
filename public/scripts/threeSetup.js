@@ -3,6 +3,8 @@ import { OrbitControls } from './three/examples/jsm/controls/OrbitControls.js';
 import { EffectComposer } from './three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from './three/examples/jsm/postprocessing/RenderPass.js';
 import { BloomPass } from './three/examples/jsm/postprocessing/BloomPass.js';
+import vertexShader from './shaders/vertexParticles.js';
+import fragmentShader from './shaders/fragment.js';
 
 export default class Setup {
     constructor(canvas) {
@@ -76,20 +78,37 @@ export default class Setup {
     // Add stars in background
     addStars(nStars, color, xRange, yRange) {
         const starGeometry = new THREE.BufferGeometry();
-        const starMaterial = new THREE.PointsMaterial({
-            color,
+        // const starMaterial = new THREE.PointsMaterial({
+        //     color,
+        // });
+        const starMaterial = new THREE.ShaderMaterial({
+            vertexShader,
+            fragmentShader,
+            vertexColors: THREE.VertexColors,
+            uniforms: {
+                time: {
+                    type: 'f',
+                    value: 0,
+                },
+            },
         });
 
         const starVertices = [];
+        const starColors = [];
         for (let i = 0; i < nStars; i++) {
             const x = (Math.random() - 0.5) * xRange * 2;
             const y = (Math.random() - 0.5) * yRange * 2;
             const z = Math.random() * this.starZ - 500;
             starVertices.push(x, y, z);
+            starColors.push(Math.random(), Math.random(), Math.random());
         }
         starGeometry.setAttribute(
             'position',
             new THREE.Float32BufferAttribute(starVertices, 3)
+        );
+        starGeometry.setAttribute(
+            'color',
+            new THREE.Float32BufferAttribute(starColors, 2)
         );
 
         const stars = new THREE.Points(starGeometry, starMaterial);
@@ -99,7 +118,11 @@ export default class Setup {
     }
 
     // Update stars
-    updateStars() {}
+    updateStars() {
+        this.stars.forEach((star) => {
+            star.material.uniforms.time.value = this.clock.getElapsedTime();
+        });
+    }
 
     // Render
     render() {

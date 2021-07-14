@@ -4,9 +4,7 @@ import { EffectComposer } from './three/examples/jsm/postprocessing/EffectCompos
 import { RenderPass } from './three/examples/jsm/postprocessing/RenderPass.js';
 import { GlitchPass } from './three/examples/jsm/postprocessing/GlitchPass.js';
 import { UnrealBloomPass } from './three/examples/jsm/postprocessing/UnrealBloomPass.js';
-import { FilmPass } from './three/examples/jsm/postprocessing/FilmPass.js';
-import vertexShader from './shaders/vertex.js';
-import fragmentShader from './shaders/fragment.js';
+import { AfterimagePass } from './three/examples/jsm/postprocessing/AfterimagePass.js';
 import Setup from './threeSetup.js';
 
 // Initialize
@@ -25,6 +23,8 @@ setup.scene.background = '#000';
 //     0.4
 // );
 // setup.addPass(bloomPass);
+const afterImagePass = new AfterimagePass();
+// setup.composer.addPass(afterImagePass);
 
 // On mouve move
 window.addEventListener('pointermove', (e) => {

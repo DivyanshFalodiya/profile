@@ -39,9 +39,9 @@ export default class Setup {
         const nStars = 10000; // 500 to 1000
         this.starZ = -200;
         this.stars = [];
-        this.stars.push(this.addStars(3000, '#ffffff', 5000, 5000));
-        this.stars.push(this.addStars(2000, '#0000ff', 5000, 5000));
-        this.stars.push(this.addStars(3000, '#00ff00', 5000, 5000));
+        this.stars.push(this.addStars(5000, 0xffffff, 5000, 5000));
+        this.stars.push(this.addStars(3000, 0xf9fe97, 5000, 5000));
+        this.stars.push(this.addStars(3000, 0x97f3fe, 5000, 5000));
     }
 
     // Add point light
@@ -77,10 +77,8 @@ export default class Setup {
 
     // Add stars in background
     addStars(nStars, color, xRange, yRange) {
+        let threeColor = new THREE.Color(color);
         const starGeometry = new THREE.BufferGeometry();
-        // const starMaterial = new THREE.PointsMaterial({
-        //     color,
-        // });
         const starMaterial = new THREE.ShaderMaterial({
             vertexShader,
             fragmentShader,
@@ -100,7 +98,7 @@ export default class Setup {
             const y = (Math.random() - 0.5) * yRange * 2;
             const z = Math.random() * this.starZ - 500;
             starVertices.push(x, y, z);
-            starColors.push(Math.random(), Math.random(), Math.random());
+            starColors.push(threeColor.r, threeColor.g, threeColor.b);
         }
         starGeometry.setAttribute(
             'position',
@@ -108,7 +106,7 @@ export default class Setup {
         );
         starGeometry.setAttribute(
             'color',
-            new THREE.Float32BufferAttribute(starColors, 2)
+            new THREE.Float32BufferAttribute(starColors, 3)
         );
 
         const stars = new THREE.Points(starGeometry, starMaterial);

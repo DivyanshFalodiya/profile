@@ -26,7 +26,7 @@ const planeMat = new THREE.ShaderMaterial({
 });
 const plane = new THREE.Mesh(planeGeom, planeMat);
 plane.position.set(0, 0, -10);
-setup.scene.add(plane);
+// setup.scene.add(plane);
 
 // Mousemove
 window.addEventListener('mousemove', (e) => {

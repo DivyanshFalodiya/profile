@@ -7,19 +7,31 @@ import vertexShader from './shaders/vertexParticles.js';
 import fragmentShader from './shaders/fragment.js';
 
 export default class Setup {
-    constructor(canvas) {
-        noise.seed(Math.random());
+    constructor(canvas, stars = true, camera = null) {
+        // noise.seed(Math.random());
+
+        // Mouse
         this.mouse = {
             x: 0,
             y: 0,
         };
+
+        // Scene
         this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(
-            75,
-            canvas.clientWidth / canvas.clientHeight,
-            0.1,
-            10000
-        );
+
+        // Camera
+        if (!camera) {
+            this.camera = new THREE.PerspectiveCamera(
+                75,
+                canvas.clientWidth / canvas.clientHeight,
+                0.1,
+                10000
+            );
+        } else {
+            this.camera = camera;
+        }
+
+        // Renderer
         this.renderer = new THREE.WebGLRenderer({
             canvas: canvas,
             antialias: true,
@@ -30,18 +42,22 @@ export default class Setup {
         // Composer and passes
         this.composer = new EffectComposer(this.renderer);
 
+        // Render pass
         this.renderPass = new RenderPass(this.scene, this.camera);
         this.addPass(this.renderPass);
 
+        // Clock
         this.clock = new THREE.Clock();
 
         // Set up stars
-        const nStars = 10000; // 500 to 1000
-        this.starZ = -200;
-        this.stars = [];
-        this.stars.push(this.addStars(5000, 0xffffff, 5000, 5000));
-        this.stars.push(this.addStars(3000, 0xf9fe97, 5000, 5000));
-        this.stars.push(this.addStars(3000, 0x97f3fe, 5000, 5000));
+        if (stars) {
+            const nStars = 10000; // 500 to 1000
+            this.starZ = -200;
+            this.stars = [];
+            this.stars.push(this.addStars(5000, 0xffffff, 5000, 5000));
+            this.stars.push(this.addStars(3000, 0xf9fe97, 5000, 5000));
+            this.stars.push(this.addStars(3000, 0x97f3fe, 5000, 5000));
+        }
     }
 
     // Add point light
@@ -49,6 +65,7 @@ export default class Setup {
         let light = new THREE.PointLight(color, 1);
         light.position.set(x, y, z);
         this.scene.add(light);
+        return light;
     }
 
     // Add pass
@@ -124,7 +141,9 @@ export default class Setup {
 
     // Render
     render() {
-        this.updateStars();
+        if (this.stars) {
+            this.updateStars();
+        }
         gsap.to(this.camera.rotation, {
             y: this.mouse.x * 0.2,
             x: this.mouse.y * 0.2,

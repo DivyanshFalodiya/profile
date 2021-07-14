@@ -6,38 +6,44 @@
     </head>
     <body>
         <canvas id="canvas"></canvas>
-        <%- include('./partials/appbar') %>
-        <div class="container">
-            <h1 class="title">Admin Login</h1>
-            <form
-                class="form-group"
-                action="/login"
-                method="POST"
-                enctype="application/json"
-            >
-                <input
-                    type="email"
-                    placeholder="Email"
-                    name="email"
-                    required
-                    class="form-control"
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    required
-                    minlength="6"
-                    class="form-control"
-                />
-                <button class="btn-theme" data-content="Login" type="submit">
-                    Login
-                </button>
-            </form>
-            <div class="error">
-                <p>Some error related to login</p>
+        <div id="outer-container">
+            <%- include('./partials/appbar') %>
+            <div class="container">
+                <h1 class="title">Admin Login</h1>
+                <form
+                    class="form-group"
+                    action="/login"
+                    method="POST"
+                    enctype="application/json"
+                >
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        name="email"
+                        required
+                        class="form-control"
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        name="password"
+                        required
+                        minlength="6"
+                        class="form-control"
+                    />
+                    <button
+                        class="btn-theme"
+                        data-content="Login"
+                        type="submit"
+                    >
+                        Login
+                    </button>
+                </form>
+                <div class="error">
+                    <p>Some error related to login</p>
+                </div>
+                <%- include('./partials/footer') %>
             </div>
-            <%- include('./partials/footer') %>
         </div>
     </body>
 </html>

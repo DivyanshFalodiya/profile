@@ -10,6 +10,8 @@ import fragmentShader from './shaders/fragment.js';
 import Setup from './threeSetup.js';
 
 // Initialize
+const navLinks = document.getElementsByClassName('nav-links')[0];
+const anchors = navLinks.querySelectorAll('a');
 const canvas = document.getElementById('canvas');
 const setup = new Setup(canvas);
 
@@ -52,6 +54,18 @@ window.addEventListener('resize', () => {
     // Renderer update
     setup.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
     setup.renderer.setPixelRatio(window.devicePixelRatio);
+});
+
+// Handling page transitions
+navLinks.addEventListener('click', (e) => {
+    if (e.target.tagName == 'A' || e.target.nodeName == 'A') {
+        if (window.location.href === e.target.href) e.preventDefault();
+    }
+});
+anchors.forEach((a) => {
+    if (a.href === window.location.href) {
+        a.style.color = 'skyblue';
+    }
 });
 
 // On device orientation for sensors

@@ -1,9 +1,9 @@
 // Imports
 import * as THREE from './three/build/three.module.js';
-import { EffectComposer } from './three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from './three/examples/jsm/postprocessing/RenderPass.js';
-import { GlitchPass } from './three/examples/jsm/postprocessing/GlitchPass.js';
-import { UnrealBloomPass } from './three/examples/jsm/postprocessing/UnrealBloomPass.js';
+// import { EffectComposer } from './three/examples/jsm/postprocessing/EffectComposer.js';
+// import { RenderPass } from './three/examples/jsm/postprocessing/RenderPass.js';
+// import { GlitchPass } from './three/examples/jsm/postprocessing/GlitchPass.js';
+// import { UnrealBloomPass } from './three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { AfterimagePass } from './three/examples/jsm/postprocessing/AfterimagePass.js';
 import Setup from './threeSetup.js';
 
@@ -24,6 +24,7 @@ setup.scene.background = '#000';
 // );
 // setup.addPass(bloomPass);
 const afterImagePass = new AfterimagePass();
+afterImagePass.uniforms['damp'].value = 0.6;
 // setup.composer.addPass(afterImagePass);
 
 // On mouve move
@@ -62,11 +63,6 @@ navLinks.addEventListener('click', (e) => {
         if (window.location.href === e.target.href) e.preventDefault();
     }
 });
-anchors.forEach((a) => {
-    if (a.href === window.location.href) {
-        a.style.color = 'skyblue';
-    }
-});
 
 // On device orientation for sensors
 const handleOrientation = (e) => {
@@ -77,4 +73,61 @@ const handleOrientation = (e) => {
 };
 window.addEventListener('deviceorientation', handleOrientation, true);
 
-export default setup;
+const render = () => {
+    setup.render();
+    window.requestAnimationFrame(render);
+};
+render();
+
+// Update anchors
+const updateAnchors = () => {
+    anchors.forEach((a) => {
+        if (a.href == window.location.href) {
+            a.style.color = 'skyblue';
+        } else {
+            a.style.color = 'white';
+        }
+    });
+};
+
+// BARBA CONTENT
+barba.init({
+    views: [
+        {
+            namespace: 'home',
+            beforeEnter() {},
+            afterEnter() {
+                updateAnchors();
+            },
+        },
+        {
+            namespace: 'projects',
+            beforeEnter() {},
+            afterEnter() {
+                updateAnchors();
+            },
+        },
+        {
+            namespace: 'login',
+            beforeEnter() {},
+            afterEnter() {
+                updateAnchors();
+            },
+        },
+    ],
+    transitions: [
+        {
+            name: 'opacity-transition',
+            leave(data) {
+                return gsap.to(data.current.container, {
+                    opacity: 0,
+                });
+            },
+            enter(data) {
+                return gsap.from(data.next.container, {
+                    opacity: 0,
+                });
+            },
+        },
+    ],
+});

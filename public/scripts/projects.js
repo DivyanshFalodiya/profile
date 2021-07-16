@@ -7,7 +7,6 @@ import * as THREE from './three/build/three.module.js';
 // import { FilmPass } from './three/examples/jsm/postprocessing/FilmPass.js';
 import vertexShader from './shaders/vertex.js';
 import fragmentShader from './shaders/fragment.js';
-import setup from './main.js';
 
 // Image plane
 const planeGeom = new THREE.PlaneBufferGeometry(8, 10, 10, 10);
@@ -29,17 +28,17 @@ plane.position.set(0, 0, -10);
 // setup.scene.add(plane);
 
 // Mousemove
-window.addEventListener('mousemove', (e) => {
-    setup.mouse = {
-        x: -(e.clientX - canvas.width / 2) / canvas.width,
-        y: -(e.clientY - canvas.height / 2) / canvas.height,
-    };
-});
+// window.addEventListener('pointer', (e) => {
+//     setup.mouse = {
+//         x: -(e.clientX - canvas.width / 2) / canvas.width,
+//         y: -(e.clientY - canvas.height / 2) / canvas.height,
+//     };
+// });
 
 // Render everything
 const render = () => {
     // plane.material.uniforms.u_time.value = setup.clock.getElapsedTime();
-    setup.render();
+    // setup.render();
     window.requestAnimationFrame(render);
 };
-render();
+// render();

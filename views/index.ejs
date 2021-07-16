@@ -3,11 +3,15 @@
     <head>
         <%- include('./partials/head') %>
     </head>
-    <body>
+    <body data-barba="wrapper">
         <canvas id="canvas"></canvas>
         <div id="outer-container">
             <%- include('./partials/appbar') %>
-            <div class="container">
+            <div
+                class="container"
+                data-barba="container"
+                data-barba-namespace="home"
+            >
                 <div class="image-container">
                     <canvas id="image-canvas"> </canvas>
                 </div>
@@ -23,8 +27,10 @@
                     expedita doloribus consequuntur alias!
                 </p>
                 <%- include('./partials/footer') %>
+                <script type="module" src="/scripts/index2.js"></script>
             </div>
-            <script type="module" src="/scripts/index2.js"></script>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/@barba/core"></script>
+        <script type="module" src="/scripts/main.js"></script>
     </body>
 </html>

@@ -7,7 +7,7 @@ import vertexShader from './shaders/vertexParticles.js';
 import fragmentShader from './shaders/fragment.js';
 
 export default class Setup {
-    constructor(canvas, stars = true, camera = null) {
+    constructor(canvas, stars = true, camera = null, rotCamera = true) {
         // noise.seed(Math.random());
 
         // Mouse
@@ -30,6 +30,7 @@ export default class Setup {
         } else {
             this.camera = camera;
         }
+        this.rotCamera = rotCamera;
 
         // Renderer
         this.renderer = new THREE.WebGLRenderer({
@@ -144,12 +145,14 @@ export default class Setup {
         if (this.stars) {
             this.updateStars();
         }
-        gsap.to(this.camera.rotation, {
-            y: this.mouse.x * 0.2,
-            x: this.mouse.y * 0.2,
-            delay: 0.1,
-            duration: 0.5,
-        });
+        if (this.rotCamera) {
+            gsap.to(this.camera.rotation, {
+                y: this.mouse.x * 0.2,
+                x: this.mouse.y * 0.2,
+                delay: 0.1,
+                duration: 0.5,
+            });
+        }
         this.composer.render();
     }
 }

@@ -4,11 +4,15 @@
         <%- include('./partials/head') %>
         <link rel="stylesheet" href="/styles/login.css" />
     </head>
-    <body>
+    <body data-barba="wrapper">
         <canvas id="canvas"></canvas>
         <div id="outer-container">
             <%- include('./partials/appbar') %>
-            <div class="container">
+            <div
+                class="container"
+                data-barba="container"
+                data-barba-namespace="projects"
+            >
                 <h1 class="title">Admin Login</h1>
                 <form
                     class="form-group"
@@ -43,8 +47,10 @@
                     <p>Some error related to login</p>
                 </div>
                 <%- include('./partials/footer') %>
+                <script type="module" src="/scripts/projects.js"></script>
             </div>
         </div>
-        <script type="module" src="/scripts/projects.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@barba/core"></script>
+        <script type="module" src="/scripts/main.js"></script>
     </body>
 </html>

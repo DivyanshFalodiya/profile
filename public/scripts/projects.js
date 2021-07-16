@@ -41,4 +41,4 @@ const render = () => {
     // setup.render();
     window.requestAnimationFrame(render);
 };
-// render();
+export default render;

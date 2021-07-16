@@ -6,6 +6,8 @@ import * as THREE from './three/build/three.module.js';
 // import { UnrealBloomPass } from './three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { AfterimagePass } from './three/examples/jsm/postprocessing/AfterimagePass.js';
 import Setup from './threeSetup.js';
+import Index from './index2.js';
+import projectsRender from './projects.js';
 
 // Initialize
 const navLinks = document.getElementsByClassName('nav-links')[0];
@@ -47,7 +49,9 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
     canvas.style.width = window.innerWidth + 'px';
     canvas.style.height = window.innerHeight + 'px';
+});
 
+canvas.addEventListener('resize', () => {
     // Camera update
     setup.camera.aspect = canvas.clientWidth / canvas.clientHeight;
     setup.camera.updateProjectionMatrix();
@@ -73,6 +77,7 @@ const handleOrientation = (e) => {
 };
 window.addEventListener('deviceorientation', handleOrientation, true);
 
+// Background Render
 const render = () => {
     setup.render();
     window.requestAnimationFrame(render);
@@ -91,43 +96,43 @@ const updateAnchors = () => {
 };
 
 // BARBA CONTENT
+barba.use(barbaCss);
+// let script = new Index();
+
 barba.init({
     views: [
         {
             namespace: 'home',
-            beforeEnter() {},
-            afterEnter() {
+            beforeEnter() {
                 updateAnchors();
             },
+            afterEnter(data) {
+                let script = new Index();
+                console.log(script.setupImage.scene);
+                script.setUp();
+            },
+            afterLeave(data) {},
         },
         {
             namespace: 'projects',
-            beforeEnter() {},
-            afterEnter() {
+            beforeEnter() {
                 updateAnchors();
+            },
+            afterEnter(data) {
+                projectsRender();
             },
         },
         {
             namespace: 'login',
-            beforeEnter() {},
-            afterEnter() {
+            beforeEnter() {
                 updateAnchors();
             },
+            afterEnter(data) {},
         },
     ],
     transitions: [
         {
-            name: 'opacity-transition',
-            leave(data) {
-                return gsap.to(data.current.container, {
-                    opacity: 0,
-                });
-            },
-            enter(data) {
-                return gsap.from(data.next.container, {
-                    opacity: 0,
-                });
-            },
+            once() {},
         },
     ],
 });

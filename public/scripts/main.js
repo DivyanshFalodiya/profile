@@ -10,6 +10,8 @@ import Index from './index2.js';
 import projectsRender from './projects.js';
 
 // Initialize
+let requestId = null;
+let script = null;
 const navLinks = document.getElementsByClassName('nav-links')[0];
 const anchors = navLinks.querySelectorAll('a');
 const canvas = document.getElementById('canvas');
@@ -80,6 +82,15 @@ window.addEventListener('deviceorientation', handleOrientation, true);
 // Background Render
 const render = () => {
     setup.render();
+    switch (window.location.pathname) {
+        case '/':
+            if (script) script.render();
+            break;
+        case '/projects':
+            break;
+        default:
+            break;
+    }
     window.requestAnimationFrame(render);
 };
 render();
@@ -97,7 +108,6 @@ const updateAnchors = () => {
 
 // BARBA CONTENT
 barba.use(barbaCss);
-// let script = new Index();
 
 barba.init({
     views: [
@@ -107,9 +117,7 @@ barba.init({
                 updateAnchors();
             },
             afterEnter(data) {
-                let script = new Index();
-                console.log(script.setupImage.scene);
-                script.setUp();
+                script = new Index();
             },
             afterLeave(data) {},
         },
@@ -119,7 +127,10 @@ barba.init({
                 updateAnchors();
             },
             afterEnter(data) {
-                projectsRender();
+                // render();
+            },
+            afterLeave(data) {
+                // stopRender();
             },
         },
         {
@@ -127,7 +138,12 @@ barba.init({
             beforeEnter() {
                 updateAnchors();
             },
-            afterEnter(data) {},
+            beforeLeave(data) {
+                // stopRender(indexSetup.stopRender);
+            },
+            afterLeave(data) {
+                // stopRender();
+            },
         },
     ],
     transitions: [

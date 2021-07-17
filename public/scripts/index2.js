@@ -1,7 +1,7 @@
 // Imports
 import * as THREE from './three/build/three.module.js';
-import vertexShader from './shaders/vertex.js';
-import fragmentShader from './shaders/fragmentPlane.js';
+// import vertexShader from './shaders/vertex.js';
+// import fragmentShader from './shaders/fragmentPlane.js';
 import Setup from './threeSetup.js';
 
 class Index {
@@ -30,25 +30,25 @@ class Index {
             50,
             50
         );
-        const planeMat = new THREE.ShaderMaterial({
-            vertexShader,
-            fragmentShader,
-            uniforms: {
-                imgTexture: {
-                    value: new THREE.TextureLoader().load(
-                        '../images/index_back.jpg'
-                    ),
-                },
-                u_time: {
-                    type: 'f',
-                    value: 0,
-                },
-            },
-            wireframe: true,
-        });
-        // const planeMat = new THREE.MeshStandardMaterial({
-        //     map: new THREE.TextureLoader().load('../images/index_back.jpg'),
+        // const planeMat = new THREE.ShaderMaterial({
+        //     vertexShader,
+        //     fragmentShader,
+        //     uniforms: {
+        //         imgTexture: {
+        //             value: new THREE.TextureLoader().load(
+        //                 '../images/index_back.jpg'
+        //             ),
+        //         },
+        //         u_time: {
+        //             type: 'f',
+        //             value: 0,
+        //         },
+        //     },
+        //     wireframe: true,
         // });
+        const planeMat = new THREE.MeshStandardMaterial({
+            map: new THREE.TextureLoader().load('../images/index_back.jpg'),
+        });
         const plane = new THREE.Mesh(planeGeom, planeMat);
         plane.position.set(0, 0, -1);
         this.setupImage.scene.add(plane);
@@ -110,9 +110,8 @@ class Index {
     }
 
     render() {
-        this.updatePlane();
+        // this.updatePlane();
         this.setupImage.render();
-        this.requestId = window.requestAnimationFrame(this);
     }
 
     stopRender() {

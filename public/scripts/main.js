@@ -15,6 +15,7 @@ let animate = false;
 let script = null;
 const navLinks = document.getElementsByClassName('nav-links')[0];
 const anchors = navLinks.querySelectorAll('a');
+const ham = document.querySelector('.ham-container');
 const canvas = document.getElementById('canvas');
 const setup = new Setup(canvas);
 
@@ -67,7 +68,7 @@ canvas.addEventListener('resize', () => {
 // Handling page transitions
 navLinks.addEventListener('click', (e) => {
     if (e.target.tagName == 'A' || e.target.nodeName == 'A') {
-        if (window.location.href === e.target.href) e.preventDefault();
+        ham.click();
     }
 });
 
@@ -152,11 +153,6 @@ barba.init({
                 animate = true;
                 // stopRender();
             },
-        },
-    ],
-    transitions: [
-        {
-            once() {},
         },
     ],
 });

@@ -1,5 +1,6 @@
 // Imports
 import * as THREE from './three/build/three.module.js';
+import { GlitchPass } from './three/examples/jsm/postprocessing/GlitchPass.js';
 import vertexShader from './shaders/vertex.js';
 import fragmentShader from './shaders/fragmentPlane.js';
 import Setup from './threeSetup.js';
@@ -19,6 +20,8 @@ class Index {
         this.setupImage = new Setup(this.canvas, false, this.camera, false);
         this.light = new THREE.AmbientLight(0xffffff, 1);
         this.setupImage.scene.add(this.light);
+
+        this.setupImage.composer.addPass(new GlitchPass());
 
         this.plane = this.addImagePlane();
     }

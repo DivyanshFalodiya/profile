@@ -3,7 +3,6 @@ import * as THREE from './three/build/three.module.js';
 // import { EffectComposer } from './three/examples/jsm/postprocessing/EffectComposer.js';
 // import { RenderPass } from './three/examples/jsm/postprocessing/RenderPass.js';
 // import { GlitchPass } from './three/examples/jsm/postprocessing/GlitchPass.js';
-// import { UnrealBloomPass } from './three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import { AfterimagePass } from './three/examples/jsm/postprocessing/AfterimagePass.js';
 import Setup from './threeSetup.js';
 import Index from './index2.js';
@@ -29,6 +28,7 @@ setup.scene.background = '#000';
 //     0.4
 // );
 // setup.addPass(bloomPass);
+
 const afterImagePass = new AfterimagePass();
 afterImagePass.uniforms['damp'].value = 0.4;
 setup.composer.addPass(afterImagePass);
@@ -120,7 +120,7 @@ barba.init({
             },
             afterEnter(data) {
                 animate = false;
-                // script = new Index();
+                script = new Index();
             },
             beforeLeave(data) {
                 animate = true;

@@ -29,7 +29,7 @@ setup.scene.background = '#000';
 // setup.addPass(bloomPass);
 const afterImagePass = new AfterimagePass();
 afterImagePass.uniforms['damp'].value = 0.6;
-// setup.composer.addPass(afterImagePass);
+setup.composer.addPass(afterImagePass);
 
 // On mouve move
 window.addEventListener('pointermove', (e) => {
@@ -149,6 +149,8 @@ barba.init({
     transitions: [
         {
             once() {},
+            enter(data) {},
+            leave(data) {},
         },
     ],
 });

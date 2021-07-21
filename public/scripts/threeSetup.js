@@ -52,12 +52,12 @@ export default class Setup {
 
         // Set up stars
         if (stars) {
-            const nStars = 10000; // 500 to 1000
+            const density = 5;
             this.starZ = -200;
             this.stars = [];
-            this.stars.push(this.addStars(5000, 0xffffff, 5000, 5000));
-            this.stars.push(this.addStars(3000, 0xf9fe97, 5000, 5000));
-            this.stars.push(this.addStars(3000, 0x97f3fe, 5000, 5000));
+            this.stars.push(this.addStars(density, 0xffffff, 5000, 5000));
+            this.stars.push(this.addStars(density, 0xf9fe97, 5000, 5000));
+            this.stars.push(this.addStars(density, 0x97f3fe, 5000, 5000));
         }
     }
 
@@ -94,7 +94,7 @@ export default class Setup {
     }
 
     // Add stars in background
-    addStars(nStars, color, xRange, yRange) {
+    addStars(density, color, xRange, yRange) {
         let threeColor = new THREE.Color(color);
         const starGeometry = new THREE.BufferGeometry();
         const starMaterial = new THREE.ShaderMaterial({
@@ -109,14 +109,18 @@ export default class Setup {
             },
         });
 
+        let nStars = (density * window.innerWidth) / 50;
+
         const starVertices = [];
         const starColors = [];
+        starGeometry.velocity = [];
         for (let i = 0; i < nStars; i++) {
-            const x = (Math.random() - 0.5) * xRange * 2;
-            const y = (Math.random() - 0.5) * yRange * 2;
+            const x = (Math.random() - 0.5) * window.innerWidth * 2;
+            const y = (Math.random() - 0.5) * window.innerHeight * 2;
             const z = Math.random() * this.starZ - 500;
             starVertices.push(x, y, z);
             starColors.push(threeColor.r, threeColor.g, threeColor.b);
+            starGeometry.velocity.push(Math.random() * 1 + 5);
         }
         starGeometry.setAttribute(
             'position',
@@ -137,6 +141,33 @@ export default class Setup {
     updateStars() {
         this.stars.forEach((star) => {
             star.material.uniforms.time.value = this.clock.getElapsedTime();
+            const positions = star.geometry.attributes.position.array;
+            const count = star.geometry.attributes.position.count;
+
+            for (let i = 2; i < count * 3; i += 3) {
+                if (positions[i] > 0) {
+                    positions[i] = Math.random() * this.starZ - 500;
+                } else {
+                    positions[i] += star.geometry.velocity[i];
+                }
+            }
+            star.geometry.attributes.position.needsUpdate = true;
+        });
+    }
+
+    resetStarPositions() {
+        this.stars.forEach((star) => {
+            const positions = star.geometry.attributes.position.array;
+            const count = star.geometry.attributes.position.count;
+
+            for (let i = 2; i < count * 3; i += 3) {
+                positions[i - 2] =
+                    (Math.random() - 0.5) * window.innerWidth * 2;
+                positions[i - 1] =
+                    (Math.random() - 0.5) * window.innerHeight * 2;
+                positions[i] = Math.random() * this.starZ - 500;
+            }
+            star.geometry.attributes.position.needsUpdate = true;
         });
     }
 

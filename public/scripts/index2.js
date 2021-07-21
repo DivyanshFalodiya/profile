@@ -1,7 +1,7 @@
 // Imports
 import * as THREE from './three/build/three.module.js';
-// import vertexShader from './shaders/vertex.js';
-// import fragmentShader from './shaders/fragmentPlane.js';
+import vertexShader from './shaders/vertex.js';
+import fragmentShader from './shaders/fragmentPlane.js';
 import Setup from './threeSetup.js';
 
 class Index {
@@ -30,25 +30,25 @@ class Index {
             50,
             50
         );
-        // const planeMat = new THREE.ShaderMaterial({
-        //     vertexShader,
-        //     fragmentShader,
-        //     uniforms: {
-        //         imgTexture: {
-        //             value: new THREE.TextureLoader().load(
-        //                 '../images/index_back.jpg'
-        //             ),
-        //         },
-        //         u_time: {
-        //             type: 'f',
-        //             value: 0,
-        //         },
-        //     },
-        //     wireframe: true,
-        // });
-        const planeMat = new THREE.MeshStandardMaterial({
-            map: new THREE.TextureLoader().load('../images/index_back.jpg'),
+        const planeMat = new THREE.ShaderMaterial({
+            vertexShader,
+            fragmentShader,
+            uniforms: {
+                imgTexture: {
+                    value: new THREE.TextureLoader().load(
+                        '../images/index_back.jpg'
+                    ),
+                },
+                u_time: {
+                    type: 'f',
+                    value: 0,
+                },
+            },
+            // wireframe: true,
         });
+        // const planeMat = new THREE.MeshStandardMaterial({
+        //     map: new THREE.TextureLoader().load('../images/index_back.jpg'),
+        // });
         const plane = new THREE.Mesh(planeGeom, planeMat);
         plane.position.set(0, 0, -1);
         this.setupImage.scene.add(plane);
@@ -91,6 +91,7 @@ class Index {
         for (let i = 2; i < count; i += 3) {
             let waveX = Math.sin(positions[i - 2] + elapsedTime) * 0.2;
             let waveY = Math.sin(positions[i - 1] + elapsedTime) * 0.2;
+            let waveZ = Math.sin(positions[i] + elapsedTime) * 0.2;
             // waveXY =
             //     Math.sin(positions[i - 2] + positions[i - 1] + elapsedTime) * 0.2;
             // waveMix =
@@ -103,14 +104,14 @@ class Index {
             //         ) +
             //             elapsedTime * 5
             //     ) * 0.5;
-            positions[i] = waveX + waveY;
+            positions[i] = waveX + waveY + waveZ;
         }
 
         this.plane.geometry.attributes.position.needsUpdate = true;
     }
 
     render() {
-        // this.updatePlane();
+        this.updatePlane();
         this.setupImage.render();
     }
 

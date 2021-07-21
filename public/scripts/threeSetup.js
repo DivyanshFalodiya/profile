@@ -120,7 +120,7 @@ export default class Setup {
             const z = Math.random() * this.starZ - 500;
             starVertices.push(x, y, z);
             starColors.push(threeColor.r, threeColor.g, threeColor.b);
-            starGeometry.velocity.push(Math.random() * 1 + 5);
+            starGeometry.velocity.push(Math.random() * 50 + 10);
         }
         starGeometry.setAttribute(
             'position',
@@ -138,20 +138,26 @@ export default class Setup {
     }
 
     // Update stars
-    updateStars() {
+    updateStars(animate) {
         this.stars.forEach((star) => {
             star.material.uniforms.time.value = this.clock.getElapsedTime();
-            const positions = star.geometry.attributes.position.array;
-            const count = star.geometry.attributes.position.count;
+            if (animate) {
+                const positions = star.geometry.attributes.position.array;
+                const count = star.geometry.attributes.position.count;
 
-            for (let i = 2; i < count * 3; i += 3) {
-                if (positions[i] > 0) {
-                    positions[i] = Math.random() * this.starZ - 500;
-                } else {
-                    positions[i] += star.geometry.velocity[i];
+                for (let i = 2, j = 0; i < count * 3; i += 3, j += 1) {
+                    if (positions[i] > 0) {
+                        positions[i] = Math.random() * this.starZ - 500;
+                    } else {
+                        positions[i] += star.geometry.velocity[j];
+                        star.geometry.velocity[j]--;
+                        if (star.geometry.velocity[j] < 0) {
+                            star.geometry.velocity[j] = Math.random() * 50 + 10;
+                        }
+                    }
                 }
+                star.geometry.attributes.position.needsUpdate = true;
             }
-            star.geometry.attributes.position.needsUpdate = true;
         });
     }
 
@@ -172,9 +178,9 @@ export default class Setup {
     }
 
     // Render
-    render() {
+    render(animate = false) {
         if (this.stars) {
-            this.updateStars();
+            this.updateStars(animate);
         }
         if (this.rotCamera) {
             gsap.to(this.camera.rotation, {

@@ -11,6 +11,7 @@ import projectsRender from './projects.js';
 
 // Initialize
 let requestId = null;
+let animate = false;
 let script = null;
 const navLinks = document.getElementsByClassName('nav-links')[0];
 const anchors = navLinks.querySelectorAll('a');
@@ -28,7 +29,7 @@ setup.scene.background = '#000';
 // );
 // setup.addPass(bloomPass);
 const afterImagePass = new AfterimagePass();
-afterImagePass.uniforms['damp'].value = 0.6;
+afterImagePass.uniforms['damp'].value = 0.4;
 setup.composer.addPass(afterImagePass);
 
 // On mouve move
@@ -81,7 +82,7 @@ window.addEventListener('deviceorientation', handleOrientation, true);
 
 // Background Render
 const render = () => {
-    setup.render();
+    setup.render(animate);
     switch (window.location.pathname) {
         case '/':
             if (script) script.render();
@@ -117,9 +118,12 @@ barba.init({
                 updateAnchors();
             },
             afterEnter(data) {
-                script = new Index();
+                animate = false;
+                // script = new Index();
             },
-            afterLeave(data) {},
+            beforeLeave(data) {
+                animate = true;
+            },
         },
         {
             namespace: 'projects',
@@ -127,9 +131,11 @@ barba.init({
                 updateAnchors();
             },
             afterEnter(data) {
+                animate = false;
                 // render();
             },
-            afterLeave(data) {
+            beforeLeave(data) {
+                animate = true;
                 // stopRender();
             },
         },
@@ -138,10 +144,12 @@ barba.init({
             beforeEnter() {
                 updateAnchors();
             },
-            beforeLeave(data) {
+            afterEnter(data) {
+                animate = false;
                 // stopRender(indexSetup.stopRender);
             },
-            afterLeave(data) {
+            beforeLeave(data) {
+                animate = true;
                 // stopRender();
             },
         },
@@ -149,8 +157,6 @@ barba.init({
     transitions: [
         {
             once() {},
-            enter(data) {},
-            leave(data) {},
         },
     ],
 });

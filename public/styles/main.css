@@ -110,9 +110,12 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     transition: 450ms ease;
+}
+.container > * {
+    margin: 1rem;
 }
 
 /* Canvas */
@@ -286,6 +289,10 @@ body {
     justify-content: center;
     user-select: none;
 }
+.about {
+    text-align: center;
+    max-width: 75ch;
+}
 .name {
     font-family: 'Varela Round', 'Roboto', sans-serif;
     display: block;
@@ -293,6 +300,12 @@ body {
 .name span {
     font-size: 1rem;
     display: inline;
+}
+
+/* Contact */
+.contact > * {
+    margin: 0.5rem;
+    font-size: 1rem;
 }
 
 /* Media queries */

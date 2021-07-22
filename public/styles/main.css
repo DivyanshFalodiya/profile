@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
 * {
     padding: 0;
     margin: 0;
@@ -86,6 +89,7 @@ body {
 }
 .barba-leave-active,
 .barba-enter-active {
+    transition: transform 450ms ease;
 }
 .barba-leave,
 .barba-enter-to {
@@ -103,6 +107,7 @@ body {
 
 /* Container */
 .container {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -123,18 +128,31 @@ body {
     height: 100%;
     border-radius: 5px;
 }
-.image-container {
-    width: 200px;
-    height: 200px;
-    background-color: grey;
+#divyansh-image-container {
+    /* width: 100%;
+    height: 100%; */
+    order: 2;
     border-radius: 1rem;
-    overflow: hidden;
 }
-.image-container img {
-    width: 1005;
+#divyansh-image-container img {
+    width: 300px;
+    /* height: 100%; */
+}
+#first-name {
+    order: 1;
+}
+#last-name {
+    order: 3;
+}
+/* .image-container::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
     height: 100%;
-    mix-blend-mode: multiply;
-}
+    background-color: rgba(0, 0, 0, 0.8);
+} */
 
 /* Navigation bar */
 .navbar {
@@ -243,6 +261,22 @@ body {
     color: red;
 }
 
+/* Content stuff */
+.content-head {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+.name {
+    font-family: 'Varela Round', 'Roboto', sans-serif;
+    display: block;
+}
+.name span {
+    font-size: 1rem;
+    display: inline;
+}
+
 /* Media queries */
 @media only screen and (max-width: 768px) {
     .navbar {
@@ -273,5 +307,33 @@ body {
     }
     .nav-links a {
         text-align: center;
+    }
+    .content-head {
+        /* flex-direction: column; */
+        flex-wrap: wrap;
+    }
+    #divyansh-image-container {
+        order: 1;
+        flex-basis: 100%;
+        text-align: center;
+    }
+    .name {
+        margin: auto 1rem;
+    }
+    #first-name {
+        order: 2;
+    }
+    #last-name {
+        order: 3;
+    }
+}
+
+@media (hover) {
+    .name span {
+        display: inline-block;
+        transition: transform 100ms ease-in-out;
+    }
+    .name span:hover {
+        transform: translateY(-5px);
     }
 }

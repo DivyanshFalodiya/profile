@@ -68,6 +68,7 @@ window.addEventListener('resize', () => {
 // Handling page transitions
 navLinks.addEventListener('click', (e) => {
     if (e.target.tagName == 'A' || e.target.nodeName == 'A') {
+        if (e.target.href === window.location.href) e.preventDefault();
         ham.click();
     }
 });

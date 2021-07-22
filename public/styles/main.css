@@ -224,17 +224,35 @@ body {
 }
 
 .ham-container {
+    --width: 1.5rem;
+    --height: 2px;
+    --margin: 0.5rem;
+    position: relative;
     display: none;
     cursor: pointer;
+    width: calc(var(--width) + 2 * var(--margin));
+    height: calc(var(--height) + 4.5 * var(--margin));
+    /* width: 1.5rem; */
+    /* height: 100px; */
     z-index: 2;
 }
 
 .ham {
-    position: relative;
-    width: 1.5rem;
-    height: 2px;
-    margin: 0.5rem;
+    width: var(--width);
+    height: var(--height);
+    margin: var(--margin);
     background-color: white;
+    transition: 450ms ease;
+}
+.ham-active > .line1 {
+    transform: translateY(500%) rotate(45deg);
+}
+.ham-active > .line3 {
+    transform: translateY(-500%) rotate(-45deg);
+}
+.ham-active > .line2 {
+    transform: scale(0);
+    transform-origin: center;
 }
 
 /* Footer */

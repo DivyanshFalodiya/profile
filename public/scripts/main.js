@@ -69,7 +69,9 @@ window.addEventListener('resize', () => {
 navLinks.addEventListener('click', (e) => {
     if (e.target.tagName == 'A' || e.target.nodeName == 'A') {
         if (e.target.href === window.location.href) e.preventDefault();
-        ham.click();
+        if (window.innerWidth < 768) {
+            ham.click();
+        }
     }
 });
 

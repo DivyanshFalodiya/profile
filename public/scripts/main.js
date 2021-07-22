@@ -53,16 +53,16 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
     canvas.style.width = window.innerWidth + 'px';
     canvas.style.height = window.innerHeight + 'px';
-});
 
-canvas.addEventListener('resize', () => {
     // Camera update
-    setup.camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    setup.camera.aspect = window.innerWidth / window.innerHeight;
     setup.camera.updateProjectionMatrix();
 
     // Renderer update
-    setup.renderer.setSize(canvas.clientWidth, canvas.clientHeight);
-    setup.renderer.setPixelRatio(window.devicePixelRatio);
+    setup.renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // Update stars
+    setup.resetStarPositions();
 });
 
 // Handling page transitions

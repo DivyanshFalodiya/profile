@@ -21,7 +21,7 @@ class Index {
         this.light = new THREE.AmbientLight(0xffffff, 1);
         this.setupImage.scene.add(this.light);
 
-        this.setupImage.composer.addPass(new GlitchPass());
+        // this.setupImage.composer.addPass(new GlitchPass());
 
         this.plane = this.addImagePlane();
     }

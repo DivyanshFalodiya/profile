@@ -52,12 +52,18 @@ export default class Setup {
 
         // Set up stars
         if (stars) {
-            const density = 5;
+            this.starDensity = 5;
             this.starZ = -200;
             this.stars = [];
-            this.stars.push(this.addStars(density, 0xffffff, 5000, 5000));
-            this.stars.push(this.addStars(density, 0xf9fe97, 5000, 5000));
-            this.stars.push(this.addStars(density, 0x97f3fe, 5000, 5000));
+            this.stars.push(
+                this.addStars(this.starDensity, 0xffffff, 5000, 5000)
+            );
+            this.stars.push(
+                this.addStars(this.starDensity, 0xf9fe97, 5000, 5000)
+            );
+            this.stars.push(
+                this.addStars(this.starDensity, 0x97f3fe, 5000, 5000)
+            );
         }
     }
 
@@ -163,18 +169,13 @@ export default class Setup {
 
     resetStarPositions() {
         this.stars.forEach((star) => {
-            const positions = star.geometry.attributes.position.array;
-            const count = star.geometry.attributes.position.count;
-
-            for (let i = 2; i < count * 3; i += 3) {
-                positions[i - 2] =
-                    (Math.random() - 0.5) * window.innerWidth * 2;
-                positions[i - 1] =
-                    (Math.random() - 0.5) * window.innerHeight * 2;
-                positions[i] = Math.random() * this.starZ - 500;
-            }
-            star.geometry.attributes.position.needsUpdate = true;
+            this.scene.remove(star);
+            star.geometry.dispose();
+            star.material.dispose();
         });
+        this.stars.push(this.addStars(this.starDensity, 0xffffff, 5000, 5000));
+        this.stars.push(this.addStars(this.starDensity, 0xf9fe97, 5000, 5000));
+        this.stars.push(this.addStars(this.starDensity, 0x97f3fe, 5000, 5000));
     }
 
     // Render

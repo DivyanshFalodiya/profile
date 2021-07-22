@@ -11,10 +11,13 @@ import projectsRender from './projects.js';
 // Initialize
 let requestId = null;
 let animate = false;
+let forceAnimate = false;
 let script = null;
 const navLinks = document.getElementsByClassName('nav-links')[0];
 const anchors = navLinks.querySelectorAll('a');
 const ham = document.querySelector('.ham-container');
+const animCircle = document.querySelector('#animation-circle');
+const animInnerCircle = document.querySelector('#inner-circle');
 const canvas = document.getElementById('canvas');
 const setup = new Setup(canvas);
 
@@ -75,6 +78,23 @@ navLinks.addEventListener('click', (e) => {
     }
 });
 
+// Ham click
+ham.addEventListener('click', () => {
+    navLinks.classList.toggle('nav-links-active');
+    ham.classList.toggle('ham-active');
+});
+
+// Animate SVG circle
+animCircle.addEventListener('click', () => {
+    forceAnimate = !forceAnimate;
+    animInnerCircle.classList.toggle('anim-circle-active');
+    if (forceAnimate) {
+        animate = true;
+    } else {
+        animate = false;
+    }
+});
+
 // On device orientation for sensors
 const handleOrientation = (e) => {
     setup.mouse = {
@@ -122,11 +142,15 @@ barba.init({
                 updateAnchors();
             },
             afterEnter(data) {
-                animate = false;
+                if (!forceAnimate) {
+                    animate = false;
+                }
                 script = new Index();
             },
             beforeLeave(data) {
-                animate = true;
+                if (!forceAnimate) {
+                    animate = true;
+                }
             },
         },
         {
@@ -135,11 +159,15 @@ barba.init({
                 updateAnchors();
             },
             afterEnter(data) {
-                animate = false;
+                if (!forceAnimate) {
+                    animate = false;
+                }
                 // render();
             },
             beforeLeave(data) {
-                animate = true;
+                if (!forceAnimate) {
+                    animate = true;
+                }
                 // stopRender();
             },
         },
@@ -149,11 +177,11 @@ barba.init({
                 updateAnchors();
             },
             afterEnter(data) {
-                animate = false;
+                if (!forceAnimate) animate = false;
                 // stopRender(indexSetup.stopRender);
             },
             beforeLeave(data) {
-                animate = true;
+                if (!forceAnimate) animate = true;
                 // stopRender();
             },
         },

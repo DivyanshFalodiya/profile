@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/', homeRoutes);
-app.use('/projects', projectRoutes);
+app.use('/work', projectRoutes);
 app.use('/login', loginRoutes);
 
 // Listening on port

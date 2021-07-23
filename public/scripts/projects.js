@@ -6,39 +6,47 @@ import * as THREE from './three/build/three.module.js';
 // import { UnrealBloomPass } from './three/examples/jsm/postprocessing/UnrealBloomPass.js';
 // import { FilmPass } from './three/examples/jsm/postprocessing/FilmPass.js';
 import vertexShader from './shaders/vertex.js';
-import fragmentShader from './shaders/fragment.js';
+import fragmentShader from './shaders/fragmentPlane.js';
 
-// Image plane
-const planeGeom = new THREE.PlaneBufferGeometry(8, 10, 10, 10);
-const planeMat = new THREE.ShaderMaterial({
-    vertexShader,
-    fragmentShader,
-    uniforms: {
-        imgTexture: {
-            value: new THREE.TextureLoader().load('../images/index_back.jpg'),
-        },
-        u_time: {
-            type: 'f',
-            value: 0,
-        },
-    },
-});
-const plane = new THREE.Mesh(planeGeom, planeMat);
-plane.position.set(0, 0, -10);
-// setup.scene.add(plane);
+class Projects {
+    constructor(setup) {
+        this.setup = setup;
+        this.meshes = [];
+        this.addPlane();
+    }
 
-// Mousemove
-// window.addEventListener('pointer', (e) => {
-//     setup.mouse = {
-//         x: -(e.clientX - canvas.width / 2) / canvas.width,
-//         y: -(e.clientY - canvas.height / 2) / canvas.height,
-//     };
-// });
+    addPlane() {
+        const planeGeometry = new THREE.PlaneBufferGeometry(10, 10, 10, 10);
+        const planeMaterial = new THREE.ShaderMaterial({
+            vertexShader,
+            fragmentShader,
+            uniforms: {
+                imgTexture: {
+                    value: new THREE.TextureLoader().load(
+                        '../images/index_back.jpg'
+                    ),
+                },
+                u_time: {
+                    type: 'f',
+                    value: 0,
+                },
+            },
+        });
+        const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        plane.position.z = -10;
+        this.setup.scene.add(plane);
 
-// Render everything
-const render = () => {
-    // plane.material.uniforms.u_time.value = setup.clock.getElapsedTime();
-    // setup.render();
-    window.requestAnimationFrame(render);
-};
-export default render;
+        this.meshes.push(plane);
+    }
+
+    stop() {
+        this.meshes.forEach((mesh) => {
+            this.setup.scene.remove(mesh);
+            mesh.geometry.dispose();
+            mesh.material.dispose();
+        });
+    }
+    render() {}
+}
+
+export default Projects;

@@ -6,7 +6,7 @@ import * as THREE from './three/build/three.module.js';
 import { AfterimagePass } from './three/examples/jsm/postprocessing/AfterimagePass.js';
 import Setup from './threeSetup.js';
 import Index from './index2.js';
-import projectsRender from './projects.js';
+import Projects from './projects.js';
 
 // Initialize
 let requestId = null;
@@ -111,7 +111,8 @@ const render = () => {
         case '/':
             if (script) script.render();
             break;
-        case '/projects':
+        case '/work':
+            if (script) script.render();
             break;
         default:
             break;
@@ -151,6 +152,7 @@ barba.init({
                 if (!forceAnimate) {
                     animate = true;
                 }
+                script = null;
             },
         },
         {
@@ -162,13 +164,14 @@ barba.init({
                 if (!forceAnimate) {
                     animate = false;
                 }
-                // render();
+                script = new Projects(setup);
             },
             beforeLeave(data) {
                 if (!forceAnimate) {
                     animate = true;
                 }
-                // stopRender();
+                script.stop();
+                // script = null;
             },
         },
         {

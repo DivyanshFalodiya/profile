@@ -4,9 +4,10 @@ function fetchProjects() {
     const data = [];
     for (let i = 0; i < 5; i++) {
         const title = faker.name.jobTitle();
-        const image = faker.image.business(200, 200);
+        const image = faker.image.imageUrl();
         const about = faker.lorem.paragraph(3);
-        data.push({ title, image, about });
+        const link = 'https://github.com/DivyanshFalodiya';
+        data.push({ title, image, about, link });
     }
     return data;
 }

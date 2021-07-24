@@ -3,7 +3,7 @@ const projectController = require('../controllers/projectsController');
 
 router.get('/', async (req, res) => {
     const projects = projectController.fetchProjects();
-    res.render('projects', { projects });
+    res.render('projects', { projects: projects });
 });
 
 module.exports = router;

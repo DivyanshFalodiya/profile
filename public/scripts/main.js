@@ -61,11 +61,12 @@ window.addEventListener('resize', () => {
     setup.camera.aspect = window.innerWidth / window.innerHeight;
     setup.camera.updateProjectionMatrix();
 
-    // Renderer update
-    setup.renderer.setSize(window.innerWidth, window.innerHeight);
-
     // Update stars
     setup.resetStarPositions();
+
+    // Renderer update
+    setup.renderer.setSize(window.innerWidth, window.innerHeight);
+    setup.renderer.setPixelRatio(window.devicePixelRatio);
 });
 
 // Handling page transitions

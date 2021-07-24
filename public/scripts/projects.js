@@ -11,40 +11,37 @@ import fragmentShader from './shaders/fragmentPlane.js';
 class Projects {
     constructor(setup) {
         this.setup = setup;
-        this.meshes = [];
-        this.addPlane();
+        this.projects = document.querySelectorAll('.project');
+        this.stripContent();
     }
 
-    addPlane() {
-        const planeGeometry = new THREE.PlaneBufferGeometry(10, 10, 10, 10);
-        const planeMaterial = new THREE.ShaderMaterial({
-            vertexShader,
-            fragmentShader,
-            uniforms: {
-                imgTexture: {
-                    value: new THREE.TextureLoader().load(
-                        '../images/index_back.jpg'
-                    ),
-                },
-                u_time: {
-                    type: 'f',
-                    value: 0,
-                },
-            },
-        });
-        const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-        plane.position.z = -10;
-        this.setup.scene.add(plane);
+    stripContent() {
+        for (let i = 0; i < this.projects.length; i++) {
+            let contentEl = this.projects[i].childNodes[3];
+            let titleEl = contentEl.childNodes[1];
+            let detailEl = contentEl.childNodes[3];
 
-        this.meshes.push(plane);
+            let title = titleEl.textContent;
+            if (title.length > 55) {
+                title = title.slice(0, 55) + '...';
+                titleEl.textContent = title;
+            }
+
+            let detail = detailEl.textContent;
+            if (detail.length > 100) {
+                detail = detail.slice(0, 100) + '...';
+                detailEl.textContent = detail;
+            }
+        }
     }
 
     stop() {
-        this.meshes.forEach((mesh) => {
-            this.setup.scene.remove(mesh);
-            mesh.geometry.dispose();
-            mesh.material.dispose();
-        });
+        // this.removeListeners();
+        // this.meshes.forEach((mesh) => {
+        //     this.setup.scene.remove(mesh);
+        //     mesh.geometry.dispose();
+        //     mesh.material.dispose();
+        // });
     }
     render() {}
 }

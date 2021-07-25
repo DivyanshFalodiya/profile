@@ -13,33 +13,6 @@
                 data-barba-namespace="projects"
             >
                 <h1>Work</h1>
-                <div class="work-container">
-                    <% for(let i = 0;i < projects.length;i++ ){ %>
-                    <div class="project">
-                        <img
-                            class="project-image"
-                            src="<%= projects[i].image %>"
-                            alt="<%= projects[i].title %>"
-                        />
-                        <div class="project-content">
-                            <h4 class="project-title">
-                                <%= projects[i].title %>
-                            </h4>
-                            <p class="project-detail">
-                                <%= projects[i].about %>
-                            </p>
-                            <div class="project-link">
-                                <a
-                                    href="<%= projects[i].link %>"
-                                    target="_blank"
-                                >
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <% } %>
-                </div>
             </div>
         </div>
         <%- include('./partials/footer') %>

@@ -4,6 +4,7 @@ const session = require('express-session');
 const homeRoutes = require('./routes/homeRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const loginRoutes = require('./routes/loginRoutes');
+const apiRoutes = require('./routes/apiRoutes');
 
 // App and middlewares
 const app = express();
@@ -32,6 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/', homeRoutes);
 app.use('/work', projectRoutes);
 app.use('/login', loginRoutes);
+app.use('/api', apiRoutes);
 
 // Listening on port
 const PORT = process.env.PORT || 3000;

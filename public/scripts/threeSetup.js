@@ -5,6 +5,8 @@ import { RenderPass } from './three/examples/jsm/postprocessing/RenderPass.js';
 import { BloomPass } from './three/examples/jsm/postprocessing/BloomPass.js';
 import vertexShader from './shaders/vertexParticles.js';
 import fragmentShader from './shaders/fragment.js';
+import vertexShaderPlane from './shaders/vertex.js';
+import fragmentShaderPlane from './shaders/fragmentPlane.js';
 
 export default class Setup {
     constructor(canvas, stars = true, camera = null, rotCamera = true) {
@@ -65,6 +67,8 @@ export default class Setup {
                 this.addStars(this.starDensity, 0x97f3fe, 5000, 5000)
             );
         }
+
+        this.controls = new OrbitControls(this.camera, canvas);
     }
 
     // Add point light
@@ -178,6 +182,30 @@ export default class Setup {
         this.stars.push(this.addStars(this.starDensity, 0x97f3fe, 5000, 5000));
     }
 
+    testScene() {
+        let mesh = new THREE.Mesh(
+            new THREE.BoxGeometry(10, 10, 10),
+            new THREE.ShaderMaterial({
+                vertexShader: vertexShaderPlane,
+                fragmentShader: fragmentShaderPlane,
+                uniforms: {
+                    imgTexture: {
+                        value: new THREE.TextureLoader().load(
+                            '../images/divyansh.png'
+                        ),
+                    },
+                    u_time: {
+                        type: 'f',
+                        value: 0,
+                    },
+                },
+                side: THREE.DoubleSide,
+            })
+        );
+        mesh.position.set(0, 0, -20);
+        this.scene.add(mesh);
+    }
+
     // Render
     render(animate = false) {
         if (this.stars) {
@@ -192,5 +220,6 @@ export default class Setup {
             });
         }
         this.composer.render();
+        this.controls.update();
     }
 }

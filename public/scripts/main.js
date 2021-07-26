@@ -51,22 +51,19 @@ window.addEventListener('click', (e) => {
 
 // On window resize
 window.addEventListener('resize', () => {
-    // Canvas resize
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvas.style.width = window.innerWidth + 'px';
-    canvas.style.height = window.innerHeight + 'px';
-
     // Camera update
-    setup.camera.aspect = window.innerWidth / window.innerHeight;
+    setup.camera.aspect = canvas.clientWidth / canvas.clientHeight;
     setup.camera.updateProjectionMatrix();
 
     // Update stars
     setup.resetStarPositions();
 
     // Renderer update
-    setup.renderer.setSize(window.innerWidth, window.innerHeight);
     setup.renderer.setPixelRatio(window.devicePixelRatio);
+    setup.renderer.setSize(window.innerWidth, window.innerHeight);
+
+    setup.composer.setPixelRatio(window.devicePixelRatio);
+    setup.composer.setSize(window.innerWidth, window.innerHeight);
 });
 
 // Handling page transitions
@@ -110,10 +107,14 @@ const render = () => {
     setup.render(animate);
     switch (window.location.pathname) {
         case '/':
-            if (script) script.render();
+            if (script) {
+                script.render();
+            }
             break;
         case '/work':
-            if (script) script.render();
+            if (script) {
+                script.render();
+            }
             break;
         default:
             break;
@@ -165,7 +166,8 @@ barba.init({
                 if (!forceAnimate) {
                     animate = false;
                 }
-                script = new Projects(setup);
+                // script = new Projects(setup);
+                script = new Projects();
             },
             beforeLeave(data) {
                 if (!forceAnimate) {

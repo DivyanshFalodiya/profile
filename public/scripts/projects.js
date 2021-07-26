@@ -2,16 +2,28 @@
 import * as THREE from './three/build/three.module.js';
 import vertexShader from './shaders/vertex.js';
 import fragmentShader from './shaders/fragmentPlane.js';
+import Setup from './threeSetup.js';
 
 class Projects {
-    constructor(setup) {
-        this.setup = setup;
+    constructor() {
+        this.canvas = document.querySelector('#projects-canvas');
+        this.canvasParent = document.querySelector('.container');
+        this.setup = new Setup(this.canvas, false, null, false);
         this.meshes = [];
         this.group = new THREE.Group();
         this.circleRadius = 0;
-        this.planeSize = 20;
+        this.planeSize = this.getPlaneSize();
         this.data = [];
         this.fetchProjects();
+        this.addEventListeners();
+    }
+
+    getPlaneSize() {
+        let smaller =
+            this.canvas.clientWidth > this.canvas.clientWidth
+                ? this.canvas.clientWidth
+                : this.canvas.clientHeight;
+        return (smaller * 15) / 500;
     }
 
     fetchProjects() {
@@ -30,9 +42,10 @@ class Projects {
     addObjects() {
         let arcAngle = this.planeSize / this.circleRadius;
         this.data.forEach((project, index) => {
-            let plane = this.addPlane(project);
+            let planeObject = this.addPlane(project);
             let rotAngle = arcAngle * index;
-            this.group.add(plane);
+            planeObject.rotation.y = rotAngle;
+            this.group.add(planeObject);
         });
         this.setup.scene.add(this.group);
     }
@@ -41,6 +54,9 @@ class Projects {
         let posZ = -15;
         let circleX = 0;
         let circleZ = posZ - this.circleRadius;
+
+        const parentObject = new THREE.Object3D();
+
         const planeGeometry = new THREE.PlaneBufferGeometry(
             this.planeSize,
             this.planeSize,
@@ -52,10 +68,11 @@ class Projects {
         const vPositions = planeGeometry.attributes.position.array;
         for (let i = 2; i < 3 * vCount; i += 3) {
             vPositions[i] =
-                circleZ +
+                vPositions[i] -
+                this.circleRadius +
                 Math.sqrt(
                     this.circleRadius * this.circleRadius -
-                        Math.pow(vPositions[i - 2] - circleX, 2)
+                        Math.pow(vPositions[i - 2], 2)
                 );
         }
 
@@ -74,22 +91,50 @@ class Projects {
             side: THREE.DoubleSide,
         });
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
-        plane.position.z = posZ;
+        plane.position.set(0, 0, this.circleRadius + 2);
 
-        // this.setup.scene.add(plane);
-        this.meshes.push(plane);
+        parentObject.add(plane);
+        parentObject.position.set(circleX, 0, circleZ);
 
-        return plane;
+        this.meshes.push(parentObject);
+
+        return parentObject;
+    }
+
+    handleResize() {
+        console.log('resize');
+        // let smaller =
+        //     this.canvas.clientWidth > this.canvas.clientHeight
+        //         ? this.canvas.clientHeight
+        //         : this.canvas.clientWidth;
+
+        // this.canvas.height = (this.canvasParent.width * 720) / 1280;
+
+        // this.canvas.width = this.canvasParent.clientWidth;
+        // this.canvas.height = (this.canvasParent.clientHeight * 720) / 1280;
+        // this.canvas.style.width = this.canvas.clientWidth + 'px';
+        // this.canvas.style.height =
+        //     (this.canvas.clientHeight * 720) / 1280 + 'px';
+    }
+
+    addEventListeners() {
+        window.addEventListener('resize', this.handleResize.bind(this));
+    }
+
+    removeEventListeners() {
+        window.removeEventListener('resize', this.handleResize.bind(this));
     }
 
     stop() {
-        this.meshes.forEach((mesh) => {
-            this.setup.scene.remove(mesh);
+        this.setup.scene.remove(this.group);
+        this.group.children.forEach((mesh) => {
             mesh.geometry.dispose();
             mesh.material.dispose();
         });
     }
-    render() {}
+    render() {
+        this.setup.render();
+    }
 }
 
 export default Projects;

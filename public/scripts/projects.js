@@ -6,25 +6,33 @@ import Setup from './threeSetup.js';
 
 class Projects {
     constructor() {
+        // Canvas and other setup
         this.canvas = document.querySelector('#projects-canvas');
         this.canvasParent = document.querySelector('.container');
         this.canvasParent.style.minHeight = '100vh';
         this.setup = new Setup(this.canvas, false, null, false);
+
+        // Meshes
         this.meshes = [];
         this.group = new THREE.Group();
+
+        // Other important variables
+        this.pointerPosition = undefined;
         this.circleRadius = 0;
         this.planeSize = this.getPlaneSize();
         this.data = [];
+
+        // Fetch projects and add event listeners
         this.fetchProjects();
         this.addEventListeners();
     }
 
     getPlaneSize() {
-        let smaller =
-            this.canvas.clientWidth > this.canvas.clientWidth
-                ? this.canvas.clientWidth
-                : this.canvas.clientHeight;
-        console.log(this.canvas.clientWidth, this.canvas.clientHeight);
+        // let smaller =
+        //     this.canvas.clientWidth > this.canvas.clientWidth
+        //         ? this.canvas.clientWidth
+        //         : this.canvas.clientHeight;
+        // console.log(this.canvas.clientWidth, this.canvas.clientHeight);
         // console.log(smaller / 8);
         return 20;
     }
@@ -104,7 +112,9 @@ class Projects {
         return parentObject;
     }
 
+    // Handle window resize
     handleResize() {
+        // Update canvas
         this.canvas.width = this.canvasParent.clientWidth;
         this.canvas.height = (this.canvasParent.clientWidth * 720) / 1280;
         if (window.innerWidth <= 450) {
@@ -113,8 +123,6 @@ class Projects {
 
         this.canvas.style.width = this.canvas.width + 'px';
         this.canvas.style.height = this.canvas.height + 'px';
-
-        console.log(this.canvas.width, this.canvas.height);
 
         // Update camera
         this.setup.camera.aspect =
@@ -136,8 +144,57 @@ class Projects {
         );
     }
 
+    // Handle pointer movements on the canvas for rotating the group
+    handlePointerDown(e) {
+        this.pointerPosition = {
+            x: e.clientX,
+            y: e.clientY,
+        };
+    }
+    handlePointerMove(e) {
+        // If the pointer is down and moving
+        if (this.pointerPosition) {
+            let curPointerPosition = {
+                x: e.clientX,
+                y: e.clientY,
+            };
+            let direction = {
+                x: curPointerPosition.x - this.pointerPosition.x,
+                y: curPointerPosition.y - this.pointerPosition.y,
+            };
+            let arcAngle = this.planeSize / this.circleRadius;
+            this.meshes.forEach((obj) => {
+                let dir =
+                    (direction.x < 0 ? -1 : 1) * arcAngle + obj.rotation.y;
+                gsap.to(obj.rotation, {
+                    y: dir,
+                    duration: 1,
+                });
+            });
+        }
+    }
+    handlePointerUp(e) {
+        this.pointerPosition = undefined;
+    }
+
     addEventListeners() {
         window.addEventListener('resize', this.handleResize.bind(this));
+        this.canvas.addEventListener(
+            'pointerdown',
+            this.handlePointerDown.bind(this)
+        );
+        this.canvas.addEventListener(
+            'pointermove',
+            this.handlePointerMove.bind(this)
+        );
+        this.canvas.addEventListener(
+            'pointerup',
+            this.handlePointerUp.bind(this)
+        );
+        this.canvas.addEventListener(
+            'pointercancel',
+            this.handlePointerUp.bind(this)
+        );
     }
 
     removeEventListeners() {

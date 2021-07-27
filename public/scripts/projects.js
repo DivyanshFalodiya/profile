@@ -8,6 +8,7 @@ class Projects {
     constructor() {
         this.canvas = document.querySelector('#projects-canvas');
         this.canvasParent = document.querySelector('.container');
+        this.canvasParent.style.minHeight = '100vh';
         this.setup = new Setup(this.canvas, false, null, false);
         this.meshes = [];
         this.group = new THREE.Group();
@@ -23,7 +24,9 @@ class Projects {
             this.canvas.clientWidth > this.canvas.clientWidth
                 ? this.canvas.clientWidth
                 : this.canvas.clientHeight;
-        return (smaller * 15) / 500;
+        console.log(this.canvas.clientWidth, this.canvas.clientHeight);
+        // console.log(smaller / 8);
+        return 20;
     }
 
     fetchProjects() {
@@ -102,19 +105,35 @@ class Projects {
     }
 
     handleResize() {
-        console.log('resize');
-        // let smaller =
-        //     this.canvas.clientWidth > this.canvas.clientHeight
-        //         ? this.canvas.clientHeight
-        //         : this.canvas.clientWidth;
+        this.canvas.width = this.canvasParent.clientWidth;
+        this.canvas.height = (this.canvasParent.clientWidth * 720) / 1280;
+        if (window.innerWidth <= 450) {
+            this.canvas.height = this.canvasParent.clientHeight / 2;
+        }
 
-        // this.canvas.height = (this.canvasParent.width * 720) / 1280;
+        this.canvas.style.width = this.canvas.width + 'px';
+        this.canvas.style.height = this.canvas.height + 'px';
 
-        // this.canvas.width = this.canvasParent.clientWidth;
-        // this.canvas.height = (this.canvasParent.clientHeight * 720) / 1280;
-        // this.canvas.style.width = this.canvas.clientWidth + 'px';
-        // this.canvas.style.height =
-        //     (this.canvas.clientHeight * 720) / 1280 + 'px';
+        console.log(this.canvas.width, this.canvas.height);
+
+        // Update camera
+        this.setup.camera.aspect =
+            this.canvas.clientWidth / this.canvas.clientHeight;
+        this.setup.camera.updateProjectionMatrix();
+
+        // Update renderer
+        this.setup.renderer.setPixelRatio(window.devicePixelRatio);
+        this.setup.renderer.setSize(
+            this.canvas.clientWidth,
+            this.canvas.clientHeight
+        );
+
+        // Update composer
+        this.setup.composer.setPixelRatio(window.devicePixelRatio);
+        this.setup.composer.setSize(
+            this.canvas.clientWidth,
+            this.canvas.clientHeight
+        );
     }
 
     addEventListeners() {

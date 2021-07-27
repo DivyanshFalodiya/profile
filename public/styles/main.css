@@ -146,6 +146,7 @@ body {
     /* justify-content: center; */
     align-items: center;
     transition: 450ms ease;
+    padding: 0;
 }
 .container > *:not(#projects-canvas) {
     margin: 1rem;
@@ -443,6 +444,9 @@ body {
     .project {
         min-width: 280px;
         height: 300px;
+    }
+    #projects-canvas {
+        height: 50vh;
     }
 }
 

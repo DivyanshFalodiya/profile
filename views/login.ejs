@@ -12,7 +12,7 @@
                 data-barba="container"
                 data-barba-namespace="projects"
             >
-                <h1 class="title">Login</h1>
+                <h1 class="title">Admin, huh?</h1>
                 <form
                     class="form-group"
                     action="/login"
@@ -21,29 +21,21 @@
                 >
                     <input
                         type="email"
-                        placeholder="Email"
+                        placeholder="Admin Email"
                         name="email"
                         required
                         class="form-control"
                     />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        name="password"
-                        required
-                        minlength="6"
-                        class="form-control"
-                    />
                     <button
                         class="btn-theme"
-                        data-content="Login"
+                        data-content="Validate"
                         type="submit"
                     >
-                        Login
+                        Validate
                     </button>
                 </form>
                 <div class="error">
-                    <p>Some error related to login</p>
+                    <p><%= error %></p>
                 </div>
             </div>
         </div>

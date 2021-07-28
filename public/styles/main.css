@@ -312,11 +312,14 @@ body {
     justify-content: space-around;
     align-items: center;
 }
+.form-control::selection {
+    color: white;
+    background-color: blue;
+}
 .form-control {
     margin: 1rem;
 }
 .error {
-    display: none;
     color: red;
 }
 

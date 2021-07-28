@@ -6,10 +6,15 @@ import Setup from './threeSetup.js';
 
 class Projects {
     constructor() {
-        // Canvas and other setup
+        // DOM setup
         this.canvas = document.querySelector('#projects-canvas');
         this.canvasParent = document.querySelector('.container');
         this.canvasParent.style.minHeight = '100vh';
+        this.projectTitle = document.querySelector('#project-title');
+        this.projectDetails = document.querySelector('#project-details');
+        this.projectLink = document.querySelector('#project-link');
+
+        // THREE setup
         this.setup = new Setup(this.canvas, false, null, false);
 
         // Meshes
@@ -60,6 +65,7 @@ class Projects {
             this.group.add(planeObject);
         });
         this.setup.scene.add(this.group);
+        this.updateDom();
     }
 
     addPlane(project) {
@@ -120,13 +126,34 @@ class Projects {
 
     updateMeshes() {
         let time = this.setup.clock.getElapsedTime();
+        let arcAngleDeg =
+            ((this.planeSize / this.circleRadius) * 180) / Math.PI;
         this.meshes.forEach((mesh, index) => {
             // Shader uniforms
-            let dist = Math.min(Math.abs(this.position - index), 1);
-            mesh.children[0].material.uniforms.distanceFront.value =
-                1 - dist ** 2;
+            let curAngle = mesh.rotation.y;
+            if (curAngle < 0) {
+                curAngle = curAngle + Math.PI * 2;
+            }
+            curAngle = Math.round((curAngle * 180) / Math.PI);
+            curAngle = curAngle % 360;
+            if (curAngle > 180) {
+                curAngle = 360 - curAngle;
+            }
+            if (curAngle >= arcAngleDeg) {
+                curAngle = 180;
+            }
+            let dist = curAngle / 180;
+            mesh.children[0].material.uniforms.distanceFront.value = 1 - dist;
             mesh.children[0].material.uniforms.u_time.value = time;
         });
+    }
+
+    // Update html
+    updateDom() {
+        let project = this.data[this.position];
+        this.projectTitle.textContent = project.title;
+        this.projectDetails.textContent = project.about;
+        this.projectLink.href = project.link;
     }
 
     // Handle window resize
@@ -176,7 +203,7 @@ class Projects {
                 y: e.clientY - this.pointerPosition.y,
             };
             this.meshes.forEach((obj, index) => {
-                let dir = (direction.x < 0 ? -1 : 1) * 0.1 + obj.rotation.y;
+                let dir = direction.x * 0.01 + obj.rotation.y;
                 gsap.to(obj.rotation, {
                     y: dir,
                     duration: 0.2,
@@ -192,6 +219,8 @@ class Projects {
         this.pointerPosition = undefined;
         let arcAngle = this.planeSize / this.circleRadius;
         let originalRotation = this.meshes[this.position].rotation.y;
+        if (originalRotation < 0)
+            originalRotation = 2 * Math.PI + originalRotation;
         let curRotation = originalRotation + arcAngle / 2;
         curRotation = curRotation - (curRotation % arcAngle);
         let diff = curRotation - originalRotation;
@@ -204,7 +233,10 @@ class Projects {
             });
             let angleDeg = Math.round((newRot * 180) / Math.PI);
             angleDeg = angleDeg % 360;
-            if (angleDeg == 0) this.position = index;
+            if (angleDeg == 0) {
+                this.position = index;
+                this.updateDom();
+            }
         });
     }
 

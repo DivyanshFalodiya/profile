@@ -10,9 +10,11 @@ class Projects {
         this.canvas = document.querySelector('#projects-canvas');
         this.canvasParent = document.querySelector('.container');
         this.canvasParent.style.minHeight = '100vh';
+        this.projectContainer = document.querySelector('#project-content');
         this.projectTitle = document.querySelector('#project-title');
         this.projectDetails = document.querySelector('#project-details');
         this.projectLink = document.querySelector('#project-link');
+        this.projectTech = document.querySelector('#project-tech');
 
         // THREE setup
         this.setup = new Setup(this.canvas, false, null, false);
@@ -30,7 +32,6 @@ class Projects {
 
         // Fetch projects and add event listeners
         this.fetchProjects();
-        this.addEventListeners();
     }
 
     getPlaneSize() {
@@ -53,6 +54,7 @@ class Projects {
                 this.circleRadius =
                     (this.data.length * this.planeSize) / (2 * Math.PI);
                 this.addObjects();
+                this.addEventListeners();
             });
     }
 
@@ -154,6 +156,29 @@ class Projects {
         this.projectTitle.textContent = project.title;
         this.projectDetails.textContent = project.about;
         this.projectLink.href = project.link;
+        while (this.projectTech.firstChild)
+            this.projectTech.removeChild(this.projectTech.firstChild);
+        project.tech.forEach((tech) => {
+            let listEl = document.createElement('li');
+            listEl.classList.add('devicon');
+            let icon = document.createElement('i');
+            icon.classList.add(`devicon-${tech}-plain`);
+            icon.classList.add(`colored`);
+            listEl.appendChild(icon);
+            this.projectTech.appendChild(listEl);
+        });
+
+        // Animate
+        gsap.fromTo(
+            this.projectContainer,
+            {
+                opacity: 0,
+            },
+            {
+                opacity: 1,
+                duration: 1,
+            }
+        );
     }
 
     // Handle window resize
@@ -233,7 +258,7 @@ class Projects {
             });
             let angleDeg = Math.round((newRot * 180) / Math.PI);
             angleDeg = angleDeg % 360;
-            if (angleDeg == 0) {
+            if (angleDeg == 0 && this.position != index) {
                 this.position = index;
                 this.updateDom();
             }

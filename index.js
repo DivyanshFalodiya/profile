@@ -1,6 +1,7 @@
 // Require modules
 const express = require('express');
 const session = require('express-session');
+const jwt = require('jsonwebtoken');
 const homeRoutes = require('./routes/homeRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const loginRoutes = require('./routes/loginRoutes');
@@ -10,7 +11,6 @@ const apiRoutes = require('./routes/apiRoutes');
 const app = express();
 
 // Session
-app.set('trust proxy', 1);
 app.use(
     session({
         secret: process.env.SESSION_KEY || 'somerandomkey',

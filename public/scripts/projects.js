@@ -18,6 +18,7 @@ class Projects {
 
         // Other important variables
         this.pointerPosition = undefined;
+        this.position = 0;
         this.circleRadius = 0;
         this.planeSize = this.getPlaneSize();
         this.data = [];
@@ -94,12 +95,17 @@ class Projects {
                 imgTexture: {
                     value: new THREE.TextureLoader().load(project.image),
                 },
+                distanceFront: {
+                    type: 'f',
+                    value: 0,
+                },
                 u_time: {
                     type: 'f',
                     value: 0,
                 },
             },
             side: THREE.DoubleSide,
+            transparent: true,
         });
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.position.set(0, 0, this.circleRadius + 2);
@@ -110,6 +116,17 @@ class Projects {
         this.meshes.push(parentObject);
 
         return parentObject;
+    }
+
+    updateMeshes() {
+        let time = this.setup.clock.getElapsedTime();
+        this.meshes.forEach((mesh, index) => {
+            // Shader uniforms
+            let dist = Math.min(Math.abs(this.position - index), 1);
+            mesh.children[0].material.uniforms.distanceFront.value =
+                1 - dist ** 2;
+            mesh.children[0].material.uniforms.u_time.value = time;
+        });
     }
 
     // Handle window resize
@@ -154,27 +171,41 @@ class Projects {
     handlePointerMove(e) {
         // If the pointer is down and moving
         if (this.pointerPosition) {
-            let curPointerPosition = {
+            let direction = {
+                x: e.clientX - this.pointerPosition.x,
+                y: e.clientY - this.pointerPosition.y,
+            };
+            this.meshes.forEach((obj, index) => {
+                let dir = (direction.x < 0 ? -1 : 1) * 0.1 + obj.rotation.y;
+                gsap.to(obj.rotation, {
+                    y: dir,
+                    duration: 0.2,
+                });
+            });
+            this.pointerPosition = {
                 x: e.clientX,
                 y: e.clientY,
             };
-            let direction = {
-                x: curPointerPosition.x - this.pointerPosition.x,
-                y: curPointerPosition.y - this.pointerPosition.y,
-            };
-            let arcAngle = this.planeSize / this.circleRadius;
-            this.meshes.forEach((obj) => {
-                let dir =
-                    (direction.x < 0 ? -1 : 1) * arcAngle + obj.rotation.y;
-                gsap.to(obj.rotation, {
-                    y: dir,
-                    duration: 1,
-                });
-            });
         }
     }
     handlePointerUp(e) {
         this.pointerPosition = undefined;
+        let arcAngle = this.planeSize / this.circleRadius;
+        let originalRotation = this.meshes[this.position].rotation.y;
+        let curRotation = originalRotation + arcAngle / 2;
+        curRotation = curRotation - (curRotation % arcAngle);
+        let diff = curRotation - originalRotation;
+        this.meshes.forEach((obj, index) => {
+            let rot = obj.rotation.y;
+            let newRot = rot + diff;
+            gsap.to(obj.rotation, {
+                y: newRot,
+                duration: 0.5,
+            });
+            let angleDeg = Math.round((newRot * 180) / Math.PI);
+            angleDeg = angleDeg % 360;
+            if (angleDeg == 0) this.position = index;
+        });
     }
 
     addEventListeners() {
@@ -195,10 +226,34 @@ class Projects {
             'pointercancel',
             this.handlePointerUp.bind(this)
         );
+        this.canvas.addEventListener(
+            'pointerleave',
+            this.handlePointerUp.bind(this)
+        );
     }
 
     removeEventListeners() {
         window.removeEventListener('resize', this.handleResize.bind(this));
+        this.canvas.removeEventListener(
+            'pointerdown',
+            this.handlePointerDown.bind(this)
+        );
+        this.canvas.removeEventListener(
+            'pointermove',
+            this.handlePointerMove.bind(this)
+        );
+        this.canvas.removeEventListener(
+            'pointerup',
+            this.handlePointerUp.bind(this)
+        );
+        this.canvas.removeEventListener(
+            'pointercancel',
+            this.handlePointerUp.bind(this)
+        );
+        this.canvas.removeEventListener(
+            'pointerleave',
+            this.handlePointerUp.bind(this)
+        );
     }
 
     stop() {
@@ -209,6 +264,7 @@ class Projects {
         });
     }
     render() {
+        this.updateMeshes();
         this.setup.render();
     }
 }

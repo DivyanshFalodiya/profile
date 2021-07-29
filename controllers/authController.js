@@ -11,7 +11,21 @@ const createToken = (email) => {
     });
 };
 
-exports.verifyToken = (req, res, next) => {
+exports.verifyToken = (token) => {
+    let decoded;
+    try {
+        decoded = jwt.verify(token, process.env.JWT_KEY);
+    } catch {
+        return;
+    }
+
+    if (!decoded.hasOwnProperty('email')) return;
+
+    const { email } = decoded;
+    return email;
+};
+
+exports.isAuthenticated = (req, res, next) => {
     const token = req.query.token;
     if (!token) {
         res.render('login', {

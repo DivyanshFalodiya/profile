@@ -5,7 +5,7 @@ router.get('/', (req, res) => {
     res.render('login', { error: '', success: '' });
 });
 
-router.get('/callback', authController.verifyToken, (req, res) => {
+router.get('/callback', authController.isAuthenticated, (req, res) => {
     res.redirect('/');
 });
 

@@ -1,38 +1,26 @@
 // Require modules
+require('dotenv').config();
 const express = require('express');
-const session = require('express-session');
-const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 const homeRoutes = require('./routes/homeRoutes');
 const projectRoutes = require('./routes/projectRoutes');
-const loginRoutes = require('./routes/loginRoutes');
+const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/apiRoutes');
 
 // App and middlewares
 const app = express();
-
-// Session
-app.use(
-    session({
-        secret: process.env.SESSION_KEY || 'somerandomkey',
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-            sameSite: 'strict',
-            secure: true,
-        },
-    })
-);
 
 // EJS and frontend
 app.set('view engine', 'ejs');
 app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Routes
 app.use('/', homeRoutes);
 app.use('/work', projectRoutes);
-app.use('/login', loginRoutes);
+app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
 
 // Listening on port

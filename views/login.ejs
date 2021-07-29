@@ -15,7 +15,7 @@
                 <h1 class="title">Admin, huh?</h1>
                 <form
                     class="form-group"
-                    action="/login"
+                    action="/auth"
                     method="POST"
                     enctype="application/json"
                 >
@@ -36,6 +36,9 @@
                 </form>
                 <div class="error">
                     <p><%= error %></p>
+                </div>
+                <div class="success">
+                    <p><%= success %></p>
                 </div>
             </div>
         </div>

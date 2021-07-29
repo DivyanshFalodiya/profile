@@ -322,6 +322,9 @@ body {
 .error {
     color: red;
 }
+.success {
+    color: greenyellow;
+}
 
 /* Content stuff */
 .content-head {

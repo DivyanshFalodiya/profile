@@ -28,9 +28,12 @@ exports.verifyToken = (token) => {
 exports.isAuthenticated = (req, res, next) => {
     const token = req.query.token;
     if (!token) {
-        res.render('login', {
+        // res.render('login', {
+        //     error: 'Sumimasen! Unable to verify.',
+        //     success: '',
+        // });
+        res.status(403).json({
             error: 'Sumimasen! Unable to verify.',
-            success: '',
         });
     }
 
@@ -38,17 +41,15 @@ exports.isAuthenticated = (req, res, next) => {
     try {
         decoded = jwt.verify(token, process.env.JWT_KEY);
     } catch {
-        res.render('login', {
+        res.status(403).json({
             error: 'Sumimasen! Unable to verify.',
-            success: '',
         });
         return;
     }
 
     if (!decoded.hasOwnProperty('email')) {
-        res.render('login', {
+        res.status(403).json({
             error: 'Sumimasen! Unable to verify.',
-            success: '',
         });
         return;
     }
@@ -71,20 +72,18 @@ exports.login = function (req, res) {
         };
         transporter.sendMail(mailOptions, (err, response) => {
             if (err) {
-                console.log(err);
-                res.render('login', {
-                    error: 'Something went wrong! Please try again later!',
-                    success: '',
+                res.status(501).json({
+                    error: 'Something went wrong! Please try again later',
                 });
                 return;
             }
-            res.render('login', {
-                error: '',
-                success: 'Please check you email to verify.',
+            res.status(200).json({
+                success: 'Please check your email to verify.',
             });
+            return;
         });
     } else {
-        res.render('login', { error: 'You are not the admin.', success: '' });
+        res.status(403).json({ error: 'You are not the admin' });
         return;
     }
 };

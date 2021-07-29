@@ -7,6 +7,7 @@ import { AfterimagePass } from './three/examples/jsm/postprocessing/AfterimagePa
 import Setup from './threeSetup.js';
 import Index from './index2.js';
 import Projects from './projects.js';
+import Login from './login.js';
 
 // Initialize
 let requestId = null;
@@ -107,14 +108,10 @@ const render = () => {
     setup.render(animate);
     switch (window.location.pathname) {
         case '/':
-            if (script) {
-                script.render();
-            }
+            if (script) script.render();
             break;
         case '/work':
-            if (script) {
-                script.render();
-            }
+            if (script) script.render();
             break;
         default:
             break;
@@ -166,7 +163,6 @@ barba.init({
                 if (!forceAnimate) {
                     animate = false;
                 }
-                // script = new Projects(setup);
                 script = new Projects();
             },
             beforeLeave(data) {
@@ -174,7 +170,7 @@ barba.init({
                     animate = true;
                 }
                 script.stop();
-                // script = null;
+                script = null;
             },
         },
         {
@@ -184,11 +180,12 @@ barba.init({
             },
             afterEnter(data) {
                 if (!forceAnimate) animate = false;
-                // stopRender(indexSetup.stopRender);
+                script = new Login();
             },
             beforeLeave(data) {
                 if (!forceAnimate) animate = true;
-                // stopRender();
+                script.stop();
+                script = null;
             },
         },
     ],

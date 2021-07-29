@@ -325,6 +325,20 @@ body {
 .success {
     color: greenyellow;
 }
+#loader {
+    display: none;
+    stroke-dasharray: 50;
+    animation: loader-rotate 1s infinite ease-in-out;
+}
+
+@keyframes loader-rotate {
+    0% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 100;
+    }
+}
 
 /* Content stuff */
 .content-head {

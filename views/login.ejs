@@ -10,15 +10,10 @@
             <div
                 class="container"
                 data-barba="container"
-                data-barba-namespace="projects"
+                data-barba-namespace="login"
             >
                 <h1 class="title">Admin, huh?</h1>
-                <form
-                    class="form-group"
-                    action="/auth"
-                    method="POST"
-                    enctype="application/json"
-                >
+                <form class="form-group" id="auth-form">
                     <input
                         type="email"
                         placeholder="Admin Email"
@@ -27,12 +22,25 @@
                         class="form-control"
                     />
                     <button
+                        id="button-login"
                         class="btn-theme"
                         data-content="Validate"
                         type="submit"
                     >
                         Validate
                     </button>
+                    <svg id="loader" width="30" height="30">
+                        <circle
+                            class="loader-circle"
+                            cx="15"
+                            cy="15"
+                            r="10"
+                            fill="none"
+                            stroke="#70c542"
+                            stroke-linecap="round"
+                            stroke-width="2"
+                        />
+                    </svg>
                 </form>
                 <div class="error">
                     <p><%= error %></p>

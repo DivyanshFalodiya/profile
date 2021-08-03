@@ -23,8 +23,12 @@ router.get('/', async (req, res) => {
 
 // Admin only route for updating project
 router.get('/edit/:id', authController.isAuthenticated, async (req, res) => {
-    const project = await projectController.fetchProjects(req.param.id);
-    if (project) res.render('edit', { project, error: '', success: '' });
+    const project = await projectController.fetchProject(req.params.id);
+    if (project) {
+        res.render('edit', { project, error: '', success: '' });
+        return;
+    }
+    res.status(401).send('Bad Request');
 });
 
 // Admin only route for adding new project

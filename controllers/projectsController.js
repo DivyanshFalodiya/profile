@@ -13,8 +13,8 @@ async function fetchProjects() {
 // Fetch project by id
 async function fetchProject(id) {
     try {
-        const data = await Project.findById(id);
-        return data;
+        const project = await Project.findById(id);
+        return project;
     } catch {
         return null;
     }

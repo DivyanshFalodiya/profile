@@ -1,5 +1,6 @@
 // Require modules
 require('dotenv').config();
+require('./config/dbconfig').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const homeRoutes = require('./routes/homeRoutes');

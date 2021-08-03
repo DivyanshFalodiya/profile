@@ -21,6 +21,14 @@
                         <a id="project-link" href="#" target="_blank">
                             <i class="fas fa-external-link-alt"></i>
                         </a>
+                        <% if (admin) { %>
+                        <a id="edit-project-link" href="/work">
+                            <i
+                                class="fas fa-pencil-alt"
+                                style="color: white"
+                            ></i>
+                        </a>
+                        <% } %>
                     </div>
                     <p id="project-details"></p>
                     <ul id="project-tech"></ul>

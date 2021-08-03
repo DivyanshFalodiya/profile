@@ -379,9 +379,14 @@ body {
     align-items: center;
     justify-content: center;
 }
+#project-link {
+    margin: auto 1rem;
+}
+#edit-project-link {
+    margin: auto 1rem;
+}
 #project-title {
     display: inline;
-    margin: 0 1rem 0 0;
     color: goldenrod;
 }
 #project-tech {

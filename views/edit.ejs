@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+    </head>
+    <body data-barba="wrapper">
+        <canvas id="canvas"></canvas>
+        <div id="outer-container">
+            <%- include('./partials/appbar') %>
+            <div
+                class="container"
+                data-barba="container"
+                data-barba-namespace="edit"
+            >
+                <h1 class="title">Edit Project</h1>
+                <form class="form-group" id="auth-form">
+                    <input
+                        type="text"
+                        placeholder="<%= project.title %>"
+                        name="title"
+                        value="<%= project.title %>"
+                        required
+                        class="form-control"
+                    />
+                    <!-- <textarea
+                        class="form-control"
+                        placeholder="<%= project.about %>"
+                        name="title"
+                        value="<%= project.about %>"
+                    >
+                    </textarea> -->
+                    <button
+                        id="button-login"
+                        class="btn-theme"
+                        data-content="Validate"
+                        type="submit"
+                    >
+                        Update
+                    </button>
+                    <svg id="loader" width="30" height="30">
+                        <circle
+                            class="loader-circle"
+                            cx="15"
+                            cy="15"
+                            r="10"
+                            fill="none"
+                            stroke="#70c542"
+                            stroke-linecap="round"
+                            stroke-width="2"
+                        />
+                    </svg>
+                </form>
+                <div class="error">
+                    <p><%= error %></p>
+                </div>
+                <div class="success">
+                    <p><%= success %></p>
+                </div>
+            </div>
+        </div>
+        <%- include('./partials/footer') %>
+    </body>
+</html>

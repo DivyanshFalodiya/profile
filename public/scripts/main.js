@@ -188,5 +188,20 @@ barba.init({
                 script = null;
             },
         },
+        {
+            namespace: 'edit',
+            beforeEnter() {
+                updateAnchors();
+            },
+            afterEnter(data) {
+                if (!forceAnimate) animate = false;
+                // script = new Login();
+            },
+            beforeLeave(data) {
+                if (!forceAnimate) animate = true;
+                // script.stop();
+                // script = null;
+            },
+        },
     ],
 });

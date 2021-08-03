@@ -8,6 +8,9 @@ class Projects {
     constructor() {
         // DOM setup
         this.canvas = document.querySelector('#projects-canvas');
+        this.canvasContainer = document.querySelector(
+            '#project-canvas-container'
+        );
         this.canvasParent = document.querySelector('.container');
         this.canvasParent.style.minHeight = '100vh';
         this.projectContainer = document.querySelector('#project-content');
@@ -267,23 +270,23 @@ class Projects {
 
     addEventListeners() {
         window.addEventListener('resize', this.handleResize.bind(this));
-        this.canvas.addEventListener(
+        this.canvasContainer.addEventListener(
             'pointerdown',
             this.handlePointerDown.bind(this)
         );
-        this.canvas.addEventListener(
+        this.canvasContainer.addEventListener(
             'pointermove',
             this.handlePointerMove.bind(this)
         );
-        this.canvas.addEventListener(
+        this.canvasContainer.addEventListener(
             'pointerup',
             this.handlePointerUp.bind(this)
         );
-        this.canvas.addEventListener(
+        this.canvasContainer.addEventListener(
             'pointercancel',
             this.handlePointerUp.bind(this)
         );
-        this.canvas.addEventListener(
+        this.canvasContainer.addEventListener(
             'pointerleave',
             this.handlePointerUp.bind(this)
         );
@@ -291,23 +294,23 @@ class Projects {
 
     removeEventListeners() {
         window.removeEventListener('resize', this.handleResize.bind(this));
-        this.canvas.removeEventListener(
+        this.canvasContainer.removeEventListener(
             'pointerdown',
             this.handlePointerDown.bind(this)
         );
-        this.canvas.removeEventListener(
+        this.canvasContainer.removeEventListener(
             'pointermove',
             this.handlePointerMove.bind(this)
         );
-        this.canvas.removeEventListener(
+        this.canvasContainer.removeEventListener(
             'pointerup',
             this.handlePointerUp.bind(this)
         );
-        this.canvas.removeEventListener(
+        this.canvasContainer.removeEventListener(
             'pointercancel',
             this.handlePointerUp.bind(this)
         );
-        this.canvas.removeEventListener(
+        this.canvasContainer.removeEventListener(
             'pointerleave',
             this.handlePointerUp.bind(this)
         );

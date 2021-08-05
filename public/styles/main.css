@@ -409,11 +409,8 @@ body {
     padding: 1rem;
     border-radius: 0.2em;
     background-color: rgb(255, 255, 255);
-    /* display: flex; */
-    /* flex-direction: column; */
-}
-.form-group {
-    align-items: flex-start;
+    width: 350px;
+    max-width: 500px;
 }
 .edit-inputs {
     margin: 0.5rem 0;
@@ -430,9 +427,6 @@ body {
 }
 .edit-project-image-container > * {
     margin: 0.5rem;
-}
-.button-update-container {
-    align-items: flex-end;
 }
 .project-tech-input-icon {
     font-size: 2rem;

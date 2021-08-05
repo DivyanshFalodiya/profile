@@ -16,14 +16,18 @@
                 <form id="edit-form">
                     <div class="form-group">
                         <label for="input-project-image">Project Image</label>
-                        <img src="" id="edit-project-image" alt="" />
                         <input
                             id="input-project-image"
-                            placeholder="ex. https://source.unsplash.com/random"
                             type="url"
-                            name="image-url"
+                            name="image"
+                            value="https://picsum.photos/500"
                             required
                             class="form-control edit-inputs"
+                        />
+                        <img
+                            src="https://picsum.photos/500"
+                            id="edit-project-image"
+                            alt=""
                         />
                     </div>
                     <div class="form-group">
@@ -36,6 +40,19 @@
                             required
                             class="form-control edit-inputs"
                         />
+                    </div>
+                    <div class="form-group">
+                        <label for="input-project-about"
+                            >Project Description</label
+                        >
+                        <textarea
+                            id="input-project-about"
+                            class="form-control edit-inputs"
+                            name="about"
+                            rows="5"
+                            required
+                            placeholder="ex. This project is used to help detect malaria."
+                        ></textarea>
                     </div>
                     <div class="form-group">
                         <label for="input-project-link">Project Link</label>
@@ -82,6 +99,12 @@
                             stroke-width="2"
                         />
                     </svg>
+                    <div class="error">
+                        <p></p>
+                    </div>
+                    <div class="success">
+                        <p></p>
+                    </div>
                 </form>
             </div>
         </div>

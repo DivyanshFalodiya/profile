@@ -9,6 +9,7 @@ import Index from './index2.js';
 import Projects from './projects.js';
 import Login from './login.js';
 import Edit from './edit.js';
+import Add from './add.js';
 
 // Initialize
 let requestId = null;
@@ -211,11 +212,11 @@ barba.init({
             },
             afterEnter(data) {
                 if (!forceAnimate) animate = false;
-                // script = new Add();
+                script = new Add();
             },
             beforeLeave(data) {
                 if (!forceAnimate) animate = true;
-                // script.stop();
+                script.stop();
                 script = null;
             },
         },

@@ -38,10 +38,15 @@ router.patch(
 router.post('/projects', authController.isAuthenticated, async (req, res) => {
     const project = await projectsController.addProject(req.body);
     if (project != null) {
-        res.status(200).send(project._id);
+        res.status(200).json({
+            id: project._id,
+            success: 'Added successfully',
+        });
         return;
     }
-    res.status(501);
+    res.status(501).json({
+        error: 'Something went wrong! Could not add!',
+    });
 });
 
 module.exports = router;

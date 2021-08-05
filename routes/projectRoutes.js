@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const authController = require('../controllers/authController');
 const projectController = require('../controllers/projectsController');
+const Project = require('../models/ProjectModel');
 
 // General route to visit projects
 router.get('/', async (req, res) => {
@@ -29,6 +30,13 @@ router.get('/edit/:id', authController.isAuthenticated, async (req, res) => {
         return;
     }
     res.status(401).send('Bad Request');
+});
+
+// Admin only route for updating project
+router.get('/add', authController.isAuthenticated, async (req, res) => {
+    const project = new Project();
+    res.render('edit', { project, error: '', success: '' });
+    res.json({ update: false });
 });
 
 // Admin only route for adding new project

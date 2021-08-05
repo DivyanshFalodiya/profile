@@ -35,8 +35,7 @@ router.get('/edit/:id', authController.isAuthenticated, async (req, res) => {
 // Admin only route for updating project
 router.get('/add', authController.isAuthenticated, async (req, res) => {
     const project = new Project();
-    res.render('edit', { project, error: '', success: '' });
-    res.json({ update: false });
+    res.render('add');
 });
 
 // Admin only route for adding new project

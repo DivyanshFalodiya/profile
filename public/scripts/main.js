@@ -158,11 +158,11 @@ barba.init({
             namespace: 'projects',
             beforeEnter() {
                 updateAnchors();
-            },
-            afterEnter(data) {
                 if (!forceAnimate) {
                     animate = false;
                 }
+            },
+            afterEnter(data) {
                 script = new Projects();
             },
             beforeLeave(data) {

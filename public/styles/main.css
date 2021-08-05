@@ -13,7 +13,6 @@ body {
     flex-direction: column;
     color: white;
     background-color: black;
-    overscroll-behavior: none;
     scroll-behavior: smooth;
 }
 
@@ -309,7 +308,7 @@ body {
 .title {
     text-align: center;
 }
-.form-group {
+#auth-form {
     margin: 1rem;
     display: flex;
     flex-direction: column;

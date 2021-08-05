@@ -54,7 +54,6 @@ class Projects {
                 return res.json();
             })
             .then((res) => {
-                console.log(res.json);
                 this.data = res;
                 this.circleRadius =
                     (this.data.length * this.planeSize) / (2 * Math.PI);
@@ -161,7 +160,8 @@ class Projects {
         this.projectTitle.textContent = project.title;
         this.projectDetails.textContent = project.about;
         this.projectLink.href = project.link;
-        this.editProject.href = `/work/edit/${project._id}`;
+        if (this.editProject)
+            this.editProject.href = `/work/edit/${project._id}`;
 
         while (this.projectTech.firstChild)
             this.projectTech.removeChild(this.projectTech.firstChild);

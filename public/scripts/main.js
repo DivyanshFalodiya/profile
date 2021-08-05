@@ -8,6 +8,7 @@ import Setup from './threeSetup.js';
 import Index from './index2.js';
 import Projects from './projects.js';
 import Login from './login.js';
+import Edit from './edit.js';
 
 // Initialize
 let requestId = null;
@@ -108,10 +109,10 @@ const render = () => {
     setup.render(animate);
     switch (window.location.pathname) {
         case '/':
-            if (script) script.render();
+            if (script && typeof script.render === 'function') script.render();
             break;
         case '/work':
-            if (script) script.render();
+            if (script && typeof script.render === 'function') script.render();
             break;
         default:
             break;
@@ -195,12 +196,27 @@ barba.init({
             },
             afterEnter(data) {
                 if (!forceAnimate) animate = false;
-                // script = new Login();
+                script = new Edit();
+            },
+            beforeLeave(data) {
+                if (!forceAnimate) animate = true;
+                script.stop();
+                script = null;
+            },
+        },
+        {
+            namespace: 'add',
+            beforeEnter() {
+                updateAnchors();
+            },
+            afterEnter(data) {
+                if (!forceAnimate) animate = false;
+                // script = new Add();
             },
             beforeLeave(data) {
                 if (!forceAnimate) animate = true;
                 // script.stop();
-                // script = null;
+                script = null;
             },
         },
     ],

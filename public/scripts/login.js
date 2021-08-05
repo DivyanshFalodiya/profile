@@ -40,7 +40,9 @@ class Login {
             }
             this.loginButton.style.display = 'block';
             this.loader.style.display = 'none';
-        } catch {}
+        } catch {
+            this.error.textContent = 'Something went wrong. Please try later.';
+        }
     }
 
     stop() {

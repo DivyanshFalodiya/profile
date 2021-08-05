@@ -15,19 +15,31 @@
                 <h1 class="title">Edit Project</h1>
                 <form id="edit-form">
                     <div class="form-group">
+                        <label for="input-project-id">Project ID</label>
+                        <input
+                            id="input-project-id"
+                            type="text"
+                            name="id"
+                            value="<%= project._id %>"
+                            required
+                            class="form-control edit-inputs"
+                            readonly
+                        />
+                    </div>
+                    <div class="form-group">
                         <label for="input-project-image">Project Image</label>
+                        <input
+                            id="input-project-image"
+                            type="url"
+                            name="image"
+                            value="<%= project.image %>"
+                            required
+                            class="form-control edit-inputs"
+                        />
                         <img
                             src="<%= project.image %>"
                             id="edit-project-image"
                             alt="<%= project.title %>"
-                        />
-                        <input
-                            id="input-project-image"
-                            type="url"
-                            name="image-url"
-                            value="<%= project.image %>"
-                            required
-                            class="form-control edit-inputs"
                         />
                     </div>
                     <div class="form-group">
@@ -43,6 +55,20 @@
                         />
                     </div>
                     <div class="form-group">
+                        <label for="input-project-about"
+                            >Project Description</label
+                        >
+                        <textarea
+                            id="input-project-about"
+                            class="form-control edit-inputs"
+                            name="about"
+                            rows="5"
+                            placeholder="ex. This project is used to help detect malaria."
+                        >
+<%= project.about %></textarea
+                        >
+                    </div>
+                    <div class="form-group">
                         <label for="input-project-link">Project Link</label>
                         <input
                             id="input-project-link"
@@ -51,6 +77,19 @@
                             name="link"
                             value="<%= project.link %>"
                             required
+                            class="form-control edit-inputs"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="input-project-tech">
+                            Project Technologies
+                        </label>
+                        <input
+                            id="input-project-tech"
+                            type="text"
+                            placeholder="ex. cplusplus, python"
+                            name="tech"
+                            value="<%= project.tech %>"
                             class="form-control edit-inputs"
                         />
                     </div>
@@ -76,13 +115,13 @@
                             stroke-width="2"
                         />
                     </svg>
+                    <div class="error">
+                        <p><%= error %></p>
+                    </div>
+                    <div class="success">
+                        <p><%= success %></p>
+                    </div>
                 </form>
-                <div class="error">
-                    <p><%= error %></p>
-                </div>
-                <div class="success">
-                    <p><%= success %></p>
-                </div>
             </div>
         </div>
         <%- include('./partials/footer') %>

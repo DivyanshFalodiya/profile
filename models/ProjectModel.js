@@ -18,6 +18,7 @@ const ProjectSchema = mongoose.Schema({
     },
     tech: {
         type: [String],
+        trim: true,
     },
     image: {
         required: true,

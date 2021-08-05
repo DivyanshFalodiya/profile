@@ -24,10 +24,14 @@ router.patch(
             req.body
         );
         if (project != null) {
-            res.status(200).json(project);
+            res.status(200).json({
+                success: 'Updated successfully.',
+            });
             return;
         }
-        res.status(400).send('Bad Request');
+        res.status(400).json({
+            error: 'Something went wrong! Could not update!',
+        });
     }
 );
 // Admin only route to add a new project

@@ -2,10 +2,13 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 
 const config = () => {
-    mongoose.connect(process.env.MONGO_URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
+    mongoose.connect(
+        `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.z7oow.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+        {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        }
+    );
 
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'Connection Error:'));

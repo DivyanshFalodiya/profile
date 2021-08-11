@@ -63,7 +63,9 @@ exports.login = function (req, res) {
     const email = req.body.email;
     if (email === process.env.ADMIN_MAIL) {
         const token = createToken(email);
-        const link = `http://localhost:3000/auth/callback?token=${token}`;
+        const link = `${req.protocol}://${req.get(
+            'host'
+        )}/auth/callback?token=${token}`;
         const template = createTemplate(link);
         const mailOptions = {
             to: email,

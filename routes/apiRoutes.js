@@ -49,4 +49,22 @@ router.post('/projects', authController.isAuthenticated, async (req, res) => {
     });
 });
 
+// Admin only route to delete an project
+router.delete(
+    '/projects/:id',
+    authController.isAuthenticated,
+    async (req, res) => {
+        const result = await projectsController.removeProject(req.params.id);
+        if (result) {
+            res.status(200).json({
+                success: true,
+            });
+            return;
+        }
+        res.status(501).json({
+            success: false,
+        });
+    }
+);
+
 module.exports = router;

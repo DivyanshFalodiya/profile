@@ -37,6 +37,16 @@ async function addProject({ title, about, link, tech, image }) {
     }
 }
 
+// Delete an existing project
+async function removeProject(id) {
+    try {
+        await Project.findByIdAndDelete(id);
+        return true;
+    } catch {
+        return false;
+    }
+}
+
 // Update an existing project
 async function updateProject(id, { title, about, link, tech, image }) {
     try {
@@ -53,4 +63,10 @@ async function updateProject(id, { title, about, link, tech, image }) {
     }
 }
 
-module.exports = { fetchProjects, fetchProject, addProject, updateProject };
+module.exports = {
+    fetchProjects,
+    fetchProject,
+    addProject,
+    updateProject,
+    removeProject,
+};

@@ -46,6 +46,7 @@ class Add {
 
             if (data.success) {
                 this.success.textContent = data.success;
+                location.href = '/work';
             }
             this.button.style.display = 'block';
             this.loader.style.display = 'none';

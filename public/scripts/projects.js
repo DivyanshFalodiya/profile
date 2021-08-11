@@ -8,6 +8,7 @@ class Projects {
     constructor() {
         // DOM setup
         this.canvas = document.querySelector('#projects-canvas');
+        this.canvas.style.visibility = 'hidden';
         this.canvasContainer = document.querySelector(
             '#project-canvas-container'
         );
@@ -19,6 +20,9 @@ class Projects {
         this.projectLink = document.querySelector('#project-link');
         this.projectTech = document.querySelector('#project-tech');
         this.editProject = document.querySelector('#edit-project-link');
+        this.next = document.querySelector('#project-next');
+        this.prev = document.querySelector('#project-prev');
+        this.loader = document.querySelector('#loader');
 
         // THREE setup
         this.setup = new Setup(this.canvas, false, null, false);
@@ -49,6 +53,7 @@ class Projects {
     }
 
     fetchProjects() {
+        this.loader.style.display = 'block';
         fetch('/api/projects')
             .then((res) => {
                 return res.json();
@@ -57,12 +62,16 @@ class Projects {
                 this.data = res;
                 this.circleRadius =
                     (this.data.length * this.planeSize) / (2 * Math.PI);
-                this.addObjects();
+                return this.addObjects();
+            })
+            .then(() => {
                 this.addEventListeners();
+                this.canvas.style.visibility = 'visible';
+                this.loader.style.display = 'none';
             });
     }
 
-    addObjects() {
+    async addObjects() {
         let arcAngle = this.planeSize / this.circleRadius;
         this.data.forEach((project, index) => {
             let planeObject = this.addPlane(project);
@@ -228,6 +237,7 @@ class Projects {
         };
     }
     handlePointerMove(e) {
+        e.preventDefault();
         // If the pointer is down and moving
         if (this.pointerPosition) {
             let direction = {
@@ -235,7 +245,7 @@ class Projects {
                 y: e.clientY - this.pointerPosition.y,
             };
             this.meshes.forEach((obj, index) => {
-                let dir = direction.x * 0.01 + obj.rotation.y;
+                let dir = direction.x * 0.015 + obj.rotation.y;
                 gsap.to(obj.rotation, {
                     y: dir,
                     duration: 0.2,
@@ -272,6 +282,40 @@ class Projects {
         });
     }
 
+    handleNext(e) {
+        let arcAngle = this.planeSize / this.circleRadius;
+        this.meshes.forEach((obj, index) => {
+            let newRot = obj.rotation.y - arcAngle;
+            gsap.to(obj.rotation, {
+                y: newRot,
+                duration: 0.5,
+            });
+            let angleDeg = Math.round((newRot * 180) / Math.PI);
+            angleDeg = angleDeg % 360;
+            if (angleDeg == 0 && this.position != index) {
+                this.position = index;
+                this.updateDom();
+            }
+        });
+    }
+
+    handlePrev(e) {
+        let arcAngle = this.planeSize / this.circleRadius;
+        this.meshes.forEach((obj, index) => {
+            let newRot = obj.rotation.y + arcAngle;
+            gsap.to(obj.rotation, {
+                y: newRot,
+                duration: 0.5,
+            });
+            let angleDeg = Math.round((newRot * 180) / Math.PI);
+            angleDeg = angleDeg % 360;
+            if (angleDeg == 0 && this.position != index) {
+                this.position = index;
+                this.updateDom();
+            }
+        });
+    }
+
     addEventListeners() {
         window.addEventListener('resize', this.handleResize.bind(this));
         this.canvasContainer.addEventListener(
@@ -294,6 +338,8 @@ class Projects {
             'pointerleave',
             this.handlePointerUp.bind(this)
         );
+        this.next.addEventListener('click', this.handleNext.bind(this));
+        this.prev.addEventListener('click', this.handlePrev.bind(this));
     }
 
     removeEventListeners() {
@@ -318,6 +364,8 @@ class Projects {
             'pointerleave',
             this.handlePointerUp.bind(this)
         );
+        this.next.removeEventListener('click', this.handleNext.bind(this));
+        this.prev.removeEventListener('click', this.handlePrev.bind(this));
     }
 
     stop() {

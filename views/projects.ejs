@@ -14,6 +14,31 @@
             >
                 <div id="project-canvas-container">
                     <canvas id="projects-canvas"> </canvas>
+                    <div class="project-navigate">
+                        <button class="btn project-nav-btn" id="project-prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="btn project-nav-btn" id="project-next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <svg
+                        id="loader"
+                        class="loader-project"
+                        width="30"
+                        height="30"
+                    >
+                        <circle
+                            class="loader-circle"
+                            cx="15"
+                            cy="15"
+                            r="10"
+                            fill="none"
+                            stroke="#70c542"
+                            stroke-linecap="round"
+                            stroke-width="2"
+                        />
+                    </svg>
                 </div>
                 <div id="project-content">
                     <div class=".project-header">

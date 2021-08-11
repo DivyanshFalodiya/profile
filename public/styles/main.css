@@ -341,7 +341,7 @@ body {
     color: greenyellow;
 }
 #loader {
-    /* display: none; */
+    display: none;
     stroke-dasharray: 50;
     animation: loader-rotate 1s infinite ease-in-out;
 }

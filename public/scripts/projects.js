@@ -20,6 +20,7 @@ class Projects {
         this.projectLink = document.querySelector('#project-link');
         this.projectTech = document.querySelector('#project-tech');
         this.editProject = document.querySelector('#edit-project-link');
+        this.deleteProject = document.querySelector('#project-delete');
         this.next = document.querySelector('#project-next');
         this.prev = document.querySelector('#project-prev');
         this.loader = document.querySelector('#loader');
@@ -179,7 +180,7 @@ class Projects {
             listEl.classList.add('devicon');
             let icon = document.createElement('i');
             icon.classList.add(`devicon-${tech}-plain`);
-            icon.classList.add(`colored`);
+            if (tech !== 'nextjs') icon.classList.add(`colored`);
             listEl.appendChild(icon);
             this.projectTech.appendChild(listEl);
         });
@@ -316,6 +317,18 @@ class Projects {
         });
     }
 
+    async handleDelete(e) {
+        const project = this.data[this.position];
+        try {
+            let result = await fetch(`/api/projects/${project._id}`, {
+                method: 'DELeTE',
+                headers: { 'Content-Type': 'application/json' },
+            });
+            result = await result.json();
+            if (result.success === true) location.reload();
+        } catch {}
+    }
+
     addEventListeners() {
         window.addEventListener('resize', this.handleResize.bind(this));
         this.canvasContainer.addEventListener(
@@ -340,6 +353,12 @@ class Projects {
         );
         this.next.addEventListener('click', this.handleNext.bind(this));
         this.prev.addEventListener('click', this.handlePrev.bind(this));
+        if (this.deleteProject) {
+            this.deleteProject.addEventListener(
+                'click',
+                this.handleDelete.bind(this)
+            );
+        }
     }
 
     removeEventListeners() {
@@ -366,6 +385,12 @@ class Projects {
         );
         this.next.removeEventListener('click', this.handleNext.bind(this));
         this.prev.removeEventListener('click', this.handlePrev.bind(this));
+        if (this.deleteProject) {
+            this.deleteProject.removeEventListener(
+                'click',
+                this.handleDelete.bind(this)
+            );
+        }
     }
 
     stop() {

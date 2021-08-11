@@ -1,7 +1,7 @@
 class Add {
     constructor() {
         this.form = document.querySelector('#edit-form');
-        // this.loader = document.querySelector('#loader');
+        this.loader = document.querySelector('#loader');
         this.button = document.querySelector('#button-update');
         this.error = document.querySelector('.error p');
         this.success = document.querySelector('.success p');
@@ -31,7 +31,7 @@ class Add {
         this.error.textContent = '';
         this.success.textContent = '';
         this.button.style.display = 'none';
-        // this.loader.style.display = 'block';
+        this.loader.style.display = 'block';
 
         try {
             const res = await fetch(`/api/projects/`, {
@@ -48,9 +48,10 @@ class Add {
                 this.success.textContent = data.success;
             }
             this.button.style.display = 'block';
-            // this.loader.style.display = 'none';
+            this.loader.style.display = 'none';
         } catch {
             this.error.textContent = 'Something went wrong. Please try later.';
+            this.loader.style.display = 'none';
         }
     }
 

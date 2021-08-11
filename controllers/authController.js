@@ -75,8 +75,9 @@ exports.login = function (req, res) {
         };
         transporter.sendMail(mailOptions, (err, response) => {
             if (err) {
+                console.log(err);
                 res.status(501).json({
-                    error: err,
+                    error: 'Something went wrong. Please try again later',
                 });
                 return;
             }

@@ -114,8 +114,9 @@ class Projects {
             vertexShader,
             fragmentShader,
             uniforms: {
-                imgTexture: {
-                    value: new THREE.TextureLoader().load(project.image),
+                imgTexture: {},
+                isTexture: {
+                    value: false,
                 },
                 distanceFront: {
                     type: 'f',
@@ -128,7 +129,14 @@ class Projects {
             },
             side: THREE.DoubleSide,
             transparent: true,
+            opacity: 0,
         });
+
+        new THREE.TextureLoader().load(project.image, (image) => {
+            planeMaterial.uniforms.imgTexture.value = image;
+            planeMaterial.uniforms.isTexture.value = true;
+        });
+
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.position.set(0, 0, this.circleRadius + 2);
 

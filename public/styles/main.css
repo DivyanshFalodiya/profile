@@ -14,6 +14,11 @@ body {
     color: white;
     background-color: black;
     scroll-behavior: smooth;
+    overflow-y: hidden;
+}
+
+.body-load {
+    overflow-y: auto;
 }
 
 ::selection {
@@ -136,6 +141,52 @@ body {
 }
 
 /* Container */
+#page-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+#page-load-circle {
+    stroke: rgb(4, 255, 242);
+    stroke-dashoffset: 10;
+    animation: page-circle infinite 3s ease-in-out forwards,
+        rotator infinite 1s linear;
+    transform-origin: center;
+}
+@keyframes rotator {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+@keyframes page-circle {
+    0% {
+        stroke-width: 1;
+        stroke-dasharray: 50;
+    }
+    50% {
+        stroke-width: 10;
+        stroke-dasharray: 20;
+    }
+    100% {
+        stroke-width: 1;
+        stroke-dasharray: 50;
+    }
+}
+.page-loaded {
+    transform: translateY(-100%);
+}
+
 .container {
     width: 100%;
     height: 100%;
@@ -520,7 +571,7 @@ body {
     }
 }
 
-@media (hover) {
+@media (hover) and (pointer: fine) {
     .project-navigate {
         display: none;
     }

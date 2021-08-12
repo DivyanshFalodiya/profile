@@ -1,0 +1,23 @@
+<div id="page-loader">
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="200"
+        height="200"
+        id="page-loader-svg"
+    >
+        <defs>
+            <linearGradient id="gradient" gradientTransform="rotate(90)">
+                <!-- Use CSS custom properties for the start / stop colors of the gradient -->
+                <stop id="gradientStop1" offset="0%" stop-color="grey" />
+                <stop id="gradientStop2 " offset="100%" stop-color="#ccc" />
+            </linearGradient>
+        </defs>
+        <circle
+            id="page-load-circle"
+            stroke="url('#gradient')"
+            cx="100"
+            cy="100"
+            r="45"
+        />
+    </svg>
+</div>

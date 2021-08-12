@@ -122,6 +122,19 @@ const render = () => {
 };
 render();
 
+// Page load
+(() => {
+    setTimeout(() => {
+        const pageLoader = document.querySelector('#page-loader');
+        gsap.to(pageLoader, {
+            pointerEvents: 'none',
+            opacity: '0',
+            duration: '1',
+            onUpdate: () => (document.body.style.overflowY = 'auto'),
+        });
+    }, 3000);
+})();
+
 // Update anchors
 const updateAnchors = () => {
     anchors.forEach((a) => {

@@ -137,9 +137,9 @@ render();
 const updateAnchors = () => {
     anchors.forEach((a) => {
         if (a.href == window.location.href) {
-            a.style.color = 'skyblue';
+            a.style.color = 'rgb(70, 70, 70)';
         } else {
-            a.style.color = 'white';
+            a.style.color = 'grey';
         }
     });
 };

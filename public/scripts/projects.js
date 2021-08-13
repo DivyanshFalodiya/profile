@@ -188,7 +188,7 @@ class Projects {
             listEl.classList.add('devicon');
             let icon = document.createElement('i');
             icon.classList.add(`devicon-${tech}-plain`);
-            if (tech !== 'nextjs') icon.classList.add(`colored`);
+            icon.classList.add(`colored`);
             listEl.appendChild(icon);
             this.projectTech.appendChild(listEl);
         });

@@ -29,8 +29,8 @@ body {
 .btn-theme {
     position: relative;
     border: none;
-    background-color: rgb(0, 153, 255);
-    color: white;
+    background-color: rgb(73, 151, 252);
+    color: rgb(0, 0, 0);
     border-radius: 2px;
     padding: 5px 10px;
     outline: none;
@@ -50,7 +50,7 @@ body {
     height: 100%;
     border-radius: 2px;
     padding: 5px 0px;
-    background-color: rgb(0, 107, 230);
+    background-color: rgb(0, 82, 233);
     transition: 0.3s;
 }
 
@@ -105,11 +105,11 @@ body {
     height: 8px;
 }
 ::-webkit-scrollbar-thumb {
-    background-color: white;
+    background-color: grey;
     border-radius: 5px;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background-color: rgb(166, 215, 255);
+    background-color: rgb(94, 94, 94);
 }
 
 /* Barba */
@@ -225,10 +225,10 @@ body {
     align-items: center;
 }
 .project-nav-btn {
-    border: 1px solid white;
+    border: 2px solid grey;
 }
 .project-nav-btn i {
-    color: white;
+    color: grey;
 }
 #image-canvas {
     width: 100%;
@@ -273,7 +273,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    color: white;
+    color: grey;
 }
 
 .nav-brand {
@@ -302,33 +302,48 @@ body {
 }
 
 .nav-links a {
+    position: relative;
     display: block;
-    color: white;
+    font-weight: 600;
+    color: grey;
     text-decoration: none;
     font-size: 1em;
     transition: 0.3s;
 }
-.a-active {
-    color: blue;
+
+.nav-link-anchor::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    background-color: grey;
+    transition: 450ms ease;
 }
 
-.link-underline {
+.nav-link-anchor:hover::after {
+    width: 100%;
+    transition: 450ms ease;
+}
+
+/* .link-underline {
     position: absolute;
     width: 0;
     height: 1px;
-    background-color: white;
+    background-color: grey;
     transition: 0.3s;
-}
+} */
 
 .nav-links li:hover a {
     color: white;
     transition: 0.3s;
 }
 
-.nav-links li:hover .link-underline {
+/* .nav-links li:hover .link-underline {
     width: 100%;
     transition: 0.3s;
-}
+} */
 
 .ham-container {
     --width: 1.5rem;
@@ -339,8 +354,6 @@ body {
     cursor: pointer;
     width: calc(var(--width) + 2 * var(--margin));
     height: calc(var(--height) + 4.5 * var(--margin));
-    /* width: 1.5rem; */
-    /* height: 100px; */
     z-index: 2;
 }
 
@@ -348,7 +361,7 @@ body {
     width: var(--width);
     height: var(--height);
     margin: var(--margin);
-    background-color: white;
+    background-color: grey;
     transition: 450ms ease;
 }
 .ham-active > .line1 {
@@ -389,7 +402,7 @@ body {
     color: red;
 }
 .success {
-    color: greenyellow;
+    color: green;
 }
 #loader {
     display: none;
@@ -521,7 +534,7 @@ body {
         top: 0;
         width: 100%;
         right: -100%;
-        background-color: rgba(0, 0, 0, 0.95);
+        background-color: rgba(255, 255, 255, 0.95);
         align-items: flex-start;
         height: 100vh;
         transition: 450ms ease;

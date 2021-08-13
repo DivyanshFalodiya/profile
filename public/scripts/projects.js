@@ -186,6 +186,7 @@ class Projects {
         project.tech.forEach((tech) => {
             let listEl = document.createElement('li');
             listEl.classList.add('devicon');
+            listEl.classList.add(`tooltip-container`);
             let icon = document.createElement('i');
             icon.classList.add(`devicon-${tech}-plain`);
             icon.classList.add(`colored`);

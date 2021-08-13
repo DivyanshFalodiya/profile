@@ -465,6 +465,7 @@ body {
 }
 #edit-project-link {
     margin: auto 1rem;
+    padding: 6px 6px;
 }
 #project-title {
     display: inline;
@@ -481,12 +482,14 @@ body {
     text-align: center;
     margin: 0.5rem;
 }
-.devicon > i {
+.tooltip-container {
     position: relative;
-    font-size: 2rem;
 }
-.devicon > i:hover .tooltiptext {
+.tooltip-container > i:hover .tooltiptext {
     visibility: visible;
+}
+.devicon > i {
+    font-size: 2rem;
 }
 .tooltiptext {
     visibility: hidden;
@@ -500,6 +503,7 @@ body {
     background-color: rgb(80, 80, 80);
     padding: 5px;
     font-family: sans-serif;
+    font-weight: normal;
     border-radius: 5px;
 }
 

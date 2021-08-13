@@ -189,6 +189,12 @@ class Projects {
             let icon = document.createElement('i');
             icon.classList.add(`devicon-${tech}-plain`);
             icon.classList.add(`colored`);
+
+            let tooltip = document.createElement('span');
+            tooltip.classList.add('tooltiptext');
+            tooltip.textContent = tech;
+            icon.appendChild(tooltip);
+
             listEl.appendChild(icon);
             this.projectTech.appendChild(listEl);
         });

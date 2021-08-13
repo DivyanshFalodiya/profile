@@ -481,19 +481,34 @@ body {
     text-align: center;
     margin: 0.5rem;
 }
-.devicon > * {
+.devicon > i {
+    position: relative;
     font-size: 2rem;
+}
+.devicon > i:hover .tooltiptext {
+    visibility: visible;
+}
+.tooltiptext {
+    visibility: hidden;
+    z-index: 2;
+    position: absolute;
+    font-size: 0.8rem;
+    top: -80%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    background-color: rgb(80, 80, 80);
+    padding: 5px;
+    font-family: sans-serif;
+    border-radius: 5px;
 }
 
 /* Edit page */
 #edit-form {
-    color: black;
     padding: 1rem;
     border-radius: 0.2em;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    /* width: 350px; */
-    /* max-width: 500px; */
+    background-color: rgba(255, 255, 255, 0.788);
+    color: grey;
 }
 .edit-inputs {
     margin: 0.5rem 0;

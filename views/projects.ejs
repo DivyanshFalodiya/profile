@@ -20,7 +20,7 @@
                             <i class="fas fa-chevron-left"></i>
                         </button>
                         <button class="btn project-nav-btn" id="project-next">
-                            <i class="fas fa-chevron-right"></i>
+                            <i class="fas fa-chevron-right"> </i>
                         </button>
                     </div>
                     <svg
@@ -44,18 +44,46 @@
                 <div id="project-content">
                     <div class=".project-header">
                         <h2 id="project-title"></h2>
-                        <a id="project-link" href="#" target="_blank">
-                            <i class="fas fa-external-link-alt"></i>
-                        </a>
-                        <% if (admin) { %>
-                        <a id="edit-project-link" href="/work">
-                            <i class="fas fa-pencil-alt" style="color: white">
-                            </i>
-                        </a>
-                        <button class="btn" id="project-delete">
-                            <i style="color: white" class="fas fa-trash"> </i>
-                        </button>
-                        <% } %>
+                        <div>
+                            <button class="btn tooltip-container">
+                                <a
+                                    id="project-link"
+                                    class="fullsize"
+                                    href="#"
+                                    target="_blank"
+                                >
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                            </button>
+                            <% if (admin) { %>
+                            <button class="btn tooltip-container">
+                                <a
+                                    id="edit-project-link"
+                                    class="fullsize"
+                                    href="/work"
+                                >
+                                    <i
+                                        class="fas fa-pencil-alt"
+                                        style="color: white"
+                                    >
+                                        <span class="tooltip-text">Edit</span>
+                                    </i>
+                                </a>
+                            </button>
+
+                            <button
+                                class="btn tooltip-container"
+                                id="project-delete"
+                            >
+                                <i
+                                    style="color: rgb(255, 0, 0)"
+                                    class="fas fa-trash"
+                                >
+                                    <span class="tooltip-text">Delete</span>
+                                </i>
+                            </button>
+                            <% } %>
+                        </div>
                     </div>
                     <p id="project-details"></p>
                     <ul id="project-tech"></ul>

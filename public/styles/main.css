@@ -444,14 +444,14 @@ body {
 }
 .project-header {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
 }
-#project-link {
-    margin: auto 1rem;
+button:is(.tooltip-container) {
+    padding: 10px;
 }
-#edit-project-link {
-    margin: auto 1rem;
+.fullsize {
+    width: 100%;
+    height: 100%;
 }
 #project-title {
     display: inline;
@@ -470,6 +470,25 @@ body {
 }
 .devicon > * {
     font-size: 2rem;
+}
+.tooltip-container {
+    position: relative;
+}
+.tooltip-text {
+    visibility: hidden;
+    position: absolute;
+    color: white;
+    background-color: grey;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: normal;
+    top: -80%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
 }
 
 /* Edit page */
@@ -570,7 +589,29 @@ body {
         height: 50vh;
     }
 }
-
+@media (hover) and (pointer: fine) and (min-width: 768px) {
+    #project-content {
+        position: absolute;
+        max-width: 50%;
+        left: 0;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 1),
+            rgba(0, 0, 0, 0.8),
+            rgba(0, 0, 0, 0)
+        );
+        pointer-events: none;
+    }
+    #project-content a,
+    #project-content .tooltip-container,
+    #project-content button {
+        pointer-events: all;
+    }
+}
 @media (hover) and (pointer: fine) {
     .project-navigate {
         display: none;

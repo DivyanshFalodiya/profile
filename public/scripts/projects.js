@@ -13,7 +13,6 @@ class Projects {
             '#project-canvas-container'
         );
         this.canvasParent = document.querySelector('.container');
-        this.canvasParent.style.minHeight = '100vh';
         this.projectContainer = document.querySelector('#project-content');
         this.projectTitle = document.querySelector('#project-title');
         this.projectDetails = document.querySelector('#project-details');
@@ -39,18 +38,15 @@ class Projects {
         this.planeSize = this.getPlaneSize();
         this.data = [];
 
+        // Handle resize
+        this.handleResize();
+
         // Fetch projects and add event listeners
         this.fetchProjects();
     }
 
     getPlaneSize() {
-        // let smaller =
-        //     this.canvas.clientWidth > this.canvas.clientWidth
-        //         ? this.canvas.clientWidth
-        //         : this.canvas.clientHeight;
-        // console.log(this.canvas.clientWidth, this.canvas.clientHeight);
-        // console.log(smaller / 8);
-        return 20;
+        return 25;
     }
 
     fetchProjects() {
@@ -93,7 +89,7 @@ class Projects {
 
         const planeGeometry = new THREE.PlaneBufferGeometry(
             this.planeSize,
-            this.planeSize,
+            (this.planeSize * 9) / 16,
             10,
             10
         );
@@ -114,9 +110,8 @@ class Projects {
             vertexShader,
             fragmentShader,
             uniforms: {
-                imgTexture: {
-                    value: new THREE.TextureLoader().load(project.image),
-                },
+                imgTexture: {},
+                isTexture: { value: false },
                 distanceFront: {
                     type: 'f',
                     value: 0,
@@ -129,6 +124,12 @@ class Projects {
             side: THREE.DoubleSide,
             transparent: true,
         });
+
+        new THREE.TextureLoader().load(project.image, (image) => {
+            planeMaterial.uniforms.imgTexture.value = image;
+            planeMaterial.uniforms.isTexture.value = true;
+        });
+
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
         plane.position.set(0, 0, this.circleRadius + 2);
 
@@ -178,9 +179,17 @@ class Projects {
         project.tech.forEach((tech) => {
             let listEl = document.createElement('li');
             listEl.classList.add('devicon');
+            listEl.classList.add('tooltip-container');
+
             let icon = document.createElement('i');
             icon.classList.add(`devicon-${tech}-plain`);
             if (tech !== 'nextjs') icon.classList.add(`colored`);
+
+            let tooltip = document.createElement('span');
+            tooltip.classList.add('tooltip-text');
+            tooltip.textContent = tech;
+            icon.appendChild(tooltip);
+
             listEl.appendChild(icon);
             this.projectTech.appendChild(listEl);
         });
@@ -203,9 +212,9 @@ class Projects {
         // Update canvas
         this.canvas.width = this.canvasParent.clientWidth;
         this.canvas.height = (this.canvasParent.clientWidth * 720) / 1280;
-        if (window.innerWidth <= 450) {
-            this.canvas.height = this.canvasParent.clientHeight / 2;
-        }
+        // if (window.innerWidth <= 450) {
+        //     this.canvas.height = this.canvasParent.clientHeight / 2;
+        // }
 
         this.canvas.style.width = this.canvas.width + 'px';
         this.canvas.style.height = this.canvas.height + 'px';

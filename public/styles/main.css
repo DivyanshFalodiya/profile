@@ -242,7 +242,7 @@ body {
     border-radius: 1rem;
 }
 #divyansh-image-container img {
-    width: 300px;
+    width: 200px;
     /* height: 100%; */
 }
 #first-name {
@@ -600,7 +600,7 @@ button:is(.tooltip-container) {
         justify-content: center;
         background: linear-gradient(
             to right,
-            rgba(0, 0, 0, 1),
+            rgba(0, 0, 0, 0),
             rgba(0, 0, 0, 0.8),
             rgba(0, 0, 0, 0)
         );

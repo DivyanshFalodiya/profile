@@ -61,7 +61,11 @@ exports.isAuthenticated = (req, res, next) => {
 // Login request handler
 exports.login = function (req, res) {
     const email = req.body.email;
-    if (email === process.env.ADMIN_MAIL) {
+    const secret = req.body.secret;
+    if (
+        email === process.env.ADMIN_MAIL &&
+        secret === process.env.ADMIN_SECRET
+    ) {
         const token = createToken(email);
         const link = `${req.protocol}://${req.get(
             'host'

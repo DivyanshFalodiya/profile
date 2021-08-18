@@ -16,9 +16,18 @@
                 <h1 class="title">Admin, huh?</h1>
                 <form class="form-group" id="auth-form">
                     <input
+                        id="admin-email"
                         type="email"
                         placeholder="Admin Email"
                         name="email"
+                        required
+                        class="form-control"
+                    />
+                    <input
+                        id="admin-pass"
+                        type="password"
+                        placeholder="Admin Secret"
+                        name="secret"
                         required
                         class="form-control"
                     />

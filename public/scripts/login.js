@@ -18,6 +18,7 @@ class Login {
     async handleFormSubmit(e) {
         e.preventDefault();
         const email = this.loginForm.email.value;
+        const secret = this.loginForm.secret.value;
 
         this.error.textContent = '';
         this.success.textContent = '';
@@ -27,7 +28,7 @@ class Login {
         try {
             const res = await fetch('/auth', {
                 method: 'POST',
-                body: JSON.stringify({ email }),
+                body: JSON.stringify({ email, secret }),
                 headers: { 'Content-Type': 'application/json' },
             });
             const data = await res.json();

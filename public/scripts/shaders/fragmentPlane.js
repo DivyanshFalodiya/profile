@@ -2,10 +2,9 @@ export default `
 uniform sampler2D imgTexture;
 uniform bool isTexture;
 uniform float u_time;
-uniform float distanceFront;
 varying vec2 vUv;
 void main(){
-    float u_colorFactor = 1.0 * distanceFront;
+    float u_colorFactor = 1.0 * 1;
     if(isTexture){
         vec4 tex = texture2D(imgTexture, vUv);
 

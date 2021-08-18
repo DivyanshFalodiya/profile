@@ -9,7 +9,7 @@ import vertexShaderPlane from './shaders/vertex.js';
 import fragmentShaderPlane from './shaders/fragmentPlane.js';
 
 export default class Setup {
-    constructor(canvas, stars = true, camera = null, rotCamera = true) {
+    constructor(canvas) {
         // noise.seed(Math.random());
 
         // Mouse
@@ -22,17 +22,12 @@ export default class Setup {
         this.scene = new THREE.Scene();
 
         // Camera
-        if (!camera) {
-            this.camera = new THREE.PerspectiveCamera(
-                75,
-                canvas.clientWidth / canvas.clientHeight,
-                0.1,
-                10000
-            );
-        } else {
-            this.camera = camera;
-        }
-        this.rotCamera = rotCamera;
+        this.camera = new THREE.PerspectiveCamera(
+            75,
+            canvas.clientWidth / canvas.clientHeight,
+            0.1,
+            10000
+        );
 
         // Renderer
         this.renderer = new THREE.WebGLRenderer({
@@ -111,14 +106,6 @@ export default class Setup {
 
     // Render
     render(animate = false) {
-        if (this.rotCamera) {
-            gsap.to(this.camera.rotation, {
-                y: this.mouse.x * 0.1,
-                x: this.mouse.y * 0.1,
-                delay: 0.1,
-                duration: 0.5,
-            });
-        }
         this.composer.render();
     }
 }

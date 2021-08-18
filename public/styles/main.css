@@ -303,25 +303,19 @@ body {
     position: relative;
     cursor: pointer;
     margin: auto 1rem;
+    padding: 5px;
 }
 
 .nav-links a {
     display: block;
     color: white;
     text-decoration: none;
-    font-size: 1em;
+    font-size: 1rem;
+    font-weight: 600;
     transition: 0.3s;
 }
 .a-active {
     color: blue;
-}
-
-.link-underline {
-    position: absolute;
-    width: 0;
-    height: 1px;
-    background-color: white;
-    transition: 0.3s;
 }
 
 .nav-links li:hover a {
@@ -329,9 +323,20 @@ body {
     transition: 0.3s;
 }
 
-.nav-links li:hover .link-underline {
+.nav-links li:not(.button-container)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background-color: white;
+    transition: 0.3s ease;
+}
+
+.nav-links li:hover::after {
     width: 100%;
-    transition: 0.3s;
+    transition: 0.3s ease;
 }
 
 .ham-container {
@@ -482,6 +487,10 @@ body {
 .contact > * {
     margin: 0.5rem;
     font-size: 1.2rem;
+    opacity: 0.5;
+}
+.contact > *:hover {
+    opacity: 1;
 }
 
 /* Projects Stuff */

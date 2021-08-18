@@ -54,7 +54,7 @@ export default class Setup {
 
         // Set up stars
         if (stars) {
-            this.starDensity = 5;
+            this.starDensity = 0;
             this.starZ = -200;
             this.stars = [];
             this.stars.push(
@@ -67,8 +67,6 @@ export default class Setup {
                 this.addStars(this.starDensity, 0x97f3fe, 5000, 5000)
             );
         }
-
-        this.controls = new OrbitControls(this.camera, canvas);
     }
 
     // Add point light
@@ -220,6 +218,5 @@ export default class Setup {
             });
         }
         this.composer.render();
-        this.controls.update();
     }
 }

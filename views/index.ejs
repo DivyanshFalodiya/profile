@@ -16,7 +16,6 @@
             >
                 <div class="content-head">
                     <div id="divyansh-image-container">
-                        <!-- <canvas id="image-canvas"> </canvas> -->
                         <img src="/images/divyansh2.jpg" alt="" />
                     </div>
                     <h1 class="name" id="first-name">
@@ -42,8 +41,33 @@
                 </div>
                 <div class="details-container">
                     <div class="details-inner-container">
+                        <h4 class="heading">WHO AM I</h4>
+                        <div class="inner-container outline-bottom">
+                            <h5 class="sub-heading">ROLES</h5>
+                            <div class="field-container">
+                                <div class="roles-container">
+                                    <h6 id="roles"></h6>
+                                    <p id="cursor"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details-inner-container">
+                        <h4 class="heading">SKILLS</h4>
+                        <div class="inner-container skills-container">
+                            <% for( let i = 0; i < skills.length; i++ ) { %>
+                            <div class="tooltip-container">
+                                <i class="<%= skills[i] %> colored"> </i>
+                                <span class="tooltip-text">
+                                    <%= skills[i].split('-')[1] %>
+                                </span>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="details-inner-container outline">
                         <h4 class="heading">EDUCATION</h4>
-                        <div class="inner-container">
+                        <div class="inner-container outline-bottom">
                             <h5 class="sub-heading">Current</h5>
                             <div class="field-container">
                                 <div class="field">
@@ -72,7 +96,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="inner-container">
+                        <div class="inner-container outline-bottom">
                             <h5 class="sub-heading">Past</h5>
                             <div class="field-container">
                                 <div class="field">
@@ -102,7 +126,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="inner-container">
+                        <div class="inner-container outline-bottom">
                             <h5 class="sub-heading">Past</h5>
                             <div class="field-container">
                                 <div class="field">

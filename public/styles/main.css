@@ -413,13 +413,40 @@ body {
     justify-content: center;
     user-select: none;
 }
-.details-container {
-    /* width: 100%;
-    padding: 2rem; */
+#roles-container {
+    position: relative;
+}
+#roles {
+    font-size: 1.5rem;
+    font-family: monospace;
+    letter-spacing: 5px;
+    font-weight: 400;
+    width: fit-content;
+    display: inline;
+}
+.skills-container {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    font-size: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 4rem);
+    border: none;
+}
+#cursor {
+    /* position: relative; */
+    display: inline-block;
+    bottom: 0;
+    width: 3px;
+    border-radius: 5px;
+    height: 1.5rem;
+    transform: translateY(1.2rem);
+    background-color: white;
+}
+.outline {
+    border: 2px solid grey;
 }
 .details-inner-container {
     padding: 1rem;
-    border: 2px solid white;
     border-radius: 3px;
     transition: 450ms ease;
 }
@@ -427,6 +454,8 @@ body {
     margin: 2rem 0;
     padding: 1rem;
     border-radius: 3px;
+}
+.outline-bottom {
     border-bottom: 2px solid rgb(189, 189, 189);
 }
 .heading {
@@ -451,8 +480,8 @@ body {
 }
 .field {
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+    /* align-items: flex-start;
+    justify-content: flex-start; */
 }
 .field-heading {
     color: rgb(177, 177, 177);
@@ -579,6 +608,7 @@ body {
 .tooltip-text {
     visibility: hidden;
     position: absolute;
+    z-index: 1;
     color: black;
     background-color: white;
     padding: 5px;

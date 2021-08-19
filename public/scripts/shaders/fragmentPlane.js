@@ -4,7 +4,7 @@ uniform bool isTexture;
 uniform float u_time;
 varying vec2 vUv;
 void main(){
-    float dist = 0.5;
+    float dist = 0.4;
     float u_colorFactor = 1.0 * dist;
     if(isTexture){
         vec4 tex = texture2D(imgTexture, vUv);

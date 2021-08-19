@@ -72,13 +72,13 @@ class Projects {
         new THREE.TextureLoader().load(url, (image) => {
             planeMaterial.uniforms.imgTexture.value = image;
             planeMaterial.uniforms.isTexture.value = true;
+            this.loader.style.display = 'none';
             gsap.to(plane.scale, {
                 x: 1,
                 y: 1,
                 z: 1,
                 duration: 0.45,
                 onComplete: () => {
-                    this.loader.style.display = 'none';
                     gsap.to(this.projectDetails, { opacity: 1, duration: 0.5 });
                 },
             });

@@ -82,15 +82,16 @@
                             <div class="tooltip-container">
                                 <i
                                     class="
-                                        devicon devicon-<%=
+                                        devicon
+                                        <%=
                                         project.tech[i]
-                                        %>-plain
+                                        %>
                                         colored
                                     "
                                 >
                                 </i>
                                 <span class="tooltip-text">
-                                    <%= project.tech[i] %>
+                                    <%= project.tech[i].split('-')[1] %>
                                 </span>
                             </div>
                             <% } %>

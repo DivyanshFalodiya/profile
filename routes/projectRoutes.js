@@ -21,6 +21,11 @@ router.get('/', async (req, res) => {
     res.status(501);
 });
 
+// Admin only route for updating project
+router.get('/add', authController.isAuthenticated, (req, res) => {
+    res.render('add');
+});
+
 router.get('/:id', async (req, res) => {
     const project = await projectController.fetchProject(req.params.id);
     if (project != null) {
@@ -40,18 +45,13 @@ router.get('/:id', async (req, res) => {
 });
 
 // Admin only route for updating project
-router.get('/:id/edit', authController.isAuthenticated, async (req, res) => {
+router.get('/edit/:id/', authController.isAuthenticated, async (req, res) => {
     const project = await projectController.fetchProject(req.params.id);
     if (project) {
         res.render('edit', { project, error: '', success: '' });
         return;
     }
     res.status(401).send('Bad Request');
-});
-
-// Admin only route for updating project
-router.get('/add', authController.isAuthenticated, (req, res) => {
-    res.render('add');
 });
 
 module.exports = router;

@@ -35,22 +35,28 @@
                                     project-link
                                     tooltip-container
                                 "
-                                href="/work/edit/<%=project._id%>"
+                                href="/work/<%=project._id%>/edit"
                             >
-                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-edit" style="color: white"></i>
                                 <span class="tooltip-text">Edit</span>
                             </a>
-                            <a
+                            <button
+                                id="project-delete-button"
                                 class="
+                                    btn
+                                    pad0
                                     devicon-container
                                     project-link
                                     tooltip-container
                                 "
                                 href="/work/delete/<%=project._id%>"
                             >
-                                <i class="fas fa-trash-alt"></i>
+                                <i
+                                    class="fas fa-trash-alt"
+                                    style="color: red"
+                                ></i>
                                 <span class="tooltip-text">Delete</span>
-                            </a>
+                            </button>
                             <% } %>
                         </div>
                         <p id="project-about"><%= project.about %></p>

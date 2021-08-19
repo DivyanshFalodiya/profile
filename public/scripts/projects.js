@@ -2,18 +2,23 @@
 import * as THREE from './three/build/three.module.js';
 import vertexShader from './shaders/vertex.js';
 import fragmentShader from './shaders/fragmentPlane.js';
-import Setup from './threeSetup.js';
 
 class Projects {
     constructor(setup) {
         this.setup = setup;
         this.id = this.getID();
         this.project = null;
+        this.deleteButton = document.querySelector('#project-delete-button');
         this.projectDetails = document.querySelector('#project-details');
         this.fetchProject().then((res) => {
             this.project = res;
             this.plane = this.createPlane(this.project.image);
         });
+
+        this.deleteButton.addEventListener(
+            'click',
+            this.handleDelete.bind(this)
+        );
     }
 
     async fetchProject() {
@@ -87,7 +92,27 @@ class Projects {
         this.plane.geometry.attributes.position.needsUpdate = true;
     }
 
+    async handleDelete() {
+        try {
+            let res = await fetch(`/api/projects/${this.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log(res);
+            res = await res.json();
+            if (!res.success) console.log('Another Something went wrong');
+        } catch {
+            console.log('Something went wrong!');
+        }
+    }
+
     stop() {
+        this.deleteButton.removeEventListener(
+            'click',
+            this.handleDelete.bind(this)
+        );
         this.projectDetails.style.opacity = 0;
         gsap.to(this.plane.scale, {
             x: 0,

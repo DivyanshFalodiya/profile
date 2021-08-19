@@ -29,6 +29,7 @@ exports.verifyToken = (token) => {
 
 // Middleware to check the request for authentication
 exports.isAuthenticated = (req, res, next) => {
+    console.log('Checking...');
     const token = req.query.token || req.cookies.jwt;
     if (!token) {
         res.status(403).json({

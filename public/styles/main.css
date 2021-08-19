@@ -18,6 +18,10 @@ body {
     overflow-y: hidden;
 }
 
+.pad0 {
+    padding: 0;
+}
+
 .body-load {
     overflow-y: auto;
 }
@@ -471,6 +475,14 @@ body {
 }
 
 /* Projects Stuff */
+.btn-fab {
+    border-radius: 50%;
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    color: black;
+    background-color: white;
+}
 #project-container {
     position: fixed;
     left: 0;
@@ -497,6 +509,12 @@ body {
 }
 .project-link {
     padding-bottom: 0.5rem;
+    margin: 1rem;
+}
+#project-links-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 #project-links-container i {
     font-size: 1.5rem;
@@ -539,9 +557,6 @@ body {
 .project:hover .project-image {
     transform: scale(1.2);
     transition: 0.3s ease;
-}
-button:is(.tooltip-container) {
-    padding: 10px;
 }
 .devicon-container {
     display: flex;

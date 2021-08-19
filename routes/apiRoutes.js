@@ -56,9 +56,7 @@ router.delete(
     async (req, res) => {
         const result = await projectsController.removeProject(req.params.id);
         if (result) {
-            res.status(200).json({
-                success: true,
-            });
+            res.redirect('/work');
             return;
         }
         res.status(501).json({

@@ -103,7 +103,6 @@ class Projects {
     }
     render() {
         if (this.plane) this.updatePlane();
-        const curCamPos = this.setup.camera.position;
         gsap.to(this.setup.camera.rotation, {
             x: this.setup.mouse.y * 0.1,
             y: this.setup.mouse.x * 0.1,

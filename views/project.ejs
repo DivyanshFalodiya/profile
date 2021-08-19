@@ -16,6 +16,62 @@
                 <div id="project-container" data-image="<%= project.image %>">
                     <div id="project-details">
                         <h1 id="project-title"><%= project.title %></h1>
+                        <div id="project-links-container">
+                            <a
+                                class="
+                                    devicon-container
+                                    project-link
+                                    tooltip-container
+                                "
+                                href="<%= project.link %>"
+                            >
+                                <i class="fas fa-external-link-square-alt"></i>
+                                <span class="tooltip-text">Go</span>
+                            </a>
+                            <% if (admin) { %>
+                            <a
+                                class="
+                                    devicon-container
+                                    project-link
+                                    tooltip-container
+                                "
+                                href="/work/edit/<%=project._id%>"
+                            >
+                                <i class="fas fa-edit"></i>
+                                <span class="tooltip-text">Edit</span>
+                            </a>
+                            <a
+                                class="
+                                    devicon-container
+                                    project-link
+                                    tooltip-container
+                                "
+                                href="/work/delete/<%=project._id%>"
+                            >
+                                <i class="fas fa-trash-alt"></i>
+                                <span class="tooltip-text">Delete</span>
+                            </a>
+                            <% } %>
+                        </div>
+                        <p id="project-about"><%= project.about %></p>
+                        <div id="project-tech" class="devicon-container">
+                            <% for( let i = 0; i < project.tech.length; i++ ){%>
+                            <div class="tooltip-container">
+                                <i
+                                    class="
+                                        devicon devicon-<%=
+                                        project.tech[i]
+                                        %>-plain
+                                        colored
+                                    "
+                                >
+                                </i>
+                                <span class="tooltip-text">
+                                    <%= project.tech[i] %>
+                                </span>
+                            </div>
+                            <% } %>
+                        </div>
                     </div>
                 </div>
             </div>

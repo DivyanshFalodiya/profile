@@ -479,6 +479,9 @@ body {
     height: 100%;
 }
 #project-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     opacity: 0;
     position: absolute;
     left: 50%;
@@ -487,6 +490,16 @@ body {
 }
 #project-title {
     font-size: 5rem;
+    text-align: center;
+}
+#project-about {
+    text-align: center;
+}
+.project-link {
+    padding-bottom: 0.5rem;
+}
+#project-links-container i {
+    font-size: 1.5rem;
 }
 .project-canvas {
     width: 100%;
@@ -530,12 +543,14 @@ body {
 button:is(.tooltip-container) {
     padding: 10px;
 }
-.devicon {
-    text-align: center;
-    margin: 0.5rem;
-}
-.devicon > * {
+.devicon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-size: 2rem;
+}
+.devicon {
+    margin: 1rem;
 }
 .tooltip-container {
     position: relative;
@@ -550,7 +565,7 @@ button:is(.tooltip-container) {
     font-size: 0.8rem;
     font-family: 'Varela Round', 'Roboto', sans-serif;
     font-weight: 600;
-    top: -80%;
+    bottom: -80%;
     left: 50%;
     transform: translateX(-50%);
 }

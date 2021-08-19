@@ -18,6 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// Protocol
+app.enable('trust proxy');
+
 // Routes
 app.use('/', homeRoutes);
 app.use('/work', projectRoutes);

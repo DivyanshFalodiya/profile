@@ -583,6 +583,7 @@ body {
     align-items: center;
 }
 .project-details {
+    pointer-events: none;
     width: 100%;
     position: absolute;
     padding: 1rem;

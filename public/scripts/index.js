@@ -16,10 +16,7 @@ class Index {
         this.interval = 150;
         this.timeGap = 50;
         this.rolesContainer = document.querySelector('#roles');
-        // this.animateRoles();
-        // setInterval(() => {
         this.animateRoles();
-        // }, this.interval);
     }
 
     changeIndex() {

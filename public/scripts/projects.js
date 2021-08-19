@@ -7,11 +7,39 @@ import Setup from './threeSetup.js';
 class Projects {
     constructor(setup) {
         this.setup = setup;
+        this.id = this.getID();
+        this.project = null;
         this.projectDetails = document.querySelector('#project-details');
-        this.plane = this.createPlane();
+        this.fetchProject().then((res) => {
+            this.project = res;
+            this.plane = this.createPlane(this.project.image);
+        });
     }
 
-    createPlane() {
+    async fetchProject() {
+        try {
+            const res = await fetch(`/api/projects/${this.id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            const data = await res.json();
+            return data;
+        } catch {
+            return null;
+            // this.error.textContent = 'Something went wrong. Please try later.';
+        }
+    }
+
+    getID() {
+        let id = window.location.pathname;
+        id = id.slice(6, id.length);
+        if (id[id.length - 1] == '/') id = id.slice(0, id.length - 1);
+        return id;
+    }
+
+    createPlane(url) {
         const planeGeometry = new THREE.PlaneGeometry(10, 10, 64, 64);
         const planeMaterial = new THREE.ShaderMaterial({
             vertexShader,
@@ -29,7 +57,7 @@ class Projects {
         plane.scale.set(0, 0, 0);
         this.setup.scene.add(plane);
 
-        new THREE.TextureLoader().load('https://picsum.photos/500', (image) => {
+        new THREE.TextureLoader().load(url, (image) => {
             planeMaterial.uniforms.imgTexture.value = image;
             planeMaterial.uniforms.isTexture.value = true;
             gsap.to(plane.scale, {
@@ -53,7 +81,7 @@ class Projects {
             let x = positions[i - 2],
                 y = positions[i - 1];
             positions[i] =
-                Math.sin(x + y + this.setup.clock.getElapsedTime()) * 0.2;
+                Math.sin(x + y + this.setup.clock.getElapsedTime() * 2) * 0.2;
         }
         this.plane.geometry.attributes.position.array = positions;
         this.plane.geometry.attributes.position.needsUpdate = true;
@@ -74,7 +102,12 @@ class Projects {
         });
     }
     render() {
-        this.updatePlane();
+        if (this.plane) this.updatePlane();
+        const curCamPos = this.setup.camera.position;
+        gsap.to(this.setup.camera.rotation, {
+            x: this.setup.mouse.y * 0.1,
+            y: this.setup.mouse.x * 0.1,
+        });
     }
 }
 

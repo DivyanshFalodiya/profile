@@ -5,7 +5,7 @@ import * as THREE from './three/build/three.module.js';
 // import { GlitchPass } from './three/examples/jsm/postprocessing/GlitchPass.js';
 // import { AfterimagePass } from './three/examples/jsm/postprocessing/AfterimagePass.js';
 import Setup from './threeSetup.js';
-import Index from './index2.js';
+import Index from './index.js';
 import Projects from './projects.js';
 import Login from './login.js';
 import Edit from './edit.js';
@@ -18,9 +18,6 @@ const anchors = navLinks.querySelectorAll('a');
 const ham = document.querySelector('.ham-container');
 const canvas = document.getElementById('canvas');
 const setup = new Setup(canvas);
-
-// Set up eveything
-// setup.scene.background = 0xffffff;
 
 // On mouve move
 window.addEventListener('pointermove', (e) => {

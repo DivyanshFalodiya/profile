@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+    </head>
+    <body data-barba="wrapper">
+        <%- include('./partials/loader') %>
+        <canvas id="canvas"></canvas>
+        <div id="outer-container">
+            <%- include('./partials/appbar') %>
+            <div
+                class="container"
+                data-barba="container"
+                data-barba-namespace="project"
+            >
+                <div id="project-container" data-image="<%= project.image %>">
+                    <div id="project-details">
+                        <h1 id="project-title"><%= project.title %></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('./partials/footer') %>
+    </body>
+</html>

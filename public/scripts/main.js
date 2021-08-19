@@ -3,7 +3,7 @@ import * as THREE from './three/build/three.module.js';
 // import { EffectComposer } from './three/examples/jsm/postprocessing/EffectComposer.js';
 // import { RenderPass } from './three/examples/jsm/postprocessing/RenderPass.js';
 // import { GlitchPass } from './three/examples/jsm/postprocessing/GlitchPass.js';
-import { AfterimagePass } from './three/examples/jsm/postprocessing/AfterimagePass.js';
+// import { AfterimagePass } from './three/examples/jsm/postprocessing/AfterimagePass.js';
 import Setup from './threeSetup.js';
 import Index from './index2.js';
 import Projects from './projects.js';
@@ -12,32 +12,15 @@ import Edit from './edit.js';
 import Add from './add.js';
 
 // Initialize
-let requestId = null;
-let animate = false;
-let forceAnimate = false;
 let script = null;
 const navLinks = document.getElementsByClassName('nav-links')[0];
 const anchors = navLinks.querySelectorAll('a');
 const ham = document.querySelector('.ham-container');
-const animCircle = document.querySelector('#animation-circle');
-const animInnerCircle = document.querySelector('#inner-circle');
 const canvas = document.getElementById('canvas');
 const setup = new Setup(canvas);
 
 // Set up eveything
-setup.scene.background = '#000';
-
-// Passes
-// let bloomPass = new UnrealBloomPass(
-//     new THREE.Vector2(window.innerWidth, window.innerHeight),
-//     1.5,
-//     0.4
-// );
-// setup.addPass(bloomPass);
-
-const afterImagePass = new AfterimagePass();
-afterImagePass.uniforms['damp'].value = 0.4;
-setup.composer.addPass(afterImagePass);
+// setup.scene.background = 0xffffff;
 
 // On mouve move
 window.addEventListener('pointermove', (e) => {
@@ -82,17 +65,6 @@ ham.addEventListener('click', () => {
     ham.classList.toggle('ham-active');
 });
 
-// Animate SVG circle
-animCircle.addEventListener('click', () => {
-    forceAnimate = !forceAnimate;
-    animInnerCircle.classList.toggle('anim-circle-active');
-    if (forceAnimate) {
-        animate = true;
-    } else {
-        animate = false;
-    }
-});
-
 // On device orientation for sensors
 const handleOrientation = (e) => {
     setup.mouse = {
@@ -104,16 +76,9 @@ window.addEventListener('deviceorientation', handleOrientation, true);
 
 // Background Render
 const render = () => {
-    setup.render(animate);
-    switch (window.location.pathname) {
-        case '/':
-            if (script && typeof script.render === 'function') script.render();
-            break;
-        case '/work':
-            if (script && typeof script.render === 'function') script.render();
-            break;
-        default:
-            break;
+    setup.render();
+    if (script && typeof script.render === 'function') {
+        script.render();
     }
     window.requestAnimationFrame(render);
 };
@@ -152,15 +117,9 @@ barba.init({
                 updateAnchors();
             },
             afterEnter(data) {
-                if (!forceAnimate) {
-                    animate = false;
-                }
                 script = new Index();
             },
             beforeLeave(data) {
-                if (!forceAnimate) {
-                    animate = true;
-                }
                 script = null;
             },
         },
@@ -168,18 +127,9 @@ barba.init({
             namespace: 'projects',
             beforeEnter() {
                 updateAnchors();
-                if (!forceAnimate) {
-                    animate = false;
-                }
             },
-            afterEnter(data) {
-                script = new Projects();
-            },
+            afterEnter(data) {},
             beforeLeave(data) {
-                if (!forceAnimate) {
-                    animate = true;
-                }
-                script.stop();
                 script = null;
             },
         },
@@ -189,11 +139,9 @@ barba.init({
                 updateAnchors();
             },
             afterEnter(data) {
-                if (!forceAnimate) animate = false;
                 script = new Login();
             },
             beforeLeave(data) {
-                if (!forceAnimate) animate = true;
                 script.stop();
                 script = null;
             },
@@ -204,11 +152,9 @@ barba.init({
                 updateAnchors();
             },
             afterEnter(data) {
-                if (!forceAnimate) animate = false;
                 script = new Edit();
             },
             beforeLeave(data) {
-                if (!forceAnimate) animate = true;
                 script.stop();
                 script = null;
             },
@@ -219,11 +165,22 @@ barba.init({
                 updateAnchors();
             },
             afterEnter(data) {
-                if (!forceAnimate) animate = false;
                 script = new Add();
             },
             beforeLeave(data) {
-                if (!forceAnimate) animate = true;
+                script.stop();
+                script = null;
+            },
+        },
+        {
+            namespace: 'project',
+            beforeEnter() {
+                updateAnchors();
+            },
+            afterEnter(data) {
+                script = new Projects(setup);
+            },
+            beforeLeave(data) {
                 script.stop();
                 script = null;
             },

@@ -105,7 +105,7 @@ export default class Setup {
     }
 
     // Render
-    render(animate = false) {
+    render() {
         this.composer.render();
     }
 }

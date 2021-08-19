@@ -10,8 +10,8 @@ router.get('/projects', async (req, res) => {
 
 // Get project by id
 router.get('/projects/:id', async (req, res) => {
-    const projects = await projectsController.fetchProject(req.params.id);
-    res.status(200).json(projects);
+    const project = await projectsController.fetchProject(req.params.id);
+    res.send(project);
 });
 
 // Admin only route to update a project

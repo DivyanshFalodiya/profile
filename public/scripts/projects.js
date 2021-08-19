@@ -8,17 +8,22 @@ class Projects {
         this.setup = setup;
         this.id = this.getID();
         this.project = null;
-        this.deleteButton = document.querySelector('#project-delete-button');
         this.projectDetails = document.querySelector('#project-details');
         this.fetchProject().then((res) => {
             this.project = res;
             this.plane = this.createPlane(this.project.image);
         });
 
-        this.deleteButton.addEventListener(
-            'click',
-            this.handleDelete.bind(this)
-        );
+        // Delete
+        try {
+            this.deleteButton = document.querySelector(
+                '#project-delete-button'
+            );
+            this.deleteButton.addEventListener(
+                'click',
+                this.handleDelete.bind(this)
+            );
+        } catch {}
     }
 
     async fetchProject() {
@@ -109,10 +114,12 @@ class Projects {
     }
 
     stop() {
-        this.deleteButton.removeEventListener(
-            'click',
-            this.handleDelete.bind(this)
-        );
+        if (this.deleteButton) {
+            this.deleteButton.removeEventListener(
+                'click',
+                this.handleDelete.bind(this)
+            );
+        }
         this.projectDetails.style.opacity = 0;
         gsap.to(this.plane.scale, {
             x: 0,

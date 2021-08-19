@@ -51,7 +51,6 @@ router.get('/:id/edit', authController.isAuthenticated, async (req, res) => {
 
 // Admin only route for updating project
 router.get('/add', authController.isAuthenticated, (req, res) => {
-    console.log('add');
     res.render('add');
 });
 

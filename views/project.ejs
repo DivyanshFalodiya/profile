@@ -14,6 +14,23 @@
                 data-barba-namespace="project"
             >
                 <div id="project-container" data-image="<%= project.image %>">
+                    <svg
+                        class="absolute-center"
+                        id="loader"
+                        width="30"
+                        height="30"
+                    >
+                        <circle
+                            class="loader-circle"
+                            cx="15"
+                            cy="15"
+                            r="10"
+                            fill="none"
+                            stroke="#70c542"
+                            stroke-linecap="round"
+                            stroke-width="2"
+                        />
+                    </svg>
                     <div id="project-details">
                         <h1 id="project-title"><%= project.title %></h1>
                         <div id="project-links-container">
@@ -24,6 +41,7 @@
                                     tooltip-container
                                 "
                                 href="<%= project.link %>"
+                                target="_blank"
                             >
                                 <i class="fas fa-external-link-square-alt"></i>
                                 <span class="tooltip-text">Go</span>

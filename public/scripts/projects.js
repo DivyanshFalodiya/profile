@@ -9,6 +9,8 @@ class Projects {
         this.id = this.getID();
         this.project = null;
         this.projectDetails = document.querySelector('#project-details');
+        this.loader = document.querySelector('#loader');
+        this.loader.style.display = 'block';
         this.fetchProject().then((res) => {
             this.project = res;
             this.plane = this.createPlane(this.project.image);
@@ -37,8 +39,8 @@ class Projects {
             const data = await res.json();
             return data;
         } catch {
+            console.log('Something went wrong');
             return null;
-            // this.error.textContent = 'Something went wrong. Please try later.';
         }
     }
 
@@ -76,6 +78,7 @@ class Projects {
                 z: 1,
                 duration: 0.45,
                 onComplete: () => {
+                    this.loader.style.display = 'none';
                     gsap.to(this.projectDetails, { opacity: 1, duration: 0.5 });
                 },
             });

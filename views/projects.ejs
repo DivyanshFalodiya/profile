@@ -13,80 +13,25 @@
                 data-barba="container"
                 data-barba-namespace="projects"
             >
-                <div id="project-canvas-container">
-                    <canvas id="projects-canvas"> </canvas>
-                    <div class="project-navigate">
-                        <button class="btn project-nav-btn" id="project-prev">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="btn project-nav-btn" id="project-next">
-                            <i class="fas fa-chevron-right"> </i>
-                        </button>
-                    </div>
-                    <svg
-                        id="loader"
-                        class="loader-project"
-                        width="30"
-                        height="30"
-                    >
-                        <circle
-                            class="loader-circle"
-                            cx="15"
-                            cy="15"
-                            r="10"
-                            fill="none"
-                            stroke="#70c542"
-                            stroke-linecap="round"
-                            stroke-width="2"
-                        />
-                    </svg>
-                </div>
-                <div id="project-content">
-                    <div class=".project-header">
-                        <h2 id="project-title"></h2>
-                        <div>
-                            <button class="btn tooltip-container">
-                                <a
-                                    id="project-link"
-                                    class="fullsize"
-                                    href="#"
-                                    target="_blank"
-                                >
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                            </button>
-                            <% if (admin) { %>
-                            <button class="btn tooltip-container">
-                                <a
-                                    id="edit-project-link"
-                                    class="fullsize"
-                                    href="/work"
-                                >
-                                    <i
-                                        class="fas fa-pencil-alt"
-                                        style="color: white"
-                                    >
-                                        <span class="tooltip-text">Edit</span>
-                                    </i>
-                                </a>
-                            </button>
-
-                            <button
-                                class="btn tooltip-container"
-                                id="project-delete"
-                            >
-                                <i
-                                    style="color: rgb(255, 0, 0)"
-                                    class="fas fa-trash"
-                                >
-                                    <span class="tooltip-text">Delete</span>
-                                </i>
-                            </button>
-                            <% } %>
+                <div class="projects-container">
+                    <% for( let i = 0; i < projects.length; i++ ) { %>
+                    <div class="project">
+                        <a href="/work/<%= projects[i]._id %>">
+                            <img
+                                class="project-image"
+                                src="<%= projects[i].image %>"
+                                alt="<%= projects[i].title %>"
+                            />
+                        </a>
+                        <div class="project-details">
+                            <h4><%= projects[i].title %></h4>
                         </div>
                     </div>
-                    <p id="project-details"></p>
-                    <ul id="project-tech"></ul>
+                    <% } %> <% if (admin) { %>
+                    <a href="/work/add" class="btn btn-fab">
+                        <i class="fas fa-plus"></i>
+                    </a>
+                    <% } %>
                 </div>
             </div>
         </div>

@@ -16,8 +16,7 @@
             >
                 <div class="content-head">
                     <div id="divyansh-image-container">
-                        <!-- <canvas id="image-canvas"> </canvas> -->
-                        <img src="/images/divyansh.png" alt="" />
+                        <img src="/images/divyansh2.jpg" alt="" />
                     </div>
                     <h1 class="name" id="first-name">
                         <span>D</span>
@@ -40,31 +39,110 @@
                         <span>A</span>
                     </h1>
                 </div>
-                <div class="about">
-                    <h4>About me</h4>
-                    <p>
-                        I am a <span>3rd year student</span> currently pursuing
-                        a
-                        <span style="color: goldenrod">
-                            Bachelors in Computer Science and Engineering
-                        </span>
-                        from
-                        <span style="color: rgb(255, 240, 152)">
-                            ABV Indian Institute of Information Technology,
-                            Gwalior.
-                        </span>
-                    </p>
-                    <p>
-                        I am really passionate about <span>technology</span> and
-                        have invested much of my time understanding and working
-                        with <span>Web</span> and <span>Android</span>.
-                    </p>
-                </div>
-                <div class="head-to-projects">
-                    <p style="text-align: center">
-                        Don't believe me? Head over
-                        <a href="/work">here</a> to find out more.
-                    </p>
+                <div class="details-container">
+                    <div class="details-inner-container">
+                        <h4 class="heading">WHO AM I</h4>
+                        <div class="inner-container outline-bottom">
+                            <h5 class="sub-heading">ROLES</h5>
+                            <div class="field-container">
+                                <div class="roles-container">
+                                    <h6 id="roles"></h6>
+                                    <p id="cursor"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="details-inner-container">
+                        <h4 class="heading">SKILLS</h4>
+                        <div class="inner-container skills-container">
+                            <% for( let i = 0; i < skills.length; i++ ) { %>
+                            <div class="tooltip-container">
+                                <i class="<%= skills[i] %> colored"> </i>
+                                <span class="tooltip-text">
+                                    <%= skills[i].split('-')[1] %>
+                                </span>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="details-inner-container outline">
+                        <h4 class="heading">EDUCATION</h4>
+                        <div class="inner-container">
+                            <h5 class="sub-heading">Current</h5>
+                            <div class="field-container">
+                                <div class="field">
+                                    <h6 class="field-heading">
+                                        School/College
+                                    </h6>
+                                    <h6 class="field-content">
+                                        Indian Institute of Information
+                                        Technology, Gwalior
+                                    </h6>
+                                </div>
+                                <div class="field">
+                                    <h6 class="field-heading">Degree</h6>
+                                    <h6 class="field-content">
+                                        Bachelor of Technology in Computer
+                                        Science and Engineering
+                                    </h6>
+                                </div>
+                                <div class="field">
+                                    <h6 class="field-heading">Year</h6>
+                                    <h6 class="field-content">2019 - 2023</h6>
+                                </div>
+                                <div class="field">
+                                    <h6 class="field-heading">CGPA</h6>
+                                    <h6 class="field-content">7.4 / 10</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inner-container">
+                            <h5 class="sub-heading">Past</h5>
+                            <div class="field-container">
+                                <div class="field">
+                                    <h6 class="field-heading">
+                                        School/College
+                                    </h6>
+                                    <h6 class="field-content">
+                                        Fatima Convent Higher Secondary School,
+                                        Nagda
+                                    </h6>
+                                </div>
+                                <div class="field">
+                                    <h6 class="field-heading">Core Subjects</h6>
+                                    <h6 class="field-content">
+                                        Maths, Physics, Chemistry
+                                    </h6>
+                                </div>
+                                <div class="field">
+                                    <h6 class="field-heading">Year</h6>
+                                    <h6 class="field-content">2005 - 2018</h6>
+                                </div>
+                                <div class="field">
+                                    <h6 class="field-heading">
+                                        XII Percentage
+                                    </h6>
+                                    <h6 class="field-content">85.5 %</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inner-container">
+                            <h5 class="sub-heading">Past</h5>
+                            <div class="field-container">
+                                <div class="field">
+                                    <h6 class="field-heading">Misc</h6>
+                                    <h6 class="field-content">
+                                        Preparation for JEE Mains and JEE
+                                        Advanced
+                                    </h6>
+                                </div>
+                                <div class="field">
+                                    <h6 class="field-heading">Year</h6>
+                                    <h6 class="field-content">2018 - 2019</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <%- include('./partials/contact') %>
             </div>

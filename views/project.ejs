@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+    </head>
+    <body data-barba="wrapper">
+        <%- include('./partials/loader') %>
+        <canvas id="canvas"></canvas>
+        <div id="outer-container">
+            <%- include('./partials/appbar') %>
+            <div
+                class="container"
+                data-barba="container"
+                data-barba-namespace="project"
+            >
+                <div id="project-container" data-image="<%= project.image %>">
+                    <svg
+                        class="absolute-center"
+                        id="loader"
+                        width="30"
+                        height="30"
+                    >
+                        <circle
+                            class="loader-circle"
+                            cx="15"
+                            cy="15"
+                            r="10"
+                            fill="none"
+                            stroke="#70c542"
+                            stroke-linecap="round"
+                            stroke-width="2"
+                        />
+                    </svg>
+                    <div id="project-details">
+                        <h1 id="project-title"><%= project.title %></h1>
+                        <div id="project-links-container">
+                            <a
+                                class="
+                                    devicon-container
+                                    project-link
+                                    tooltip-container
+                                "
+                                href="<%= project.link %>"
+                                target="_blank"
+                            >
+                                <i class="fas fa-external-link-square-alt"></i>
+                                <span class="tooltip-text">Go</span>
+                            </a>
+                            <% if (admin) { %>
+                            <a
+                                class="
+                                    devicon-container
+                                    project-link
+                                    tooltip-container
+                                "
+                                href="/work/edit/<%=project._id%>"
+                            >
+                                <i class="fas fa-edit" style="color: white"></i>
+                                <span class="tooltip-text">Edit</span>
+                            </a>
+                            <button
+                                id="project-delete-button"
+                                class="
+                                    btn
+                                    pad0
+                                    devicon-container
+                                    project-link
+                                    tooltip-container
+                                "
+                            >
+                                <i
+                                    class="fas fa-trash-alt"
+                                    style="color: red"
+                                ></i>
+                                <span class="tooltip-text">Delete</span>
+                            </button>
+                            <% } %>
+                        </div>
+                        <p id="project-about"><%= project.about %></p>
+                        <div id="project-tech" class="devicon-container">
+                            <% for( let i = 0; i < project.tech.length; i++ ){%>
+                            <div class="tooltip-container">
+                                <i
+                                    class="
+                                        devicon
+                                        <%=
+                                        project.tech[i]
+                                        %>
+                                        colored
+                                    "
+                                >
+                                </i>
+                                <span class="tooltip-text">
+                                    <%= project.tech[i].split('-')[1] %>
+                                </span>
+                            </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <%- include('./partials/footer') %>
+    </body>
+</html>

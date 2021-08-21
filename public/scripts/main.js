@@ -13,6 +13,7 @@ import Add from './add.js';
 
 // Initialize
 let script = null;
+const pageLoader = document.querySelector('#page-loader');
 const navLinks = document.getElementsByClassName('nav-links')[0];
 const anchors = navLinks.querySelectorAll('a');
 const ham = document.querySelector('.ham-container');
@@ -83,12 +84,16 @@ render();
 
 // Page load
 (() => {
-    const pageLoader = document.querySelector('#page-loader');
     gsap.to(pageLoader, {
         pointerEvents: 'none',
-        opacity: '0',
+        // opacity: '0',
+        x: '-100%',
         duration: '1',
-        onUpdate: () => (document.body.style.overflowY = 'auto'),
+        onComplete: () => {
+            document.body.style.overflowY = 'auto';
+            pageLoader.querySelector('#page-loader-svg').style.visibility =
+                'hidden';
+        },
     });
 })();
 

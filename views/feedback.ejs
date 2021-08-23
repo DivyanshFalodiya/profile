@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+    </head>
+    <body data-barba="wrapper">
+        <%- include('./partials/loader') %>
+        <canvas id="canvas"></canvas>
+        <div id="outer-container">
+            <%- include('./partials/appbar') %>
+            <div
+                class="container"
+                data-barba="container"
+                data-barba-namespace="login"
+            >
+                <h1 class="title">Feedback</h1>
+                <a href="/feedback/add" class="btn btn-fab">
+                    <i class="fas fa-plus"></i>
+                </a>
+                <div class="feedbacks-container">
+                    <% for( let i = 0; i < 5; i++ ) { %>
+                    <div class="card feedback">
+                        <div class="card-body">
+                            <h6 class="card-title">Custom User</h6>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipisicing elit. Consectetur at vero, dolor
+                                modi deleniti aut aspernatur sequi corporis
+                                culpa officiis repellendus, dolorem, libero odio
+                                nam sint. Odio placeat, soluta commodi sapiente
+                                est suscipit aperiam ea aliquam omnis voluptas,
+                                ipsam minima eos, eveniet ullam ipsum nihil
+                                facere eligendi ex perferendis eius.
+                            </p>
+                            <p class="timestamp">00:00:00 25 August, 2021</p>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+                <%- include('./partials/contact') %>
+            </div>
+        </div>
+        <%- include('./partials/footer') %>
+    </body>
+</html>

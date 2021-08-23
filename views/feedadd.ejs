@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+    </head>
+    <body data-barba="wrapper">
+        <%- include('./partials/loader') %>
+        <canvas id="canvas"></canvas>
+        <div id="outer-container">
+            <%- include('./partials/appbar') %>
+            <div
+                class="container"
+                data-barba="container"
+                data-barba-namespace="login"
+            >
+                <h1 class="title">Provide Feedback</h1>
+                <form class="form-group feedback-form" id="auth-form">
+                    <input
+                        id="username"
+                        type="text"
+                        placeholder="Username"
+                        name="username"
+                        required
+                        class="form-control feed-input"
+                    />
+                    <textarea
+                        id="feed"
+                        class="form-control feed-input"
+                        name="feed"
+                        rows="5"
+                        minlength="1"
+                        maxlength="500"
+                        required
+                        placeholder="Please type your valuable feedback here."
+                    ></textarea>
+                    <p class="textarea-counter">500/500</p>
+                    <button
+                        id="button-login"
+                        class="btn-theme"
+                        data-content="Provide"
+                        type="submit"
+                    >
+                        Provide
+                    </button>
+                    <svg id="loader" width="30" height="30">
+                        <circle
+                            class="loader-circle"
+                            cx="15"
+                            cy="15"
+                            r="10"
+                            fill="none"
+                            stroke="#70c542"
+                            stroke-linecap="round"
+                            stroke-width="2"
+                        />
+                    </svg>
+                </form>
+            </div>
+        </div>
+        <%- include('./partials/footer') %>
+    </body>
+</html>

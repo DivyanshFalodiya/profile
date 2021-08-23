@@ -653,6 +653,29 @@ body {
     font-size: 2rem;
 }
 
+/* Feedback */
+.feedback {
+    margin: 1rem 0;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.feedback-form {
+    width: 100%;
+    position: relative;
+}
+.textarea-counter {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 0.8rem;
+}
+.timestamp {
+    text-align: end;
+}
+.feed-add-link-container {
+    width: 100%;
+    text-align: end;
+}
+
 /* Media queries */
 @media only screen and (min-width: 425px) {
     #edit-project-image {
@@ -678,7 +701,7 @@ body {
         top: 0;
         width: 100%;
         right: -100%;
-        background-color: rgba(0, 0, 0, 0.95);
+        background-color: rgba(0, 0, 0, 0.96);
         align-items: flex-start;
         height: 100vh;
         transition: 450ms ease;

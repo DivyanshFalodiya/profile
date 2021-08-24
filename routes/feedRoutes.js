@@ -1,10 +1,12 @@
 const router = require('express').Router();
+const feedController = require('../controllers/feedbackController');
 
 router.get('/', async (req, res) => {
-    res.render('feedback');
+    const feedbacks = await feedController.fetchFeeds();
+    res.render('feedback', { feedbacks: feedbacks });
 });
 router.get('/add', async (req, res) => {
-    res.render('feedadd');
+    res.render('feedadd', { error: '', success: '' });
 });
 
 module.exports = router;

@@ -16,7 +16,19 @@
                 <div class="projects-container">
                     <% for( let i = 0; i < projects.length; i++ ) { %>
                     <div class="project">
-                        <a href="/work/<%= projects[i]._id %>">
+                        <a
+                            class="project-image-container"
+                            href="/work/<%= projects[i]._id %>"
+                        >
+                            <svg
+                                class="image-load-anim"
+                                width="180"
+                                height="180"
+                            >
+                                <circle fill="green" cx="30" cy="90" r="10" />
+                                <circle fill="yellow" cx="85" cy="90" r="10" />
+                                <circle fill="blue" cx="140" cy="90" r="10" />
+                            </svg>
                             <img
                                 class="project-image"
                                 src="<%= projects[i].image %>"

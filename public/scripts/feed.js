@@ -11,17 +11,13 @@ class Feed {
             let id = e.target.getAttribute('data-feed-id');
 
             try {
-                console.log('1');
                 let res = await fetch(`/api/feedback/${id}`, {
                     method: 'DELETE',
                     headers: { 'Content-Type': 'application/json' },
                 });
-                console.log(res);
                 res = await res.json();
-                console.log('3');
                 if (!res.success) {
-                    console.log('Something went wrong.');
-                    console.log('4');
+                    console.log('Something went wrong again.');
                 }
             } catch {
                 console.log('Something went wrong');

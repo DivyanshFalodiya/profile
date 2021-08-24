@@ -200,17 +200,19 @@ body {
     transform: translateY(-100%);
 }
 
+.container > *:not(#project-container) {
+    margin: 1rem;
+}
 .container {
     width: 100%;
     height: 100%;
+    min-height: 100vh;
+    padding-bottom: 2rem;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: 450ms ease;
-}
-.container > *:not(#project-container) {
-    margin: 1rem;
 }
 
 /* Canvas */
@@ -501,6 +503,10 @@ body {
 }
 
 /* Contact */
+.contact {
+    position: absolute;
+    bottom: 0;
+}
 .contact > * {
     margin: 0.5rem;
     font-size: 1.2rem;
@@ -668,12 +674,19 @@ body {
     bottom: 0;
     font-size: 0.8rem;
 }
-.timestamp {
+.feedback-username {
     text-align: end;
+    color: grey;
 }
 .feed-add-link-container {
     width: 100%;
     text-align: end;
+}
+#rating-container {
+    cursor: default;
+}
+.rating-star {
+    cursor: pointer;
 }
 
 /* Media queries */

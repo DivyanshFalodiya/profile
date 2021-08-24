@@ -27,12 +27,13 @@
                             <h4><%= projects[i].title %></h4>
                         </div>
                     </div>
-                    <% } %> <% if (admin) { %>
-                    <a href="/work/add" class="btn btn-fab">
-                        <i class="fas fa-plus"></i>
-                    </a>
                     <% } %>
                 </div>
+                <% if (admin) { %>
+                <a href="/work/add" class="btn btn-fab">
+                    <i class="fas fa-plus"></i>
+                </a>
+                <% } %>
             </div>
         </div>
         <%- include('./partials/footer') %>

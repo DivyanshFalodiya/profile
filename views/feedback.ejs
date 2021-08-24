@@ -11,32 +11,38 @@
             <div
                 class="container"
                 data-barba="container"
-                data-barba-namespace="login"
+                data-barba-namespace="feed"
             >
                 <h1 class="title">Feedback</h1>
-                <a href="/feedback/add" class="btn btn-fab">
-                    <i class="fas fa-plus"></i>
-                </a>
-                <div class="feedbacks-container">
-                    <% for( let i = 0; i < 5; i++ ) { %>
+                <% if (feedbacks.length === 0) { %>
+                <div>
+                    <p class="success">No feedbacks available yet.</p>
+                </div>
+                <% } %>
+                <div class="projects-container">
+                    <% for( let i = 0; i < feedbacks.length; i++ ) { %>
                     <div class="card feedback">
                         <div class="card-body">
-                            <h6 class="card-title">Custom User</h6>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Consectetur at vero, dolor
-                                modi deleniti aut aspernatur sequi corporis
-                                culpa officiis repellendus, dolorem, libero odio
-                                nam sint. Odio placeat, soluta commodi sapiente
-                                est suscipit aperiam ea aliquam omnis voluptas,
-                                ipsam minima eos, eveniet ullam ipsum nihil
-                                facere eligendi ex perferendis eius.
+                            <h6 class="card-title">
+                                <% for( let j = 0; j < feedbacks[i].rating; j++
+                                ) { %>
+                                <i
+                                    class="fas fa-star rating-star"
+                                    style="color: gold"
+                                ></i>
+                                <% } %>
+                            </h6>
+                            <p class="card-text"><%= feedbacks[i].detail %></p>
+                            <p class="feedback-username">
+                                ~ <%= feedbacks[i].username %>
                             </p>
-                            <p class="timestamp">00:00:00 25 August, 2021</p>
                         </div>
                     </div>
                     <% } %>
                 </div>
+                <a href="/feedback/add" class="btn btn-fab">
+                    <i class="fas fa-plus"></i>
+                </a>
                 <%- include('./partials/contact') %>
             </div>
         </div>

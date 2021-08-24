@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 
 * {
     padding: 0;
@@ -262,7 +263,6 @@ body {
     cursor: default;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
         'Lucida Sans', Arial, sans-serif;
-    z-index: 2;
 }
 
 .nav-links {
@@ -326,8 +326,6 @@ body {
     cursor: pointer;
     width: calc(var(--width) + 2 * var(--margin));
     height: calc(var(--height) + 4.5 * var(--margin));
-    /* width: 1.5rem; */
-    /* height: 100px; */
     z-index: 2;
 }
 
@@ -339,14 +337,8 @@ body {
     transition: 450ms ease;
 }
 .ham-active > .line1 {
-    transform: translateY(500%) rotate(45deg);
-}
-.ham-active > .line3 {
-    transform: translateY(-500%) rotate(-45deg);
-}
-.ham-active > .line2 {
-    transform: scale(0);
-    transform-origin: center;
+    transform: translateY(calc(var(--margin) + 2px)) rotate(45deg) scaleX(0.5);
+    transform-origin: right;
 }
 
 /* Footer */
@@ -552,7 +544,7 @@ body {
 .projects-container {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
 }
 .project {
@@ -703,25 +695,39 @@ body {
         top: 0;
         width: 100%;
         right: -100%;
-        background-color: rgba(0, 0, 0, 0.96);
+        background-color: rgba(0, 0, 0, 1);
         align-items: flex-start;
         height: 100vh;
-        transition: 450ms ease;
+        transition: 800ms ease;
     }
     .nav-links-active {
         right: 0;
+        transition: 800ms ease-in-out;
+    }
+    .nav-links-active .navbar-nav {
+        opacity: 1;
+        transition: 450ms ease;
+        transition-delay: 800ms;
+    }
+    .navbar-nav {
+        opacity: 0;
         transition: 450ms ease;
     }
     .nav-links ul {
         flex-direction: column;
         height: 100%;
+        width: 100%;
         justify-content: flex-start;
     }
     .nav-links a {
-        text-align: center;
+        font-family: 'Montserrat', 'Roboto', sans-serif;
+        font-size: 1.2rem;
+        text-align: left;
+    }
+    #resume {
+        font-weight: 500;
     }
     .content-head {
-        /* flex-direction: column; */
         flex-wrap: wrap;
     }
     #divyansh-image-container {

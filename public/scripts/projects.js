@@ -19,8 +19,11 @@ class Projects {
         this.waveSpeed = {
             value: 0,
         };
+        this.animateWave();
 
-        this.shake = new Shake();
+        this.shake = new Shake({
+            threshold: 5,
+        });
         this.shake.start();
         window.addEventListener('shake', this.handleShake.bind(this), false);
 

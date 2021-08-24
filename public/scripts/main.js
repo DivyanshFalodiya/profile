@@ -41,6 +41,9 @@ window.addEventListener('resize', () => {
     setup.camera.aspect = canvas.clientWidth / canvas.clientHeight;
     setup.camera.updateProjectionMatrix();
 
+    if (script && typeof script.handleResize === 'function')
+        script.handleResize();
+
     // Renderer update
     setup.renderer.setPixelRatio(window.devicePixelRatio);
     setup.renderer.setSize(window.innerWidth, window.innerHeight);

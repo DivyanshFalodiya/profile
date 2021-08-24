@@ -116,6 +116,11 @@ class Projects {
         }
     }
 
+    handleResize() {
+        this.setup.scene.remove(this.plane);
+        this.plane = this.createPlane(this.project.image);
+    }
+
     stop() {
         if (this.deleteButton) {
             this.deleteButton.removeEventListener(

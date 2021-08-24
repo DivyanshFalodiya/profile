@@ -16,6 +16,14 @@ class Projects {
             this.plane = this.createPlane(this.project.image);
         });
 
+        this.waveSpeed = {
+            value: 0,
+        };
+
+        this.shake = new Shake();
+        this.shake.start();
+        window.addEventListener('shake', this.handleShake.bind(this), false);
+
         // Delete
         try {
             this.deleteButton = document.querySelector(
@@ -27,6 +35,19 @@ class Projects {
             );
         } catch {}
     }
+
+    animateWave() {
+        this.waveSpeed.value = 2;
+        gsap.to(this.waveSpeed, {
+            value: 0,
+            duration: 5,
+            ease: 'linear',
+        });
+    }
+
+    increaseWave() {}
+
+    decreaseWave() {}
 
     async fetchProject() {
         try {
@@ -94,7 +115,12 @@ class Projects {
             let x = positions[i - 2],
                 y = positions[i - 1];
             positions[i] =
-                Math.sin(x + y + this.setup.clock.getElapsedTime() * 2) * 0.2;
+                Math.sin(
+                    Math.sqrt(x * x + y * y) * 2 +
+                        this.setup.clock.getElapsedTime() * 2
+                ) *
+                    this.waveSpeed.value +
+                Math.cos(x + y + this.setup.clock.getElapsedTime() * 2) * 0.2;
         }
         this.plane.geometry.attributes.position.array = positions;
         this.plane.geometry.attributes.position.needsUpdate = true;
@@ -121,6 +147,10 @@ class Projects {
         this.plane = this.createPlane(this.project.image);
     }
 
+    handleShake() {
+        this.animateWave();
+    }
+
     stop() {
         if (this.deleteButton) {
             this.deleteButton.removeEventListener(
@@ -128,6 +158,8 @@ class Projects {
                 this.handleDelete.bind(this)
             );
         }
+        window.removeEventListener('shake', this.handleShake.bind(this), false);
+        this.shake.stop();
         this.projectDetails.style.opacity = 0;
         gsap.to(this.plane.scale, {
             x: 0,

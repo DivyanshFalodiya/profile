@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+    </head>
+    <body data-barba="wrapper">
+        <%- include('./partials/loader') %>
+        <canvas id="canvas"></canvas>
+        <div id="outer-container">
+            <%- include('./partials/appbar') %>
+            <div
+                class="container"
+                data-barba="container"
+                data-barba-namespace="feed"
+            >
+                <h1 class="title">Feedback</h1>
+                <% if (feedbacks.length === 0) { %>
+                <div>
+                    <p class="success">No feedbacks available yet.</p>
+                </div>
+                <% } %>
+                <div class="projects-container">
+                    <% for( let i = 0; i < feedbacks.length; i++ ) { %>
+                    <div class="card feedback">
+                        <div class="card-body">
+                            <h6 class="card-title">
+                                <% for( let j = 0; j < feedbacks[i].rating; j++
+                                ) { %>
+                                <i
+                                    class="fas fa-star rating-star"
+                                    style="color: gold"
+                                ></i>
+                                <% } %>
+                            </h6>
+                            <p class="card-text"><%= feedbacks[i].detail %></p>
+                            <p class="feedback-username">
+                                ~ <%= feedbacks[i].username %>
+                            </p>
+                            <% if(admin){ %>
+                            <button
+                                class="btn feed-delete"
+                                data-feed-id="<%= feedbacks[i]._id %>"
+                            >
+                                <i
+                                    class="fas fa-trash-alt"
+                                    style="color: red; pointer-events: none"
+                                ></i>
+                            </button>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+                <a href="/feedback/add" class="btn btn-fab">
+                    <i class="fas fa-plus"></i>
+                </a>
+                <%- include('./partials/contact') %>
+            </div>
+        </div>
+        <%- include('./partials/footer') %>
+    </body>
+</html>

@@ -200,17 +200,19 @@ body {
     transform: translateY(-100%);
 }
 
+.container > *:not(#project-container) {
+    margin: 1rem;
+}
 .container {
     width: 100%;
     height: 100%;
+    min-height: 100vh;
+    padding-bottom: 2rem;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: 450ms ease;
-}
-.container > *:not(#project-container) {
-    margin: 1rem;
 }
 
 /* Canvas */
@@ -501,6 +503,10 @@ body {
 }
 
 /* Contact */
+.contact {
+    position: absolute;
+    bottom: 0;
+}
 .contact > * {
     margin: 0.5rem;
     font-size: 1.2rem;
@@ -653,6 +659,41 @@ body {
     font-size: 2rem;
 }
 
+/* Feedback */
+.feedback {
+    margin: 1rem 0;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.feed-delete {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.feedback-form {
+    width: 100%;
+    position: relative;
+}
+.textarea-counter {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 0.8rem;
+}
+.feedback-username {
+    text-align: end;
+    color: grey;
+}
+.feed-add-link-container {
+    width: 100%;
+    text-align: end;
+}
+#rating-container {
+    cursor: default;
+}
+.rating-star {
+    cursor: pointer;
+}
+
 /* Media queries */
 @media only screen and (min-width: 425px) {
     #edit-project-image {
@@ -678,7 +719,7 @@ body {
         top: 0;
         width: 100%;
         right: -100%;
-        background-color: rgba(0, 0, 0, 0.95);
+        background-color: rgba(0, 0, 0, 0.96);
         align-items: flex-start;
         height: 100vh;
         transition: 450ms ease;

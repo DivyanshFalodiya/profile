@@ -6,13 +6,20 @@ class Login {
     constructor() {
         this.loginForm = document.querySelector('#auth-form');
         this.loginButton = document.querySelector('#button-login');
+        this.logoutButton = document.querySelector('#logout-button');
         this.loader = document.querySelector('#loader');
         this.error = document.querySelector('.error p');
         this.success = document.querySelector('.success p');
-        this.loginForm.addEventListener(
-            'submit',
-            this.handleFormSubmit.bind(this)
-        );
+        if (this.loginForm)
+            this.loginForm.addEventListener(
+                'submit',
+                this.handleFormSubmit.bind(this)
+            );
+        if (this.logoutButton)
+            this.logoutButton.addEventListener(
+                'click',
+                () => (location.href = '/auth/logout')
+            );
     }
 
     async handleFormSubmit(e) {
@@ -47,7 +54,15 @@ class Login {
     }
 
     stop() {
-        this.loginForm.removeEventListener(this.handleFormSubmit.bind(this));
+        if (this.loginForm)
+            this.loginForm.removeEventListener(
+                this.handleFormSubmit.bind(this)
+            );
+        if (this.logoutButton)
+            this.logoutButton.removeEventListener(
+                'click',
+                () => (location.href = '/auth/logout')
+            );
     }
 }
 

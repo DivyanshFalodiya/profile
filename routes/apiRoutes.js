@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const authController = require('../controllers/authController');
 const projectsController = require('../controllers/projectsController');
+const feedsController = require('../controllers/feedbackController');
 
 // Get all projects
 router.get('/projects', async (req, res) => {
@@ -13,6 +14,42 @@ router.get('/projects/:id', async (req, res) => {
     const project = await projectsController.fetchProject(req.params.id);
     res.send(project);
 });
+
+// Post feedback
+router.get('/feedback', async (req, res) => {
+    const feeds = await feedsController.fetchFeeds();
+    res.send(feeds);
+});
+
+// Post feedback
+router.post('/feedback', async (req, res) => {
+    const feed = await feedsController.addFeed(req.body);
+    if (feed != null) {
+        res.status(200).json({
+            success: 'Added successfully',
+        });
+        return;
+    }
+    res.status(501).json({
+        error: 'Something went wrong! Could not add!',
+    });
+});
+
+// Admin route to delete feedback
+router.delete(
+    '/feedback/:id',
+    authController.isAuthenticated,
+    async (req, res) => {
+        const result = await feedsController.removeFeed(req.params.id);
+        if (result) {
+            res.redirect('/');
+            return;
+        }
+        res.status(501).json({
+            success: false,
+        });
+    }
+);
 
 // Admin only route to update a project
 router.patch(

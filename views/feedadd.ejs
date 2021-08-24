@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head') %>
+    </head>
+    <body data-barba="wrapper">
+        <%- include('./partials/loader') %>
+        <canvas id="canvas"></canvas>
+        <div id="outer-container">
+            <%- include('./partials/appbar') %>
+            <div
+                class="container"
+                data-barba="container"
+                data-barba-namespace="feedadd"
+            >
+                <h1 class="title">Provide Feedback</h1>
+                <form class="feedback-form" id="edit-form">
+                    <div class="form-group">
+                        <label for="input-feed-rating">Review</label>
+                        <div id="rating-container">
+                            <% for( let i = 0; i < 5; i++ ) { %>
+                            <i
+                                class="fas fa-star rating-star"
+                                id="star-<%= i+1 %>"
+                            ></i>
+                            <% } %>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-feed-username">Username</label>
+                        <input
+                            id="input-feed-username"
+                            type="text"
+                            placeholder="ex. John Cena"
+                            name="username"
+                            required
+                            class="form-control edit-inputs"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="input-feed-about">Description</label>
+                        <textarea
+                            id="input-feed-about"
+                            class="form-control edit-inputs"
+                            name="detail"
+                            rows="5"
+                            maxlength="500"
+                            required
+                            placeholder="Please type your valuable feedback here."
+                        ></textarea>
+                        <p class="" style="color: grey">
+                            Your feedback will be visible to everyone in the
+                            <a href="/feedback">feedbacks</a> section. Please
+                            keep it clean.
+                        </p>
+                    </div>
+                    <div class="form-group button-update-container">
+                        <button
+                            id="button-update"
+                            class="btn-theme"
+                            data-content="Send"
+                            type="submit"
+                        >
+                            Send
+                        </button>
+                    </div>
+                    <svg id="loader" width="30" height="30">
+                        <circle
+                            class="loader-circle"
+                            cx="15"
+                            cy="15"
+                            r="10"
+                            fill="none"
+                            stroke="#70c542"
+                            stroke-linecap="round"
+                            stroke-width="2"
+                        />
+                    </svg>
+                    <div class="error">
+                        <p><%= error %></p>
+                    </div>
+                    <div class="success">
+                        <p><%= success %></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <%- include('./partials/footer') %>
+    </body>
+</html>

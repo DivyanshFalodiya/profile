@@ -10,6 +10,8 @@ import Projects from './projects.js';
 import Login from './login.js';
 import Edit from './edit.js';
 import Add from './add.js';
+import Feed from './feed.js';
+import FeedAdd from './feedadd.js';
 
 // Initialize
 let script = null;
@@ -181,6 +183,32 @@ barba.init({
             },
             afterEnter(data) {
                 script = new Projects(setup);
+            },
+            beforeLeave(data) {
+                script.stop();
+                script = null;
+            },
+        },
+        {
+            namespace: 'feed',
+            beforeEnter() {
+                updateAnchors();
+            },
+            afterEnter(data) {
+                script = new Feed();
+            },
+            beforeLeave(data) {
+                script.stop();
+                script = null;
+            },
+        },
+        {
+            namespace: 'feedadd',
+            beforeEnter() {
+                updateAnchors();
+            },
+            afterEnter(data) {
+                script = new FeedAdd();
             },
             beforeLeave(data) {
                 script.stop();

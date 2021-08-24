@@ -7,6 +7,7 @@ const homeRoutes = require('./routes/homeRoutes');
 const projectRoutes = require('./routes/projectRoutes');
 const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/apiRoutes');
+const feedRoutes = require('./routes/feedRoutes');
 
 // App and middlewares
 const app = express();
@@ -26,6 +27,7 @@ app.use('/', homeRoutes);
 app.use('/work', projectRoutes);
 app.use('/auth', authRoutes);
 app.use('/api', apiRoutes);
+app.use('/feedback', feedRoutes);
 
 // Listening on port
 const PORT = process.env.PORT || 3000;

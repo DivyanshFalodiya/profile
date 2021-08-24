@@ -334,7 +334,7 @@ body {
     height: var(--height);
     margin: var(--margin);
     background-color: white;
-    transition: 450ms ease;
+    transition: 800ms ease;
 }
 .ham-active > .line1 {
     transform: translateY(calc(var(--margin) + 2px)) rotate(45deg) scaleX(0.5);
@@ -717,11 +717,10 @@ body {
         flex-direction: column;
         height: 100%;
         width: 100%;
-        justify-content: flex-start;
     }
     .nav-links a {
         font-family: 'Montserrat', 'Roboto', sans-serif;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         text-align: left;
     }
     #resume {
@@ -748,7 +747,11 @@ body {
         grid-template-columns: 1fr;
     }
 }
-
+@media (hover: none) and (pointer: coarse) {
+    ::-webkit-scrollbar {
+        width: 1px;
+    }
+}
 @media (hover) and (pointer: fine) {
     .project-details {
         bottom: -100%;

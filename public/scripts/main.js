@@ -64,8 +64,13 @@ ham.addEventListener('click', () => {
     navLinks.classList.toggle('nav-links-active');
     ham.classList.toggle('ham-active');
     let body = document.body;
-    if (body.style.overflowY != 'hidden') body.style.overflowY = 'hidden';
-    else body.style.overflowY = 'auto';
+    if (body.style.overflowY != 'hidden') {
+        body.style.overflowY = 'hidden';
+        navLinks.style.overflowY = 'auto';
+    } else {
+        body.style.overflowY = 'auto';
+        navLinks.style.overflowY = 'hidden';
+    }
 });
 
 // On device orientation for sensors

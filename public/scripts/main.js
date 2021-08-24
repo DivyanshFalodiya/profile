@@ -88,9 +88,10 @@ render();
 (() => {
     gsap.to(pageLoader, {
         pointerEvents: 'none',
-        // opacity: '0',
-        x: '-100%',
-        duration: '1',
+        opacity: 0,
+        y: '-100%',
+        duration: '0.5',
+        ease: 'sine',
         onComplete: () => {
             document.body.style.overflowY = 'auto';
             pageLoader.querySelector('#page-loader-svg').style.visibility =

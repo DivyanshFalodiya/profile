@@ -10,6 +10,7 @@ import Projects from './projects.js';
 import Login from './login.js';
 import Edit from './edit.js';
 import Add from './add.js';
+import Feed from './feed.js';
 import FeedAdd from './feedadd.js';
 
 // Initialize
@@ -194,10 +195,10 @@ barba.init({
                 updateAnchors();
             },
             afterEnter(data) {
-                // script = new Projects(setup);
+                script = new Feed();
             },
             beforeLeave(data) {
-                // script.stop();
+                script.stop();
                 script = null;
             },
         },

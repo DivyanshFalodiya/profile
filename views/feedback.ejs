@@ -36,6 +36,17 @@
                             <p class="feedback-username">
                                 ~ <%= feedbacks[i].username %>
                             </p>
+                            <% if(admin){ %>
+                            <button
+                                class="btn feed-delete"
+                                data-feed-id="<%= feedbacks[i]._id %>"
+                            >
+                                <i
+                                    class="fas fa-trash-alt"
+                                    style="color: red; pointer-events: none"
+                                ></i>
+                            </button>
+                            <% } %>
                         </div>
                     </div>
                     <% } %>

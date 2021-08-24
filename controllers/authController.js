@@ -18,19 +18,31 @@ exports.verifyToken = (token) => {
     try {
         decoded = jwt.verify(token, process.env.JWT_KEY);
     } catch {
-        return;
+        return null;
     }
 
-    if (!decoded.hasOwnProperty('email')) return;
+    if (!decoded.hasOwnProperty('email')) return null;
 
     const { email } = decoded;
     return email;
 };
 
+// Check if the admin is making request
+exports.checkAdmin = (req, res, next) => {
+    let cookies = req.cookies;
+    res.isAdmin = false;
+    if (cookies.jwt) {
+        const email = this.verifyToken(cookies.jwt);
+        if (email === process.env.ADMIN_MAIL) {
+            res.isAdmin = true;
+        }
+    }
+    next();
+};
+
 // Middleware to check the request for authentication
-exports.isAuthenticated = (req, res, next) => {
-    console.log('Checking...');
-    const token = req.query.token || req.cookies.jwt;
+exports.authenticate = (req, res, next) => {
+    const token = req.query.token;
     if (!token) {
         res.status(403).json({
             error: 'Sumimasen! Unable to verify.',
@@ -56,6 +68,36 @@ exports.isAuthenticated = (req, res, next) => {
     }
 
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+    next();
+};
+
+// Middleware to check the request for authentication
+exports.isAuthenticated = (req, res, next) => {
+    const token = req.query.token || req.cookies.jwt;
+    if (!token) {
+        res.status(403).json({
+            error: 'Sumimasen! Unable to verify.',
+        });
+        return;
+    }
+
+    let decoded;
+    try {
+        decoded = jwt.verify(token, process.env.JWT_KEY);
+    } catch {
+        res.status(403).json({
+            error: 'Sumimasen! Unable to verify.',
+        });
+        return;
+    }
+
+    if (!decoded.hasOwnProperty('email')) {
+        res.status(403).json({
+            error: 'Sumimasen! Unable to verify.',
+        });
+        return;
+    }
+
     next();
 };
 

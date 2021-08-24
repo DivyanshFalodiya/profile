@@ -505,18 +505,18 @@ body {
     background-color: white;
 }
 #project-container {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    /* position: relative; */
+    /* left: 0; */
+    /* top: 0; */
+    /* width: 100%; */
+    /* height: 100%; */
 }
 #project-details {
+    position: absolute;
     display: flex;
     flex-direction: column;
     align-items: center;
     opacity: 0;
-    position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -717,6 +717,9 @@ body {
     }
 }
 @media only screen and (max-width: 768px) {
+    #project-details {
+        width: 100%;
+    }
     .field {
         margin-top: 1rem;
         flex-direction: column;

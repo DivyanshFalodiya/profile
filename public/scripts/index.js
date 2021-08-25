@@ -15,16 +15,6 @@ class Index {
         this.removeTimer = null;
         this.resetTimer = null;
         this.animateRoles();
-
-        window.onfocus = () => {
-            this.animateRoles();
-        };
-        window.onblur = () => {
-            this.rolesContainer.textContent = '';
-            clearTimeout(this.dispTimer);
-            clearTimeout(this.removeTimer);
-            clearTimeout(this.resetTimer);
-        };
     }
 
     animateRoles() {

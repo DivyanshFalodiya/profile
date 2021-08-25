@@ -19,7 +19,6 @@ class Projects {
         this.waveSpeed = {
             value: 0,
         };
-        this.animateWave();
 
         this.shake = new Shake({
             threshold: 5,

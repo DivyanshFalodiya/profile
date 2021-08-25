@@ -10,6 +10,10 @@
     box-sizing: border-box;
 }
 
+i {
+    pointer-events: none;
+}
+
 body {
     min-height: 100vh;
     display: flex;
@@ -37,6 +41,27 @@ body {
 ::selection {
     color: black;
     background-color: white;
+}
+
+#pointer-cursor-container {
+    display: none;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+#pointer-cursor {
+    transform-origin: center;
+    /* animation: rotator 5s infinite linear; */
+}
+@keyframes rotator {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .btn-theme {
@@ -82,15 +107,6 @@ body {
 .btn-theme:hover:before {
     width: 100%;
     transition: 0.3s;
-}
-
-#animation-circle {
-    position: fixed;
-    z-index: 2;
-    bottom: 1rem;
-    right: 1rem;
-    cursor: pointer;
-    transition: 200ms ease;
 }
 
 #animation-circle:hover {
@@ -261,12 +277,6 @@ body {
     color: white;
 }
 
-.nav-brand {
-    /* cursor: default;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-        'Lucida Sans', Arial, sans-serif; */
-}
-
 .nav-links {
     display: flex;
     justify-content: center;
@@ -281,7 +291,6 @@ body {
 
 .nav-links > ul > li {
     position: relative;
-    cursor: pointer;
     margin: auto 1rem;
     padding: 5px;
 }
@@ -325,7 +334,6 @@ body {
     --margin: 0.5rem;
     position: relative;
     display: none;
-    cursor: pointer;
     width: calc(var(--width) + 2 * var(--margin));
     height: calc(var(--height) + 4.5 * var(--margin));
     z-index: 2;
@@ -586,6 +594,7 @@ body {
     overflow: hidden;
 }
 .project-image {
+    pointer-events: none;
     width: 100%;
     transform-origin: center;
     aspect-ratio: 16/9;
@@ -702,12 +711,6 @@ body {
     width: 100%;
     text-align: end;
 }
-#rating-container {
-    cursor: default;
-}
-.rating-star {
-    cursor: pointer;
-}
 
 /* Media queries */
 @media only screen and (min-width: 425px) {
@@ -795,6 +798,12 @@ body {
     }
 }
 @media (hover) and (pointer: fine) {
+    * {
+        cursor: none !important;
+    }
+    #pointer-cursor-container {
+        display: block;
+    }
     .project-details {
         bottom: -100%;
         transition: 0.3s ease;

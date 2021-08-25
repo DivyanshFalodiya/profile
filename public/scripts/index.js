@@ -11,16 +11,19 @@ class Index {
         this.interval = 150;
         this.timeGap = 50;
         this.rolesContainer = document.querySelector('#roles');
+        this.dispTimer = null;
+        this.removeTimer = null;
+        this.resetTimer = null;
         this.animateRoles();
     }
 
     animateRoles() {
         let cur = this.roles[this.index];
         this.displayRole(cur);
-        setTimeout(() => {
+        this.removeTimer = setTimeout(() => {
             this.removeRole(cur);
         }, this.interval * (cur.length + 1) + 3 * this.timeGap);
-        setTimeout(() => {
+        this.resetTimer = setTimeout(() => {
             this.index =
                 this.index + 1 == this.roles.length ? 0 : this.index + 1;
             this.animateRoles();
@@ -29,14 +32,14 @@ class Index {
 
     displayRole(cur) {
         let charIndex = 0;
-        let id = setInterval(() => {
+        this.dispTimer = setInterval(() => {
             this.rolesContainer.textContent =
                 this.rolesContainer.textContent +
                 (cur[charIndex] ? cur[charIndex] : '');
             charIndex++;
         }, this.interval);
         setTimeout(() => {
-            clearInterval(id);
+            clearInterval(this.dispTimer);
         }, this.interval * (cur.length + 1));
     }
     removeRole(cur) {

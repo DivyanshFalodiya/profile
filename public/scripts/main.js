@@ -15,6 +15,7 @@ import FeedAdd from './feedadd.js';
 
 // Initialize
 let script = null;
+const cursor = document.querySelector('#pointer-cursor-container');
 const pageLoader = document.querySelector('#page-loader');
 const navLinks = document.getElementsByClassName('nav-links')[0];
 const anchors = navLinks.querySelectorAll('a');
@@ -24,6 +25,14 @@ const setup = new Setup(canvas);
 
 // On mouve move
 window.addEventListener('pointermove', (e) => {
+    gsap.to(cursor, {
+        x: e.clientX - 50,
+        y: e.clientY - 50,
+        scale:
+            e.target.tagName == 'A' || e.target.tagName == 'BUTTON' ? 1.5 : 1,
+        duration: 0.5,
+    });
+    console.log(e.target);
     setup.mouse = {
         x: -(e.clientX - canvas.width / 2) / canvas.width,
         y: -(e.clientY - canvas.height / 2) / canvas.height,
@@ -100,7 +109,6 @@ render();
     gsap.to(pageLoader, {
         pointerEvents: 'none',
         opacity: 0,
-        y: '-100%',
         duration: '0.5',
         ease: 'sine',
         onComplete: () => {

@@ -161,25 +161,24 @@ body {
     width: 100%;
     height: 100%;
     background: rgb(17, 17, 17);
+    z-index: 5;
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    z-index: 10;
 }
-.page-load-circle {
-    stroke: rgb(245, 255, 107);
-    stroke-linecap: round;
-    stroke-width: 2;
-    animation: page-circle infinite 1s linear forwards;
-    transform-origin: center;
+#loader-animate {
+    stroke-dasharray: 260;
+    animation: loader 3s ease-in-out infinite;
 }
-@keyframes page-circle {
+@keyframes loader {
     0% {
-        transform: translateX(-100%);
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dashoffset: 260;
     }
     100% {
-        transform: translateX(100%);
+        stroke-dashoffset: 0;
     }
 }
 .page-loaded {
@@ -263,9 +262,9 @@ body {
 }
 
 .nav-brand {
-    cursor: default;
+    /* cursor: default;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-        'Lucida Sans', Arial, sans-serif;
+        'Lucida Sans', Arial, sans-serif; */
 }
 
 .nav-links {

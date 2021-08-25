@@ -100,7 +100,6 @@ render();
     gsap.to(pageLoader, {
         pointerEvents: 'none',
         opacity: 0,
-        y: '-100%',
         duration: '0.5',
         ease: 'sine',
         onComplete: () => {

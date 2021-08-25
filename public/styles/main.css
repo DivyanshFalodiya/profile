@@ -594,7 +594,7 @@ body {
     overflow: hidden;
 }
 .project-image {
-    pointer-events: none;
+    /* pointer-events: none; */
     width: 100%;
     transform-origin: center;
     aspect-ratio: 16/9;

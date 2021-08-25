@@ -798,9 +798,9 @@ body {
     }
 }
 @media (hover) and (pointer: fine) {
-    * {
+    /* * {
         cursor: none !important;
-    }
+    } */
     #pointer-cursor-container {
         display: block;
     }

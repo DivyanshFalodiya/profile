@@ -30,9 +30,10 @@ window.addEventListener('pointermove', (e) => {
         y: e.clientY - 50,
         scale:
             e.target.tagName == 'A' || e.target.tagName == 'BUTTON' ? 1.5 : 1,
-        duration: 0.5,
+        duration: 1,
+        delay: 0.1,
+        ease: 'back',
     });
-    console.log(e.target);
     setup.mouse = {
         x: -(e.clientX - canvas.width / 2) / canvas.width,
         y: -(e.clientY - canvas.height / 2) / canvas.height,

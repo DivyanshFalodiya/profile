@@ -16,6 +16,7 @@ import FeedAdd from './feedadd.js';
 // Initialize
 let script = null;
 const cursor = document.querySelector('#pointer-cursor-container');
+const cursorCircle = document.querySelector('#pointer-circle');
 const pageLoader = document.querySelector('#page-loader');
 const navLinks = document.getElementsByClassName('nav-links')[0];
 const anchors = navLinks.querySelectorAll('a');
@@ -34,6 +35,10 @@ window.addEventListener('pointermove', (e) => {
         delay: 0.1,
         ease: 'back',
     });
+    // cursorCircle.style.stroke =
+    //     e.target.tagName == 'A' || e.target.tagName == 'BUTTON'
+    //         ? 'goldenrod'
+    //         : 'white';
     setup.mouse = {
         x: -(e.clientX - canvas.width / 2) / canvas.width,
         y: -(e.clientY - canvas.height / 2) / canvas.height,

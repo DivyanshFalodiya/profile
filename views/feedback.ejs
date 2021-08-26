@@ -14,7 +14,7 @@
                 data-barba-namespace="feed"
             >
                 <h1 class="title">Feedback</h1>
-                <% if (feedbacks.length === 0) { %>
+                <% if (feedbacks && feedbacks.length === 0) { %>
                 <div>
                     <p class="success">
                         No feedbacks available yet. You can add one
@@ -23,7 +23,8 @@
                 </div>
                 <% } %>
                 <div class="projects-container">
-                    <% for( let i = 0; i < feedbacks.length; i++ ) { %>
+                    <% if(feedbacks) %> <% for( let i = 0; i < feedbacks.length;
+                    i++ ) { %>
                     <div class="card feedback">
                         <div class="card-body">
                             <h6 class="card-title">

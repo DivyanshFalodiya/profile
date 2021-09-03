@@ -42,11 +42,22 @@
                     </div>
                     <% } %>
                 </div>
+                <div>
+                    <p style="color: grey">
+                        The list of projects/work here may not have been
+                        updated. To view all my projects, visit my
+                        <a
+                            target="_blank"
+                            href="https://github.com/DivyanshFalodiya"
+                            >Github</a
+                        >
+                    </p>
+                </div>
                 <% if (admin) { %>
                 <a href="/work/add" class="btn btn-fab">
                     <i class="fas fa-plus"></i>
                 </a>
-                <% } %>
+                <% } %> <%-include('./partials/contact') %>
             </div>
         </div>
         <%- include('./partials/footer') %>

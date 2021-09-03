@@ -4,8 +4,7 @@
         <%- include('./partials/head') %>
     </head>
     <body data-barba="wrapper">
-        <%- include('./partials/cursor') %>
-        <%- include('./partials/loader') %>
+        <%- include('./partials/cursor') %> <%- include('./partials/loader') %>
         <canvas id="canvas"></canvas>
         <div id="outer-container">
             <%- include('./partials/appbar') %>
@@ -49,7 +48,7 @@
                             required
                             placeholder="Please type your valuable feedback here."
                         ></textarea>
-                        <p class="" style="color: grey">
+                        <p style="color: grey">
                             Your feedback will be visible to everyone in the
                             <a href="/feedback">feedbacks</a> section. Please
                             keep it clean.
@@ -84,6 +83,7 @@
                         <p><%= success %></p>
                     </div>
                 </form>
+                <%- include('./partials/contact') %>
             </div>
         </div>
         <%- include('./partials/footer') %>
